@@ -1,0 +1,45 @@
+version: 3
+
+dotenv:
+  - .env
+
+tasks:
+  default:
+    cmds:
+      - echo "Global Tasks"
+
+  bootstrap:
+    cmds:
+      - ./scripts/bootstrap.sh
+
+  update:dotfiles:
+    cmds:
+      - |
+        DOTFILES_REPO="https://github.com/swibrow/dotfiles.git"
+        DOTFILES_DIR="$HOME/.dotfiles"
+        DOTFILES_BACKUP_DIR="$HOME/.dotfiles-backup"
+
+        # Clone dotfiles repository
+        if [ ! -d "$DOTFILES_DIR" ]; then
+            git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+        else
+            echo "$DOTFILES_DIR already exists. Pulling latest changes..."
+            git -C "$DOTFILES_DIR" pull
+        fi
+
+  gha:
+    desc: "Open GitHub Actions for current repository"
+    cmds:
+      - |
+        org=$(echo {{.USER_WORKING_DIR}} | awk -F'/' '{print $(NF-1)}')
+        url=https://www.github.com/$org/$(basename {{.USER_WORKING_DIR}})/actions
+        if [[ "$(uname)" == "Darwin" ]]; then
+          open $url
+        else
+          xdg-open $url
+        fi
+    silent: true
+
+  foo:
+    cmds:
+      - echo {{.USER_WORKING_DIR}}

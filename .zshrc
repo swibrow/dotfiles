@@ -77,6 +77,7 @@ plugins=(
   docker
   dotenv
   encode64
+  fluxcd
   git
   gitignore
   golang
@@ -84,6 +85,7 @@ plugins=(
   kubectl
   kubectx
   kubetail
+  kube-ps1
   macos
   microk8s
   minikube
@@ -92,13 +94,13 @@ plugins=(
   pass
   pip
   postgres
-  # pyenv
+  pyenv
   rust
+  skaffold
   terraform
   vault
-  # virtualenv
-  # virtualenvwrapper
   vscode
+  zsh-aws-vault
   zsh-autosuggestions
   zsh-syntax-highlighting
   zsh-completions
@@ -115,40 +117,19 @@ source $ZSH/oh-my-zsh.sh
 # # Rust
 # fpath+=~/.zfunc
 
-# Kubectl
-# source <(kubectl completion zsh)
-
-# Helm3
-# source <(helm completion zsh)
-
-# Minikube
-# source <(minikube completion zsh)
-
-# Skaffold
-source <(skaffold completion zsh)
-
-# Flux CD
-source <(flux completion zsh)
-
 # Chart Releases
 source <(cr completion zsh)
 
-# AWS Cli
-# autoload bashcompinit && bashcompinit
-# autoload -Uz compinit && compinit
-# complete -C '/usr/local/bin/aws_completer' aws
-
-# Terraform
-# complete -o nospace -C '/home/samuel/bin/terraform' terraform
-
+# Okta CLI
+source <(okta generate-completion zsh)
 
 # # Kube PS1
-source "$(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh"
+# source "$(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh"
 NEWLINE=$'\n\$ '
 PS1='$(kube_ps1)'$PS1$NEWLINE
 
 # AWS Vault
-export AWS_VAULT_BACKEND=pass
+export AWS_VAULT_BACKEND=keychain
 
 # Pyenv config
 export PYENV_ROOT="$HOME/.pyenv"
@@ -171,11 +152,6 @@ export LANG=en_US.UTF-8
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
 # Aliases
 alias zshconfig="code ~/.zshrc"
 alias ohmyzsh="code ~/.oh-my-zsh"
@@ -183,8 +159,10 @@ alias new-shell="exec $SHELL"
 
 alias tflint="terraform fmt -recursive && terragrunt hclfmt"
 
-# AWS vault
-# alias av="aws-vault"
+
+
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent
 
 
 # Kubenetes
@@ -196,15 +174,15 @@ alias kt="kubetail"
 alias kd="kubectl drain --ignore-daemonsets --delete-emptydir-data"
 # Terraform
 alias tf="terraform"
-alias tg="terragrunt"
 alias tf_lint="terraform fmt -recursive && terragrunt hclfmt"
 
 # Base64
 alias bd="base64 --decode"
 alias b="base64"
 
-# Ip Forwarding
-alias ipf="sudo sysctl -w net.ipv4.ip_forward=1"
+alias tg="task --global"
+# # Ip Forwarding
+# alias ipf="sudo sysctl -w net.ipv4.ip_forward=1"
 
 
 # Functions
@@ -212,8 +190,8 @@ work() {
     cd ~/dock/"${1}"
 }
 
-av() {
-    kubectl config use-context "${1}"
+_a() {
+    # kubectl config use-context "${1}"
     unset AWS_VAULT
     aws-vault exec "${1}"
 
@@ -233,9 +211,15 @@ pg_up() {
 }
 
 eks_config() {
-  aws eks update-kubeconfig --name="${1}-eks-cluster" --alias "${1}"
+  aws eks update-kubeconfig --name="${1}" --alias "${2}"
 }
 
+function cloner {
+   curl -H "Authorization: token $1" -s "https://api.github.com/orgs/$2/repos?per_page=100&page=${3:-"1"}" \
+       | sed -n '/"ssh_url"/s/.*ssh_url": "\([^"]*\).*/\1/p' \
+       | sort -u \
+       | xargs -n1 git clone;
+}
 
 export_gitlab() {}
 
@@ -251,4 +235,4 @@ function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
 
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+# source <(ng completion script)
