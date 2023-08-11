@@ -21,10 +21,10 @@ if [ ! -d "$DOTFILES_BACKUP_DIR" ]; then
 fi
 
 # Move existing dotfiles to backup directory
-files=(.zshrc .zsh_functions Brewfile)
+files=(.zshrc .zprofile .zsh_functions Brewfile)
 
 for file in "${files[@]}"; do
-    if [ -f "$HOME/$file" ]; then
+    if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
         mv "$HOME/$file" "$DOTFILES_BACKUP_DIR/${TIMESTAMP}_$file"
     fi
 done
