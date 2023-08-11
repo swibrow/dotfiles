@@ -21,10 +21,12 @@ if [ ! -d "$DOTFILES_BACKUP_DIR" ]; then
 fi
 
 # Move existing dotfiles to backup directory
-files=(.zshrc .zprofile .zsh_functions Brewfile)
+echo "Backing up existing dotfiles..."
+files=(.zshrc .zprofile .zsh_functions Taskfile.yaml .Brewfile)
 
 for file in "${files[@]}"; do
     if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
+        echo "Moving $file to $DOTFILES_BACKUP_DIR/${TIMESTAMP}_$file"
         mv "$HOME/$file" "$DOTFILES_BACKUP_DIR/${TIMESTAMP}_$file"
     fi
 done
@@ -58,7 +60,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
             echo "Homebrew will not be installed."
         fi
     fi
-    brew bundle --global --verbose --no-lock --file="$HOME/Brewfile"
+    brew bundle --global --verbose --no-lock
 else
     echo "This is not macOS. Exiting."
 fi
