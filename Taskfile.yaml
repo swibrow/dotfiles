@@ -10,7 +10,7 @@ tasks:
 
   bootstrap:
     cmds:
-      - ./scripts/bootstrap.sh
+      - .dotfiles/bootstrap.sh
 
   update:dotfiles:
     cmds:
@@ -26,6 +26,7 @@ tasks:
             echo "$DOTFILES_DIR already exists. Pulling latest changes..."
             git -C "$DOTFILES_DIR" pull
         fi
+    silent: true
 
   gha:
     desc: "Open GitHub Actions for current repository"
