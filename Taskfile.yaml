@@ -8,11 +8,11 @@ tasks:
     cmds:
       - echo "Global Tasks"
 
-  bootstrap:
+  dotfiles:install:
     cmds:
-      - .dotfiles/bootstrap.sh
+      - .dotfiles/install.sh
 
-  update:dotfiles:
+  dotfiles:update:
     cmds:
       - |
         DOTFILES_REPO="https://github.com/swibrow/dotfiles.git"
@@ -28,7 +28,7 @@ tasks:
         fi
     silent: true
 
-  gha:
+  gh:actions:
     desc: "Open GitHub Actions for current repository"
     cmds:
       - |
