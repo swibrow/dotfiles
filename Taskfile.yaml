@@ -41,6 +41,19 @@ tasks:
         fi
     silent: true
 
+  gh:repo:
+    desc: "Open GitHub Repo for current repository"
+    cmds:
+      - |
+        org=$(echo {{.USER_WORKING_DIR}} | awk -F'/' '{print $(NF-1)}')
+        url=https://www.github.com/$org/$(basename {{.USER_WORKING_DIR}})
+        if [[ "$(uname)" == "Darwin" ]]; then
+          open $url
+        else
+          xdg-open $url
+        fi
+    silent: true
+
   foo:
     cmds:
       - echo {{.USER_WORKING_DIR}}
