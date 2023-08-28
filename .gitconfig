@@ -1,0 +1,12 @@
+[init]
+	defaultBranch = main
+[user]
+	email = 15628653+swibrow@users.noreply.github.com
+	name = Samuel
+	signingkey = 28257C9F
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
+[push]
+	autoSetupRemote = true

@@ -22,7 +22,7 @@ fi
 
 # Move existing dotfiles to backup directory
 echo "Backing up existing dotfiles..."
-files=(.zshrc .zprofile .zsh_functions Taskfile.yaml .Brewfile)
+files=(.zshrc .zprofile .zsh_functions Taskfile.yaml .Brewfile .gitconfig .env)
 
 for file in "${files[@]}"; do
     if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
