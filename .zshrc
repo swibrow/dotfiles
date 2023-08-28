@@ -124,7 +124,6 @@ source <(cr completion zsh)
 source <(okta generate-completion zsh)
 
 # # Kube PS1
-# source "$(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh"
 NEWLINE=$'\n\$ '
 PS1='$(kube_ps1)'$PS1$NEWLINE
 
@@ -157,7 +156,7 @@ alias zshconfig="code ~/.zshrc"
 alias ohmyzsh="code ~/.oh-my-zsh"
 alias new-shell="exec $SHELL"
 
-alias tflint="terraform fmt -recursive && terragrunt hclfmt"
+alias tffmt="terraform fmt -recursive"
 
 
 
@@ -172,9 +171,16 @@ alias kns="kubens"
 alias kt="kubetail"
 
 alias kd="kubectl drain --ignore-daemonsets --delete-emptydir-data"
+
+kpodbynode() {
+  kubectl get pods -A -owide --field-selector=spec.nodeName="${1}",status.phase=Running
+}
+kpodbylabel() {
+  kubectl get pods -A -owide --selector="${1}"
+}
+
 # Terraform
 alias tf="terraform"
-alias tf_lint="terraform fmt -recursive && terragrunt hclfmt"
 
 # Base64
 alias bd="base64 --decode"
@@ -236,3 +242,8 @@ function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
 
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
+
+# Alias autocompletion
+# completealiases
+# autoload -U compinit
+# compinit
