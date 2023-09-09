@@ -83,6 +83,7 @@ repos=(
     "https://github.com/zsh-users/zsh-autosuggestions.git"
     "https://github.com/zsh-users/zsh-syntax-highlighting.git"
     "https://github.com/zsh-users/zsh-completions.git"
+    "https://github.com/zsh-users/zsh-history-substring-search"
     "https://github.com/blimmer/zsh-aws-vault.git"
     "https://github.com/johanhaleby/kubetail.git"
 )

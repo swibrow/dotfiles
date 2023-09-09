@@ -1,4 +1,6 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew_path=$(command -v brew)
+eval "$($brew_path shellenv)"
 
 # Pyenv config
 export PYENV_ROOT="$HOME/.pyenv"

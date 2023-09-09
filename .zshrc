@@ -79,7 +79,6 @@ plugins=(
   encode64
   fluxcd
   git
-  gitignore
   golang
   helm
   kubectl
@@ -87,19 +86,11 @@ plugins=(
   kubetail
   kube-ps1
   macos
-  microk8s
-  minikube
   nmap
   otp
   pass
-  pip
-  postgres
   pyenv
-  rust
-  skaffold
   terraform
-  vault
-  vscode
   zsh-aws-vault
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -119,9 +110,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Chart Releases
 source <(cr completion zsh)
-
-# Okta CLI
-source <(okta generate-completion zsh)
 
 # # Kube PS1
 NEWLINE=$'\n\$ '
