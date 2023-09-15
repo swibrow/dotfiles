@@ -167,6 +167,14 @@ kpodbylabel() {
   kubectl get pods -A -owide --selector="${1}"
 }
 
+kremovefinalizers() {
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo "Please provide a resource type and name."
+    return 1
+  fi
+  kubectl patch "${1} ${2}" -p '{"metadata":{"finalizers":[]}}' --type=merge
+}
+
 # Terraform
 alias tf="terraform"
 
@@ -215,8 +223,6 @@ function cloner {
        | xargs -n1 git clone;
 }
 
-export_gitlab() {}
-
 # Chart Release envs
 export CR_OWNER=swibrow
 export CR_GIT_REPO=pitower-charts
@@ -226,12 +232,3 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
-
-
-# Load Angular CLI autocompletion.
-# source <(ng completion script)
-
-# Alias autocompletion
-# completealiases
-# autoload -U compinit
-# compinit
