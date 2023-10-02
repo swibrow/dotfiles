@@ -118,7 +118,7 @@ PS1='$(kube_ps1)'$PS1$NEWLINE
 # AWS Vault
 export AWS_VAULT_BACKEND=keychain
 
-# Pyenv config
+# # Pyenv config
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
