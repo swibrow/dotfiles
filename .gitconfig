@@ -10,3 +10,5 @@
 	gpgSign = true
 [push]
 	autoSetupRemote = true
+[core]
+	excludesfile = /Users/samuel/.gitignore

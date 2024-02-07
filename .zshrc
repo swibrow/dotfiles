@@ -1,9 +1,12 @@
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
+# Krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -102,6 +105,8 @@ plugins=(
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
+eval "$(direnv hook zsh)"
+
 # User configuration
 
 ### Completions ###
@@ -110,6 +115,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Chart Releases
 source <(cr completion zsh)
+
+# Talos
+source <(talosctl completion zsh)
 
 # # Kube PS1
 NEWLINE=$'\n\$ '
@@ -151,6 +159,8 @@ alias tffmt="terraform fmt -recursive"
 export GPG_TTY=$(tty)
 gpgconf --launch gpg-agent
 
+# Talos
+alias t="talosctl"
 
 # Kubenetes
 alias k="kubectl"
@@ -232,3 +242,6 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"

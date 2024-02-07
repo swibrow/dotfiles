@@ -36,6 +36,15 @@ for file in "${files[@]}"; do
     ln -sf "$DOTFILES_DIR/$file" "$HOME/$file"
 done
 
+# Run Personal Dotfile Install Script
+if [ -f "$DOTFILES_DIR/dotfiles-personal/install.sh" ]; then
+    echo "Running personal dotfile install script..."
+    "$DOTFILES_DIR/dotfiles-personal/install.sh"
+else
+    echo "Personal dotfile install script not found."
+fi
+
+
 source "$HOME/.zsh_functions"
 
 
