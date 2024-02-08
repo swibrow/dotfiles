@@ -1,1 +1,12 @@
+
+# Environment variables
 .env
+
+# OS generated files
+.DS_Store
+.temp
+
+# .Config
+.config/fish/
+.config/argocd/
+
