@@ -25,6 +25,7 @@ _darcs
 
 # Ignore files and folders that are managed in private dotfiles
 \.config/sops
+\dotfiles-personal
 
 
 

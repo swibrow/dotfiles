@@ -1,0 +1,11 @@
+# Global
+
+**/history
+**/log
+
+fish/
+argocd/
+iterm2/
+rasa/
+sops/
+
