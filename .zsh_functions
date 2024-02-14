@@ -33,25 +33,3 @@ git_clone_or_update() {
         git clone "$REPO_URL" "$BASE_DIR/$DIR_NAME"
     fi
 }
-
-# Checkout and pull 'master' or 'main'
-main() {
-    # Make sure we are in a git repository
-    if ! git rev-parse --git-dir > /dev/null 2>&1; then
-        echo "ERROR: Current directory is not a Git repository."
-        return 1
-    fi
-
-    # Checkout default branch
-    MAIN_BRANCH="master"
-    if [ $(git rev-parse --verify main 2>/dev/null) ]; then
-        MAIN_BRANCH="main"
-    fi
-    CURRENT_BRANCH=$(git branch --show-current)
-    if [ "$MAIN_BRANCH" = "$CURRENT_BRANCH" ]; then
-        git pull origin "$CURRENT_BRANCH"
-    else
-        echo "Checking out default branch..."
-        git fetch origin "$MAIN_BRANCH":"$MAIN_BRANCH" && git checkout "$MAIN_BRANCH"
-    fi
-}

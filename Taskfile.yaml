@@ -1,5 +1,7 @@
 version: 3
 
+set: [pipefail]
+
 dotenv:
   - .env
 
@@ -54,6 +56,67 @@ tasks:
         fi
     silent: true
 
+  eks:latestaddons:
+    desc: "Get latest EKS addon versions. Pass in the EKS version as an argument."
+    vars:
+      ADDONS: vpc-cni coredns kube-proxy aws-ebs-csi-driver aws-efs-csi-driver
+    cmds:
+      - for: { var: ADDONS}
+        cmd: |
+          printf "%s: " {{.ITEM}}
+          aws eks describe-addon-versions --addon-name {{.ITEM}} --kubernetes-version {{.CLI_ARGS}}  | jq -r '.addons[0].addonVersions[0].addonVersion'
+    silent: true
+
+  tf:init:
+    desc: Initialise Terraform backend
+
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      AWS_ACCOUNT_ID:
+        sh: aws sts get-caller-identity | jq -r .Account
+    cmds:
+      # - aws-vault exec disco_sandbox-admin
+      - echo {{.AWS_ACCOUNT_ID}}
+      - terraform init -reconfigure -backend-config="bucket=tf-state-{{.AWS_ACCOUNT_ID}}"
+
+  tf:plan:
+    desc: TF Plan
+    dir: '{{.USER_WORKING_DIR}}'
+
+    cmds:
+      - terraform plan -var-file environments/sandbox.tfvars
+
   foo:
     cmds:
       - echo {{.USER_WORKING_DIR}}
+
+  args:
+    cmds:
+      - echo {{index (splitArgs .CLI_ARGS) 0}}
+
+  envs:
+    cmds:
+      - echo $FOO
+    env:
+      FOO: bar
+
+  aws:list_users:
+    cmds:
+      - |
+        #!/bin/bash
+        # List all IAM users
+        for user in $(aws iam list-users --query 'Users[*].UserName' --output text --no-cli-pager)
+        do
+            echo "User: $user"
+
+            # List access keys for each user
+            for key in $(aws iam list-access-keys --user-name $user --query 'AccessKeyMetadata[*].AccessKeyId' --output text --no-cli-pager)
+            do
+                echo "  Access Key: $key"
+
+                # Get details for each access key
+                aws iam get-access-key-last-used --access-key-id $key --no-cli-pager #--query '{AccessKeyId: AccessKeyId, LastUsedDate: AccessKeyLastUsed.LastUsedDate, Status: AccessKeyMetadata[0].Status}'
+            done
+        done
+
+    silent: true
