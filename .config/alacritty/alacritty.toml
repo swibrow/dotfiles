@@ -14,3 +14,6 @@ decorations = "none"
 [window.padding]
 x = 7
 y = 0
+
+[shell]
+program = "/usr/local/bin/zsh"

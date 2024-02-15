@@ -1,3 +1,6 @@
 [submodule "dotfiles-personal"]
 	path = dotfiles-personal
 	url = git@github.com:swibrow/dotfiles-personal.git
+[submodule ".config/alacritty/themes"]
+	path = .config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme

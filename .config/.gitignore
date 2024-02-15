@@ -4,8 +4,10 @@
 **/log
 
 fish/
+github-copilot/
 argocd/
 iterm2/
 rasa/
 sops/
-
+zed/
+!zed/settings.json
