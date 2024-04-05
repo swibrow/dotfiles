@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  auth:
+    desc: "Authenticate with AWS"
+    cmds:
+      - aws-vault exec {{.CLI_ARGS}}

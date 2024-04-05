@@ -5,12 +5,18 @@ set: [pipefail]
 dotenv:
   - .env
 
+includes:
+  aws:
+    taskfile: .taskfiles/aws/Taskfile.yaml
+    optional: true
+
 tasks:
   default:
     cmds:
       - echo "Global Tasks"
 
   dotfiles:install:
+    desc: "Install dotfiles"
     cmds:
       - .dotfiles/install.sh
 
