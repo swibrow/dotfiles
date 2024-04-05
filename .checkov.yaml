@@ -1,0 +1,25 @@
+# branch: develop
+# check:
+#   - CKV_DOCKER_1
+# compact: true
+# directory:
+#   - test-dir
+# docker-image: sample-image
+# dockerfile-path: Dockerfile
+# download-external-modules: true
+# evaluate-variables: true
+# external-checks-dir:
+#   - sample-dir
+# external-modules-download-path: .external_modules
+# framework:
+#   - all
+# output: cli
+# quiet: true
+# repo-id: prisma-cloud/sample-repo
+# skip-check:
+#   - CKV_DOCKER_3
+#   - CKV_DOCKER_2
+# skip-framework:
+#   - dockerfile
+#   - secrets
+# soft-fail: true

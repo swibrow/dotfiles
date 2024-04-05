@@ -1,12 +1,18 @@
-# CodeWhisperer pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+if [ "$(arch)" = arm64 ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 export PATH=$HOME/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 # Krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:$GOROOT/bin
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -68,11 +74,11 @@ ZSH_THEME="simple"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# # Pyenv config
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 plugins=(
   ansible
   aws
@@ -110,13 +116,8 @@ eval "$(direnv hook zsh)"
 # User configuration
 
 ### Completions ###
-# # Rust
-# fpath+=~/.zfunc
-
 # Chart Releases
 source <(cr completion zsh)
-
-# Talos
 source <(talosctl completion zsh)
 
 # # Kube PS1
@@ -125,11 +126,6 @@ PS1='$(kube_ps1)'$PS1$NEWLINE
 
 # AWS Vault
 export AWS_VAULT_BACKEND=keychain
-
-# # Pyenv config
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
@@ -198,10 +194,6 @@ alias tg="task --global"
 
 
 # Functions
-work() {
-    cd ~/dock/"${1}"
-}
-
 _a() {
     # kubectl config use-context "${1}"
     unset AWS_VAULT
@@ -216,7 +208,7 @@ pg_up() {
     --name postgres \
     -p 5432:5432 \
     -e POSTGRES_USER=postgres \
-    -e POSTGRES_PASSWORD=password \
+    -e POSTGRES_PASSWORD=postgres \
     -e POSTGRES_DB=postgres \
     -d \
     postgres:14.3
@@ -242,6 +234,4 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
-
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
+export PATH="/usr/local/opt/ruby/bin:$PATH"

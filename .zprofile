@@ -1,5 +1,11 @@
+if [ "$(arch)" = arm64 ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
 
-# Pyenv config
+export GOPATH="$HOME/go"
+
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(/opt/homebrew/bin/pyenv init --path)"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
