@@ -15,5 +15,6 @@ decorations = "none"
 x = 7
 y = 0
 
-[shell]
-program = "/usr/local/bin/zsh"
+#[shell]
+#program = "/usr/local/bin/zsh"
+#program = "/opt/homebrew/bin/zsh"
