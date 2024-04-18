@@ -9,6 +9,9 @@ includes:
   aws:
     taskfile: .taskfiles/aws/Taskfile.yaml
     optional: true
+  kubectl:
+    taskfile: .taskfiles/kubectl/Taskfile.yaml
+    optional: false
 
 tasks:
   default:

@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  drain:condoned:
+    desc: "Drain all cordoned nodes"
+    cmds:
+      - kubectl get nodes -o json | jq -r '.items[] | select(.spec.unschedulable == true) | .metadata.name' | xargs -I {} kubectl drain {} --ignore-daemonsets --delete-emptydir-data
