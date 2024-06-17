@@ -5,3 +5,8 @@ tasks:
     desc: "Drain all cordoned nodes"
     cmds:
       - kubectl get nodes -o json | jq -r '.items[] | select(.spec.unschedulable == true) | .metadata.name' | xargs -I {} kubectl drain {} --ignore-daemonsets --delete-emptydir-data
+  pods:clean:
+    desc: "Delete all Succeeded and Failed pods in all namespaces"
+    cmds:
+      - kubectl delete pod --field-selector=status.phase==Succeeded --all-namespaces
+      - kubectl delete pod --field-selector=status.phase==Failed --all-namespaces
