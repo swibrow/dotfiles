@@ -4,16 +4,15 @@ else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH=$HOME/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-# Path to your oh-my-zsh installation.
+export PATH="$PATH:$HOME/bin"
 export ZSH="$HOME/.oh-my-zsh"
-# Krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$GOPATH/bin:$PATH
-export PATH=$PATH:$GOROOT/bin
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin:"
+export PATH="$PATH:$GOROOT/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -190,9 +189,10 @@ alias bd="base64 --decode"
 alias b="base64"
 
 alias tg="task --global"
-# # Ip Forwarding
-# alias ipf="sudo sysctl -w net.ipv4.ip_forward=1"
 
+# Folder shortcuts
+alias pitower="cd ~/git/github.com/swibrow/pitower"
+alias dev="cd ~/git/github.com/swibrow/"
 
 # Functions
 _a() {
@@ -235,4 +235,4 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+
