@@ -70,6 +70,8 @@ eval "$(direnv hook zsh)"
 # AWS Vault
 export AWS_VAULT_BACKEND=keychain
 
+# k9s
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
 ## Terrafrom
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
