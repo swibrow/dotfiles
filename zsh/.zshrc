@@ -4,6 +4,7 @@ else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+zstyle ':completion:*' menu select
 export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin"
 export GOROOT="$(go env GOROOT)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"

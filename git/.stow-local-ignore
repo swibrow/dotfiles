@@ -21,7 +21,3 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
-
-\.pre-commit-config\.yaml
-install\.sh
-

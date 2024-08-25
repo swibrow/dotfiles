@@ -1,5 +1,6 @@
-# #!/bin/bash
-stow .
+#!/bin/bash
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+stow --override=\.gitignore */
 
 # # Variables
 # DOTFILES_REPO="https://github.com/swibrow/dotfiles.git"
