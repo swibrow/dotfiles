@@ -11,4 +11,4 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
 # Created by `pipx` on 2024-05-05 12:56:04
-export PATH="$PATH:/Users/samuel/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"

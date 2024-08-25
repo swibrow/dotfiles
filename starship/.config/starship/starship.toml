@@ -1,0 +1,16 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$lua\
+$python\
+$nodejs\
+$aws\
+$cmd_duration\
+$line_break\
+$kubernetes\
+$memory_usage\
+$character"""

@@ -1,0 +1,18 @@
+
+
+# OMZ plugins
+# Not working in tmux atm
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
+# getantidote/use-omz
+# ohmyzsh/ohmyzsh path:lib
+# ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+# ohmyzsh/ohmyzsh path:plugins/git
+
+
+mattmc3/zfunctions
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting kind:defer
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
+MichaelAquilina/zsh-you-should-use
+agkozak/zsh-z

@@ -11,4 +11,4 @@
 [push]
 	autoSetupRemote = true
 [core]
-	excludesfile = /Users/samuel/.gitignore
+	excludesfile = ~/.gitignore

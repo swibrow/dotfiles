@@ -12,7 +12,8 @@ _darcs
 \.hg
 
 \.git
-# \.gitignore
+\.gitignore
+\.gitmodules
 
 .+~          # emacs backup files
 \#.*\#       # emacs autosave files
@@ -21,13 +22,10 @@ _darcs
 ^/LICENSE.*
 ^/COPYING
 
-.env.sample
-renovate.json
-.pre-commit-config.yaml
+# Ignore markdown files in the root directory
+^/*.md
 
+\.pre-commit-config.yaml
+install.sh
 # Ignore files and folders that are managed in private dotfiles
-\.config/sops
-\dotfiles-personal
-
-
-
+dotfiles-personal
