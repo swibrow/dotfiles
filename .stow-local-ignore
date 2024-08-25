@@ -22,6 +22,8 @@ _darcs
 ^/COPYING
 
 .env.sample
+renovate.json
+.pre-commit-config.yaml
 
 # Ignore files and folders that are managed in private dotfiles
 \.config/sops

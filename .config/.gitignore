@@ -3,9 +3,11 @@
 **/history
 **/log
 
+!aerospace/
 !alacritty/
 !gh/
 !nvim/
-
+!starship/
 !pgcli/config
-
+!tmux/
+!zsh/
