@@ -23,7 +23,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
             echo "Homebrew will not be installed."
         fi
     fi
-    brew bundle --global --verbose --no-lock
+    brew bundle --verbose --no-lock
 else
     echo "This is not macOS. Exiting."
 fi
