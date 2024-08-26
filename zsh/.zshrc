@@ -38,19 +38,20 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
 fi
 
 [[ -f $HOME/.config/zsh/aliases.zsh ]] && source $HOME/.config/zsh/aliases.zsh
-[[ -f $HOME/.config/zsh/functions.zsh ]] && source $HOME/.config/zsh/functions.zsh
+[[ -f $HOME/.config/zsh/functions/functions.zsh ]] && source $HOME/.config/zsh/functions/functions.zsh
+[[ -f $HOME/.config/zsh/functions/git.zsh ]] && source $HOME/.config/zsh/functions/git.zsh
 [[ -f $HOME/.config/zsh/plugins.zsh ]] && source $HOME/.config/zsh/plugins.zsh
 
 #### Set bind keys ####
-# History substring search TODO: change to use the ^n and ^p or ^k and ^j
+bindkey '^E' end-of-line
+bindkey '^A' beginning-of-line
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
+
+# History substring search
 bindkey '^[[A' history-substring-search-up # or '\eOA'
 bindkey '^[[B' history-substring-search-down # or '\eOB'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-
-# # Pligins
-# source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Chart Releases
 source <(cr completion zsh)
@@ -96,6 +97,3 @@ export CR_PACKAGE_PATH=.deploy
 export CR_GIT_BASE_URL="https://api.github.com/"
 export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
-
-# function gam() { "/Users/samuel/bin/gam/gam" "$@" ; }
-

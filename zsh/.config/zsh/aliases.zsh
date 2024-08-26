@@ -4,13 +4,13 @@ alias zreload="source ~/.zshrc"
 
 # Git
 alias g="git"
-# alias gcm="git checkout $(git_main_branch)"
-
+alias gcm="git checkout $(git_main_branch)"
 alias gst="git status"
 alias gco="git checkout"
 alias gcb="git checkout -b"
 alias gc="git commit"
 alias gp="git push"
+alias gpf="git push --force-with-lease"
 alias gl="git pull"
 
 alias gcaa="git commit --amend -a --no-edit"

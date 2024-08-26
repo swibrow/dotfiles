@@ -19,9 +19,9 @@ $character\
 
 add_newline = true
 
-command_timeout = 10000
+command_timeout = 1000
 
-palette = "nord"
+palette = "catppuccin_mocha"
 
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
@@ -52,8 +52,8 @@ style = 'fg:red'
 format = '([$all_status$ahead_behind]($style) )'
 
 [aws]
-format = '[$symbol($profile )(\[$duration\] )(\($region\) )]($style)'
 disabled = false
+format = '[$symbol($profile )(\[$duration\] )(\($region\) )]($style)'
 style = 'yellow'
 symbol = ' '
 [aws.region_aliases]
@@ -68,9 +68,11 @@ symbol = '󱁢 '
 format = '[$version | $workspace]($style) '
 
 [golang]
+disabled = false
 format = '[ ](bold cyan)'
 
 [python]
+disabled = false
 style = 'teal'
 symbol = ' '
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
@@ -78,11 +80,12 @@ pyenv_version_name = true
 pyenv_prefix = ''
 
 [kubernetes]
-symbol = '☸ '
 disabled = false
+symbol = '☸ '
 format = '[$symbol$context( \($namespace\))]($style) '
 
 [docker_context]
+disabled = true
 symbol = ' '
 style = 'fg:#06969A'
 format = '[$symbol]($style) $path'
