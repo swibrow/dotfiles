@@ -1,0 +1,29 @@
+#!/bin/bash
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+stow */
+
+# ###############################################################################
+# ################################ HOMEBREW #####################################
+# ###############################################################################
+
+# Check if the OS is macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+    echo "Detected macOS."
+
+    # Check if Homebrew is installed
+    if command -v brew &>/dev/null; then
+        echo "Homebrew is already installed."
+    else
+        echo "Homebrew is not installed. Would you like to install it now? (y/n)"
+        read -r response
+        if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+            echo "Installing Homebrew..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+            echo "Homebrew will not be installed."
+        fi
+    fi
+    brew bundle --global --verbose --no-lock
+else
+    echo "This is not macOS. Exiting."
+fi

@@ -35,7 +35,15 @@ https://getantidote.github.io/usage
 
 https://github.com/agkozak/zsh-z
 
+https://github.com/jimeh/tmuxifier
 
+https://github.com/Macchina-CLI/macchina
+
+## nvim
+
+https://github.com/BurntSushi/ripgrep
+https://github.com/ast-grep/ast-grep
+https://github.com/luarocks/luarocks?tab=readme-ov-file
 
 # Resources
 

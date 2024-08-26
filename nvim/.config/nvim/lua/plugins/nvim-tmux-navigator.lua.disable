@@ -1,0 +1,9 @@
+return {
+  'christoomey/vim-tmux-navigator',
+  vim.keymap.set({
+    { 'n', '<C-h>', ':TmuxNavigateLeft<CR>' },
+    { 'n', '<C-j>', ':TmuxNavigateDown<CR>' },
+    { 'n', '<C-k>', ':TmuxNavigateUp<CR>' },
+    { 'n', '<C-l>', ':TmuxNavigateRight<CR>' },
+  })
+}

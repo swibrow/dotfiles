@@ -45,4 +45,4 @@ brew "helm/tap/chart-releaser"
 brew "warrensbox/tap/tfswitch"
 brew "env0/terratag/terratag"
 cask "okta"
-brew "siderolabs/tap/talosctl
+brew "siderolabs/tap/talosctl"

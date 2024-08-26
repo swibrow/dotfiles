@@ -7,10 +7,12 @@ fi
 zstyle ':completion:*' menu select
 export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin"
 export GOROOT="$(go env GOROOT)"
+
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 
-
+export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
+export HOMEBREW_BUNDLE_LOCK=1
 ### Completions ###
 # ZSH Completions Support
 autoload -Uz compinit
