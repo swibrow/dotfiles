@@ -16,3 +16,4 @@ zsh-users/zsh-history-substring-search
 zsh-users/zsh-completions
 MichaelAquilina/zsh-you-should-use
 agkozak/zsh-z
+ahmetb/kubectx path:completion kind:fpath

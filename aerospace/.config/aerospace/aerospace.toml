@@ -53,7 +53,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = [{ monitor.secondary = 150 }, 6]
+inner.horizontal = [{ monitor.secondary = 6 }, 6]
 inner.vertical =   0
 outer.left =       6
 outer.bottom =     6

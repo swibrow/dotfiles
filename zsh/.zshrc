@@ -13,10 +13,18 @@ eval "$(starship init zsh)"
 
 export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
 export HOMEBREW_BUNDLE_LOCK=1
+
+
+
 ### Completions ###
 # ZSH Completions Support
-autoload -Uz compinit
-compinit
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
 
 #### ZSH Plugins ####
 #### Antidote ####
@@ -37,10 +45,10 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
   antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
 fi
 
-[[ -f $HOME/.config/zsh/aliases.zsh ]] && source $HOME/.config/zsh/aliases.zsh
-[[ -f $HOME/.config/zsh/functions/functions.zsh ]] && source $HOME/.config/zsh/functions/functions.zsh
-[[ -f $HOME/.config/zsh/functions/git.zsh ]] && source $HOME/.config/zsh/functions/git.zsh
-[[ -f $HOME/.config/zsh/plugins.zsh ]] && source $HOME/.config/zsh/plugins.zsh
+source $HOME/.config/zsh/plugins.zsh
+source $HOME/.config/zsh/functions/general.zsh
+source $HOME/.config/zsh/functions/git.zsh
+source $HOME/.config/zsh/aliases.zsh
 
 #### Set bind keys ####
 bindkey '^E' end-of-line
@@ -58,6 +66,7 @@ source <(cr completion zsh)
 
 # Talos
 source <(talosctl completion zsh)
+source <(kubectl completion zsh)
 
 ### Configurations ###
 export LANG=en_US.UTF-8
@@ -75,6 +84,7 @@ export AWS_VAULT_BACKEND=keychain
 
 # k9s
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
+
 ## Terrafrom
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"

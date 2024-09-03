@@ -2,6 +2,12 @@
 alias zconfig="code ~/.zshrc"
 alias zreload="source ~/.zshrc"
 
+# Directory shortcuts
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
 # Git
 alias g="git"
 alias gcm="git checkout $(git_main_branch)"
