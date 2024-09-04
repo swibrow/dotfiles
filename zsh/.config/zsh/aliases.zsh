@@ -2,11 +2,22 @@
 alias zconfig="code ~/.zshrc"
 alias zreload="source ~/.zshrc"
 
+# AWS Vault
+alias av="aws-vault"
+alias avl="aws-vault login"
+alias ave="aws-vault exec"
+
 # Directory shortcuts
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+
+# fzf
+alias f="fzf"
+alias ff="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
+alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
+
 
 # Git
 alias g="git"
