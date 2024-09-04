@@ -9,7 +9,7 @@ k9s:
   noExitOnCtrlC: false
   noIcons: false
   liveViewAutoRefresh: false
-  screenDumpDir: $HOME/.config/k9s/screen-dumps
+  screenDumpDir: ~/.config/k9s/screen-dumps
   logger:
     tail: 100
     buffer: 5000
