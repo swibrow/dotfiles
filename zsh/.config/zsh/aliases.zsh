@@ -34,6 +34,7 @@ alias gpf="git push --force-with-lease"
 alias gl="git pull"
 
 alias gcaa="git commit --amend -a --no-edit"
+alias gcaan="git commit --amend -an --no-edit"
 
 # Terraform
 alias tf="terraform"
@@ -69,7 +70,7 @@ alias kdel="kubectl delete"
 alias grep="grep --color"
 alias ll="ls -al"
 
-alias kd="kubectl drain --ignore-daemonsets --delete-emptydir-data"
+alias kdrain="kubectl drain --ignore-daemonsets --delete-emptydir-data"
 
 
 
