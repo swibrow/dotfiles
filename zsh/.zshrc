@@ -5,8 +5,9 @@ else
 fi
 
 zstyle ':completion:*' menu select
-export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin"
 export GOROOT="$(go env GOROOT)"
+export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin"
+
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
@@ -48,6 +49,7 @@ fi
 source $HOME/.config/zsh/plugins.zsh
 source $HOME/.config/zsh/functions/general.zsh
 source $HOME/.config/zsh/functions/git.zsh
+source $HOME/.config/zsh/functions/kubectl.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 #### Set bind keys ####

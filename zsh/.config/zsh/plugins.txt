@@ -17,3 +17,4 @@ zsh-users/zsh-completions
 MichaelAquilina/zsh-you-should-use
 agkozak/zsh-z
 ahmetb/kubectx path:completion kind:fpath
+johanhaleby/kubetail

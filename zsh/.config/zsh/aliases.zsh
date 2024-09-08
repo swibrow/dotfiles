@@ -72,8 +72,6 @@ alias ll="ls -al"
 
 alias kdrain="kubectl drain --ignore-daemonsets --delete-emptydir-data"
 
-
-
 # Base64
 alias bd="base64 --decode"
 alias b="base64"
