@@ -20,7 +20,7 @@ alias .....="cd ../../../.."
 alias f="fzf"
 alias ff="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
-
+# export FZF_CTRL_T_COMMAND=$(ft)
 
 # Git
 alias g="git"

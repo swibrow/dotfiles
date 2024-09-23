@@ -16,16 +16,15 @@ export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
 export HOMEBREW_BUNDLE_LOCK=1
 
 
-
 ### Completions ###
 # ZSH Completions Support
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+# if type brew &>/dev/null
+# then
+#   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
-  autoload -Uz compinit
-  compinit
-fi
+#   autoload -Uz compinit
+#   compinit
+# fi
 
 #### ZSH Plugins ####
 #### Antidote ####
@@ -63,6 +62,13 @@ bindkey '^[[A' history-substring-search-up # or '\eOA'
 bindkey '^[[B' history-substring-search-down # or '\eOB'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
+# Completion
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C $HOME/bin/terraform terraform
+
+# go-task
+eval "$(task --completion zsh)"
+
 # Chart Releases
 source <(cr completion zsh)
 
@@ -80,6 +86,9 @@ eval "$(pyenv init -)"
 
 # Load direnv
 eval "$(direnv hook zsh)"
+
+# fzf
+source <(fzf --zsh)
 
 # AWS Vault
 export AWS_VAULT_BACKEND=keychain
@@ -109,3 +118,11 @@ export CR_PACKAGE_PATH=.deploy
 export CR_GIT_BASE_URL="https://api.github.com/"
 export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
+
+
+export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line-range :500 {}'"
+
+# Mac OSX
+
+# defaults write -g NSWindowShouldDragOnGesture -bool true
+
