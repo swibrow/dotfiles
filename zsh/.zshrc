@@ -62,20 +62,17 @@ bindkey '^[[A' history-substring-search-up # or '\eOA'
 bindkey '^[[B' history-substring-search-down # or '\eOB'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
-# Completion
+# Completions
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C $HOME/bin/terraform terraform
 
-# go-task
-eval "$(task --completion zsh)"
-
-# Chart Releases
 source <(cr completion zsh)
-
-# Talos
 source <(talosctl completion zsh)
 source <(kubectl completion zsh)
-
+source <(helm completion zsh)
+source <(k9s completion zsh)
+source <(kubebuilder completion zsh)
+eval "$(task --completion zsh)"
 ### Configurations ###
 export LANG=en_US.UTF-8
 
