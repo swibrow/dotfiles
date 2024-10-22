@@ -1,8 +1,10 @@
 if [ "$(arch)" = arm64 ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    export HOMEBREW_PREFIX="/opt/homebrew"
 else
-    eval "$(/usr/local/bin/brew shellenv)"
+    export HOMEBREW_PREFIX="/usr/local"
 fi
+eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+
 
 zstyle ':completion:*' menu select
 export GOROOT="$(go env GOROOT)"
@@ -18,13 +20,13 @@ export HOMEBREW_BUNDLE_LOCK=1
 
 ### Completions ###
 # ZSH Completions Support
-# if type brew &>/dev/null
-# then
-#   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
-#   autoload -Uz compinit
-#   compinit
-# fi
+  autoload -Uz compinit
+  compinit
+fi
+
 
 #### ZSH Plugins ####
 #### Antidote ####
@@ -51,16 +53,16 @@ source $HOME/.config/zsh/functions/git.zsh
 source $HOME/.config/zsh/functions/kubectl.zsh
 source $HOME/.config/zsh/aliases.zsh
 
-#### Set bind keys ####
-bindkey '^E' end-of-line
-bindkey '^A' beginning-of-line
-bindkey '^P' up-line-or-history
-bindkey '^N' down-line-or-history
+# #### Set bind keys ####
+# bindkey '^E' end-of-line
+# bindkey '^A' beginning-of-line
+# bindkey '^P' up-line-or-history
+# bindkey '^N' down-line-or-history
 
-# History substring search
-bindkey '^[[A' history-substring-search-up # or '\eOA'
-bindkey '^[[B' history-substring-search-down # or '\eOB'
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+# # History substring search
+# bindkey '^[[A' history-substring-search-up # or '\eOA'
+# bindkey '^[[B' history-substring-search-down # or '\eOB'
+# HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # Completions
 autoload -U +X bashcompinit && bashcompinit
@@ -73,6 +75,7 @@ source <(helm completion zsh)
 source <(k9s completion zsh)
 source <(kubebuilder completion zsh)
 eval "$(task --completion zsh)"
+eval "$(aws-vault --completion-script-zsh)"
 ### Configurations ###
 export LANG=en_US.UTF-8
 
@@ -130,3 +133,8 @@ export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line
 
 # defaults write -g NSWindowShouldDragOnGesture -bool true
 
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
