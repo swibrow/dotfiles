@@ -54,17 +54,17 @@ source $HOME/.config/zsh/functions/kubectl.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 # #### Set bind keys ####
-# bindkey '^E' end-of-line
-# bindkey '^A' beginning-of-line
-# bindkey '^P' up-line-or-history
-# bindkey '^N' down-line-or-history
+bindkey '^E' end-of-line
+bindkey '^A' beginning-of-line
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
 
 # # History substring search
 # bindkey '^[[A' history-substring-search-up # or '\eOA'
 # bindkey '^[[B' history-substring-search-down # or '\eOB'
 # HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
-# Completions
+# # Completions
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C $HOME/bin/terraform terraform
 
@@ -140,3 +140,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 complete -o nospace -C /Users/bcfd@mediait.ch/bin/terraform terraform
+
+alias gcm='git checkout $(git_default_branch)'
