@@ -53,7 +53,8 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = [{ monitor.secondary = 150 }, 6]
+#inner.horizontal = [{ monitor.secondary = 150 }, 6]
+inner.horizontal = 6
 inner.vertical =   0
 outer.left =       6
 outer.bottom =     6
@@ -194,8 +195,14 @@ alt-shift-l = ['join-with right', 'mode main']
 
 
 # Assign applications to workspaces
+# Find application IDs `osascript -e 'id of app "App Name"'`
+
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
+run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace A'
 
 [[on-window-detected]]
