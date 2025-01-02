@@ -26,21 +26,5 @@ config.keys = {
     mods = 'CMD',
     action = wezterm.action.DisableDefaultAssignment,
   },
-  -- {
-  --   key = 'LeftArrow',
-  --   action = wezterm.action.DisableDefaultAssignment,
-  -- },
-  -- {
-  --   key = 'RightArrow',
-  --   action = wezterm.action.DisableDefaultAssignment,
-  -- },
-  -- {
-  --   key = 'UpArrow',
-  --   action = wezterm.action.DisableDefaultAssignment,
-  -- },
-  -- {
-  --   key = 'DownArrow',
-  --   action = wezterm.action.DisableDefaultAssignment,
-  -- }
 }
 return config
