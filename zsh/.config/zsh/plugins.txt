@@ -7,9 +7,9 @@ belak/zsh-utils path:history
 # Not working in tmux atm
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 # getantidote/use-omz
-# ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:lib
 # ohmyzsh/ohmyzsh path:plugins/colored-man-pages
-# ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/git
 
 mattmc3/zfunctions
 zsh-users/zsh-autosuggestions

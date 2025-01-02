@@ -23,15 +23,15 @@ alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-r
 # export FZF_CTRL_T_COMMAND=$(ft)
 
 # Git
-alias g="git"
-alias gcm="git checkout $(git_main_branch)"
-alias gst="git status"
-alias gco="git checkout"
-alias gcb="git checkout -b"
-alias gc="git commit"
-alias gp="git push"
-alias gpf="git push --force-with-lease"
-alias gl="git pull"
+# alias g="git"
+# alias gcm="git checkout $(git_main_branch)"
+# alias gst="git status"
+# alias gco="git checkout"
+# alias gcb="git checkout -b"
+# alias gc="git commit"
+# alias gp="git push"
+# alias gpf="git push --force-with-lease"
+# alias gl="git pull"
 
 alias gcaa="git commit --amend -a --no-edit"
 alias gcaan="git commit --amend -an --no-edit"

@@ -6,9 +6,9 @@ fi
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 
 
-zstyle ':completion:*' menu select
+# zstyle ':completion:*' menu select
 export GOROOT="$(go env GOROOT)"
-export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin"
+export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$GOROOT/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin:/opt/homebrew/opt/ruby/bin"
 
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
@@ -49,15 +49,15 @@ fi
 
 source $HOME/.config/zsh/plugins.zsh
 source $HOME/.config/zsh/functions/general.zsh
-source $HOME/.config/zsh/functions/git.zsh
+# source $HOME/.config/zsh/functions/git.zsh
 source $HOME/.config/zsh/functions/kubectl.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 # #### Set bind keys ####
-bindkey '^E' end-of-line
-bindkey '^A' beginning-of-line
-bindkey '^P' up-line-or-history
-bindkey '^N' down-line-or-history
+# bindkey '^E' end-of-line
+# bindkey '^A' beginning-of-line
+# bindkey '^P' up-line-or-history
+# bindkey '^N' down-line-or-history
 
 # # History substring search
 # bindkey '^[[A' history-substring-search-up # or '\eOA'
@@ -65,6 +65,7 @@ bindkey '^N' down-line-or-history
 # HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # # Completions
+
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C $HOME/bin/terraform terraform
 
@@ -76,6 +77,7 @@ source <(k9s completion zsh)
 source <(kubebuilder completion zsh)
 eval "$(task --completion zsh)"
 eval "$(aws-vault --completion-script-zsh)"
+
 ### Configurations ###
 export LANG=en_US.UTF-8
 
@@ -127,18 +129,15 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 
-export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line-range :500 {}'"
+export FZF_CTRL_T_OPTS="--preview='cat --color=always --style=header,grid --line-range :500 {}'"
 
 # Mac OSX
-
 # defaults write -g NSWindowShouldDragOnGesture -bool true
 
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
+# TODO: debug while its slow
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-complete -o nospace -C /Users/bcfd@mediait.ch/bin/terraform terraform
-
-alias gcm='git checkout $(git_default_branch)'
+# Cleanup
+# alias gcm='git checkout $(git_default_branch)'
