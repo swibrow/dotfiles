@@ -1,6 +1,7 @@
 theme = catppuccin-mocha
 font-size = 20
 background-blur-radius = 20
+cursor-click-to-move = true
 mouse-hide-while-typing = true
 window-decoration = true
 keybind = global:cmd+.=toggle_quick_terminal
