@@ -30,8 +30,10 @@ fi
 
 #### ZSH Plugins ####
 #### Antidote ####
-source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
+# https://antidote.sh/
+export ANTIDOTE_HOME=~/.cache/antidote
 
+source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
 # Set the root name of the plugins files (.txt and .zsh) antidote will use.
 zsh_plugins=${ZDOTDIR:-~}/.config/zsh/plugins
 
@@ -65,10 +67,6 @@ source $HOME/.config/zsh/aliases.zsh
 # HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # # Completions
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C $HOME/bin/terraform terraform
-
 source <(cr completion zsh)
 source <(talosctl completion zsh)
 source <(kubectl completion zsh)
@@ -87,7 +85,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
 # Load direnv
-eval "$(direnv hook zsh)"
+# Disabled since using dotenv from omz
+# eval "$(direnv hook zsh)"
 
 # fzf
 source <(fzf --zsh)
@@ -117,7 +116,7 @@ gpgconf --launch gpg-agent
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='nvim'
+  export EDITOR='vim'
 fi
 
 # Chart Release envs
@@ -138,6 +137,3 @@ export FZF_CTRL_T_OPTS="--preview='cat --color=always --style=header,grid --line
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Cleanup
-# alias gcm='git checkout $(git_default_branch)'

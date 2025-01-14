@@ -6,11 +6,12 @@ belak/zsh-utils path:history
 # OMZ plugins
 # Not working in tmux atm
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
-# getantidote/use-omz
+getantidote/use-omz
 ohmyzsh/ohmyzsh path:lib
-# ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/dotenv
+ohmyzsh/ohmyzsh path:plugins/terraform
 
 mattmc3/zfunctions
 zsh-users/zsh-autosuggestions
