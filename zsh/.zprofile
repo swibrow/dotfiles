@@ -12,3 +12,4 @@ eval "$(pyenv init --path)"
 
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/scripts"
 
+eval "$(mise activate zsh --shims)"
