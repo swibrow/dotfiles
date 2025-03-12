@@ -128,7 +128,7 @@ export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
 export CR_SKIP_EXISTING=true
 
 
-export FZF_CTRL_T_OPTS="--preview='cat --color=always --style=header,grid --line-range :500 {}'"
+export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line-range :500 {}'"
 
 # Mac OSX
 # defaults write -g NSWindowShouldDragOnGesture -bool true

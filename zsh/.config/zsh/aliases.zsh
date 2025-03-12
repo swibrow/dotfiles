@@ -8,7 +8,7 @@ alias avl="aws-vault login"
 alias ave="aws-vault exec"
 
 # Bat
-alias cat="bat"
+# alias cat="bat"
 
 # Directory shortcuts
 alias ..="cd .."

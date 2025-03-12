@@ -46,9 +46,9 @@ pg_up() {
     --rm \
     --name postgres \
     -p 5432:5432 \
-    -e POSTGRES_USER=house_hunter \
+    -e POSTGRES_USER=flowtrip \
     -e POSTGRES_PASSWORD=postgres \
-    -e POSTGRES_DB=house_hunter \
+    -e POSTGRES_DB=flowtrip \
     -d \
     postgres:16
 }
