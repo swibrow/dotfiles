@@ -62,7 +62,7 @@ eu-central-1 = 'FR'
 us-east-1 = 'VA'
 
 [terraform]
-disabled = true
+disabled = false
 style = 'purple'
 symbol = '󱁢 '
 format = '[$version | $workspace]($style) '
