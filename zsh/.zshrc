@@ -107,6 +107,8 @@ export K9S_CONFIG_DIR="$HOME/.config/k9s"
 ## Terrafrom
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
+# terraform
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 
 # GPG
 export GPG_TTY=$(tty)
