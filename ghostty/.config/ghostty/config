@@ -4,6 +4,6 @@ background-blur-radius = 20
 cursor-click-to-move = true
 mouse-hide-while-typing = true
 window-decoration = true
-keybind = global:cmd+.=toggle_quick_terminal
+keybind = global:cmd+shift+.=toggle_quick_terminal
 macos-option-as-alt = true
 macos-titlebar-style = hidden
