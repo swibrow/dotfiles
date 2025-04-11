@@ -2,10 +2,16 @@
 alias zconfig="code ~/.zshrc"
 alias zreload="source ~/.zshrc"
 
+# Open editors
+alias cu="cursor ."
+alias co="code ."
+alias nv="nvim ."
+
 # AWS Vault
 alias av="aws-vault"
 alias avl="aws-vault login"
 alias ave="aws-vault exec"
+alias af='aws-vault exec $(aws-vault list --profiles | fzf)'
 
 # Bat
 # alias cat="bat"

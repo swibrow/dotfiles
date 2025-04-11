@@ -64,3 +64,9 @@ function cloner {
 eks_config() {
   aws eks update-kubeconfig --name="${1}" --alias "${2}"
 }
+
+
+gh-browse() {
+  local org=${1:-dnd-it}
+  gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
+}
