@@ -137,4 +137,13 @@ kdelete_empty_namespaces() {
   fi
 }
 
-# Usage example: delete_empty_namespaces [--yes|-y]
+inline_kubectl_editor() {
+  local action=${1:-create}
+  local tmpfile=$(mktemp)
+
+  ${EDITOR:-vim} ${tmpfile}
+
+  kubectl ${action} -f ${tmpfile}
+
+  rm ${tmpfile}
+}

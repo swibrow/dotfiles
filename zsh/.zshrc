@@ -69,12 +69,12 @@ source $HOME/.config/zsh/aliases.zsh
 # # Completions
 source <(cr completion zsh)
 source <(talosctl completion zsh)
-source <(kubectl completion zsh)
-source <(helm completion zsh)
-source <(k9s completion zsh)
+# source <(kubectl completion zsh)
+# source <(helm completion zsh)
+# source <(k9s completion zsh)
 source <(kubebuilder completion zsh)
-eval "$(task --completion zsh)"
-eval "$(aws-vault --completion-script-zsh)"
+# eval "$(task --completion zsh)"
+# eval "$(aws-vault --completion-script-zsh)"
 
 ### Configurations ###
 export LANG=en_US.UTF-8
