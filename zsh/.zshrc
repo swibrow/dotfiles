@@ -69,6 +69,7 @@ source $HOME/.config/zsh/aliases.zsh
 # # Completions
 source <(cr completion zsh)
 source <(talosctl completion zsh)
+source <(kubectl datadog completion zsh)
 # source <(kubectl completion zsh)
 # source <(helm completion zsh)
 # source <(k9s completion zsh)
