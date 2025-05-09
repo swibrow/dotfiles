@@ -53,6 +53,7 @@ source $HOME/.config/zsh/plugins.zsh
 source $HOME/.config/zsh/functions/general.zsh
 # source $HOME/.config/zsh/functions/git.zsh
 source $HOME/.config/zsh/functions/kubectl.zsh
+source $HOME/.config/zsh/functions/terraform.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 # #### Set bind keys ####
@@ -140,3 +141,7 @@ export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)

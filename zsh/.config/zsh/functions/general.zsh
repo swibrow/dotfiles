@@ -70,3 +70,4 @@ gh-browse() {
   local org=${1:-dnd-it}
   gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
 }
+
