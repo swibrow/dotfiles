@@ -145,3 +145,8 @@ export NVM_DIR="$HOME/.nvm"
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
+alias claude="/Users/bcfd@mediait.ch/.claude/local/claude"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
