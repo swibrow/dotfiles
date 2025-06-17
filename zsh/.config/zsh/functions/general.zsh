@@ -40,17 +40,145 @@ _a() {
     aws-vault exec "${1}"
 }
 
+# PostgreSQL Docker Helper Functions
 pg_up() {
-  docker kill postgres || true
+  local port="${1:-5432}"
+  local version="${2:-16}"
+  local container_name="${3:-postgres}"
+  local db_name="${4:-flowtrip}"
+  local db_user="${5:-flowtrip}"
+  local db_password="${6:-postgres}"
+  
+  # Kill existing container if it exists
+  docker kill "$container_name" 2>/dev/null || true
+  
+  echo "Starting PostgreSQL $version on port $port..."
   docker run \
     --rm \
-    --name postgres \
-    -p 5432:5432 \
-    -e POSTGRES_USER=flowtrip \
-    -e POSTGRES_PASSWORD=postgres \
-    -e POSTGRES_DB=flowtrip \
+    --name "$container_name" \
+    -p "${port}:5432" \
+    -e POSTGRES_USER="$db_user" \
+    -e POSTGRES_PASSWORD="$db_password" \
+    -e POSTGRES_DB="$db_name" \
     -d \
-    postgres:16
+    postgres:$version
+  
+  echo "PostgreSQL is starting up on port $port..."
+  echo "Connection string: postgresql://$db_user:$db_password@localhost:$port/$db_name"
+}
+
+pg_down() {
+  local container_name="${1:-postgres}"
+  echo "Stopping PostgreSQL container '$container_name'..."
+  docker stop "$container_name" 2>/dev/null || echo "Container '$container_name' not found"
+}
+
+pg_status() {
+  local container_name="${1:-postgres}"
+  if docker ps | grep -q "$container_name"; then
+    echo "PostgreSQL container '$container_name' is running:"
+    docker ps --filter "name=$container_name" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+  else
+    echo "PostgreSQL container '$container_name' is not running"
+  fi
+}
+
+pg_logs() {
+  local container_name="${1:-postgres}"
+  local lines="${2:-50}"
+  docker logs --tail "$lines" -f "$container_name"
+}
+
+pg_exec() {
+  local container_name="${1:-postgres}"
+  local db_name="${2:-flowtrip}"
+  local db_user="${3:-flowtrip}"
+  
+  docker exec -it "$container_name" psql -U "$db_user" -d "$db_name"
+}
+
+pg_backup() {
+  local container_name="${1:-postgres}"
+  local db_name="${2:-flowtrip}"
+  local db_user="${3:-flowtrip}"
+  local backup_file="${4:-backup_$(date +%Y%m%d_%H%M%S).sql}"
+  
+  echo "Creating backup of $db_name to $backup_file..."
+  docker exec "$container_name" pg_dump -U "$db_user" "$db_name" > "$backup_file"
+  echo "Backup completed: $backup_file ($(ls -lh "$backup_file" | awk '{print $5}'))"
+}
+
+pg_restore() {
+  local container_name="${1:-postgres}"
+  local db_name="${2:-flowtrip}"
+  local db_user="${3:-flowtrip}"
+  local backup_file="$4"
+  
+  if [ -z "$backup_file" ]; then
+    echo "Usage: pg_restore [container_name] [db_name] [db_user] <backup_file>"
+    return 1
+  fi
+  
+  if [ ! -f "$backup_file" ]; then
+    echo "Backup file not found: $backup_file"
+    return 1
+  fi
+  
+  echo "Restoring $backup_file to $db_name..."
+  docker exec -i "$container_name" psql -U "$db_user" "$db_name" < "$backup_file"
+  echo "Restore completed"
+}
+
+pg_list() {
+  echo "PostgreSQL containers:"
+  docker ps -a --filter "ancestor=postgres" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}\t{{.Image}}"
+}
+
+pg_shell() {
+  local container_name="${1:-postgres}"
+  docker exec -it "$container_name" bash
+}
+
+pg_help() {
+  cat << EOF
+PostgreSQL Docker Helper Functions:
+
+  pg_up [port] [version] [container] [db] [user] [pass]
+    Start PostgreSQL container (defaults: 5432, 16, postgres, flowtrip, flowtrip, postgres)
+    
+  pg_down [container]
+    Stop PostgreSQL container (default: postgres)
+    
+  pg_status [container]
+    Show container status (default: postgres)
+    
+  pg_logs [container] [lines]
+    Show container logs (defaults: postgres, 50)
+    
+  pg_exec [container] [db] [user]
+    Open psql session (defaults: postgres, flowtrip, flowtrip)
+    
+  pg_backup [container] [db] [user] [file]
+    Backup database to file (default filename: backup_YYYYMMDD_HHMMSS.sql)
+    
+  pg_restore [container] [db] [user] <file>
+    Restore database from file (file is required)
+    
+  pg_list
+    List all PostgreSQL containers
+    
+  pg_shell [container]
+    Open bash shell in container (default: postgres)
+    
+  pg_help
+    Show this help message
+
+Examples:
+  pg_up 5433 15              # Start PostgreSQL 15 on port 5433
+  pg_up 5432 16 myapp        # Custom container name
+  pg_backup                  # Quick backup with timestamp
+  pg_exec                    # Quick psql access
+EOF
 }
 
 function cloner {
