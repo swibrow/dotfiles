@@ -44,12 +44,12 @@ export K9S_CONFIG_DIR="$HOME/.config/k9s"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 export GPG_TTY=$(tty)
 export EDITOR='vim'
-export CR_OWNER=swibrow
-export CR_GIT_REPO=pitower-charts
-export CR_PACKAGE_PATH=.deploy
-export CR_GIT_BASE_URL="https://api.github.com/"
-export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
-export CR_SKIP_EXISTING=true
+# export CR_OWNER=swibrow
+# export CR_GIT_REPO=pitower-charts
+# export CR_PACKAGE_PATH=.deploy
+# export CR_GIT_BASE_URL="https://api.github.com/"
+# export CR_GIT_UPLOAD_URL="https://uploads.github.com/"
+# export CR_SKIP_EXISTING=true
 export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=header,grid --line-range :500 {}'"
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
 
@@ -112,7 +112,7 @@ fi
 () {
     # Basic completion setup
     autoload -Uz compinit
-    
+
     # Use completion cache and check once per day
     local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
     if [[ $zcompdump -nt /usr/share/zsh ]] && [[ ! $zcompdump.zwc -ot $zcompdump ]]; then
@@ -121,7 +121,7 @@ fi
         compinit
         [[ -f "$zcompdump" && ! -f "$zcompdump.zwc" ]] && zcompile "$zcompdump"
     fi
-    
+
     # Defer heavy completions to background
     {
         # Only load completions for installed tools
