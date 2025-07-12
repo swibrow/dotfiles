@@ -136,7 +136,7 @@ alt-t = 'workspace T'
 # alt-v = 'workspace V'
 alt-w = 'workspace W'
 # alt-x = 'workspace X'
-# alt-y = 'workspace Y'
+alt-y = 'workspace Y'
 # alt-z = 'workspace Z'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -169,7 +169,7 @@ alt-shift-t = 'move-node-to-workspace T'
 # alt-shift-v = 'move-node-to-workspace V'
 alt-shift-w = 'move-node-to-workspace W'
 # alt-shift-x = 'move-node-to-workspace X'
-# alt-shift-y = 'move-node-to-workspace Y'
+alt-shift-y = 'move-node-to-workspace Y'
 # alt-shift-z = 'move-node-to-workspace Z'
 
 
@@ -208,15 +208,15 @@ alt-shift-l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace A'
+run = 'move-node-to-workspace F'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = 'move-node-to-workspace R'
+run = 'move-node-to-workspace Y'
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace N'
+run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -228,11 +228,11 @@ run = 'move-node-to-workspace M'
 
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
-run = 'move-node-to-workspace F'
+run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace F'
+run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iphonesimulator'
@@ -241,4 +241,12 @@ run = 'move-node-to-workspace 4'
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = 'move-node-to-workspace G'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace D'
 

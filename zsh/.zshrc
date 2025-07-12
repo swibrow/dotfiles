@@ -122,6 +122,9 @@ fi
         [[ -f "$zcompdump" && ! -f "$zcompdump.zwc" ]] && zcompile "$zcompdump"
     fi
 
+    # Load fzf keybindings synchronously (needed for ctrl-r/ctrl-t)
+    command -v fzf &>/dev/null && source <(fzf --zsh)
+    
     # Defer heavy completions to background
     {
         # Only load completions for installed tools
@@ -129,7 +132,6 @@ fi
         command -v talosctl &>/dev/null && source <(talosctl completion zsh)
         command -v kubectl &>/dev/null && source <(kubectl datadog completion zsh)
         command -v kubebuilder &>/dev/null && source <(kubebuilder completion zsh)
-        command -v fzf &>/dev/null && source <(fzf --zsh)
         command -v carapace &>/dev/null && source <(carapace _carapace)
     } &!
 }
@@ -138,4 +140,3 @@ fi
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
 # Claude alias
-alias claude="/Users/bcfd@mediait.ch/.claude/local/claude"
