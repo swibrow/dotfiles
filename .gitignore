@@ -5,3 +5,6 @@
 # OS generated files
 .DS_Store
 .temp
+
+# Claude
+settings.json
