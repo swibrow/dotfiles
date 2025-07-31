@@ -112,6 +112,9 @@ fi
 () {
     # Basic completion setup
     autoload -Uz compinit
+    
+    # Add Homebrew completions to fpath
+    fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
     # Use completion cache and check once per day
     local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
@@ -125,12 +128,15 @@ fi
     # Load fzf keybindings synchronously (needed for ctrl-r/ctrl-t)
     command -v fzf &>/dev/null && source <(fzf --zsh)
     
-    # Defer heavy completions to background
+    # Load critical completions synchronously
+    command -v kubectl &>/dev/null && source <(kubectl completion zsh)
+    command -v helm &>/dev/null && source <(helm completion zsh)
+    
+    # Defer other completions to background
     {
         # Only load completions for installed tools
         command -v cr &>/dev/null && source <(cr completion zsh)
         command -v talosctl &>/dev/null && source <(talosctl completion zsh)
-        command -v kubectl &>/dev/null && source <(kubectl datadog completion zsh)
         command -v kubebuilder &>/dev/null && source <(kubebuilder completion zsh)
         command -v carapace &>/dev/null && source <(carapace _carapace)
     } &!
