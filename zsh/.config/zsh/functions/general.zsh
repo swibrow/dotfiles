@@ -199,3 +199,32 @@ gh-browse() {
   gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
 }
 
+# AWS profile switching function using native AWS CLI
+function af {
+  # Get list of AWS profiles from ~/.aws/config
+  local profile=$(aws configure list-profiles | fzf)
+  if [ -n "$profile" ]; then
+    export AWS_PROFILE="$profile"
+    echo "✓ Switched to AWS profile: $profile"
+    
+    # Try to verify credentials, if it fails, trigger SSO login
+    if ! aws sts get-caller-identity &>/dev/null; then
+      echo "📝 SSO session expired. Logging in..."
+      if aws sso login --profile "$profile"; then
+        echo "✓ Successfully logged in"
+        local identity=$(aws sts get-caller-identity --query '[Account,UserId]' --output text 2>/dev/null)
+        if [ -n "$identity" ]; then
+          echo "✓ Verified access: $identity"
+        fi
+      else
+        echo "✗ Failed to login"
+        unset AWS_PROFILE
+        return 1
+      fi
+    else
+      local account=$(aws sts get-caller-identity --query Account --output text 2>/dev/null)
+      echo "✓ Using existing session for account: $account"
+    fi
+  fi
+}
+

@@ -11,7 +11,8 @@ alias nv="nvim ."
 alias av="aws-vault"
 alias avl="aws-vault login"
 alias ave="aws-vault exec"
-alias af='aws-vault exec $(aws-vault list --profiles | fzf)'
+alias afc='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE; echo "AWS credentials cleared"'
+alias afp='echo "Current AWS_PROFILE: ${AWS_PROFILE:-none}"'
 
 # Bat
 # alias cat="bat"
