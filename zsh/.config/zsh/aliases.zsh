@@ -29,6 +29,8 @@ alias ff="fzf --preview 'bat --color=always --style=header,grid --line-range :50
 alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 # export FZF_CTRL_T_COMMAND=$(ft)
 
+alias y="yazi"
+
 # Git
 # alias g="git"
 # alias gcm="git checkout $(git_main_branch)"

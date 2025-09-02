@@ -25,11 +25,6 @@ export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 # Core PATH setup (combined into one export)
 export PATH="$PATH:$HOME/bin:${KREW_ROOT:-$HOME/.krew}/bin:$HOME/go/bin:$HOME/.local/bin:/usr/local/opt/ruby/bin:/opt/homebrew/opt/ruby/bin:$HOME/.tfenv/bin"
 
-# Lazy load Go environment
-if command -v go &>/dev/null; then
-    export GOROOT="$(go env GOROOT)"
-    export PATH="$PATH:$GOROOT/bin"
-fi
 
 # Fast prompt initialization
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
@@ -112,7 +107,7 @@ fi
 () {
     # Basic completion setup
     autoload -Uz compinit
-    
+
     # Add Homebrew completions to fpath
     fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
@@ -127,11 +122,11 @@ fi
 
     # Load fzf keybindings synchronously (needed for ctrl-r/ctrl-t)
     command -v fzf &>/dev/null && source <(fzf --zsh)
-    
+
     # Load critical completions synchronously
     command -v kubectl &>/dev/null && source <(kubectl completion zsh)
     command -v helm &>/dev/null && source <(helm completion zsh)
-    
+
     # Defer other completions to background
     {
         # Only load completions for installed tools
@@ -146,3 +141,5 @@ fi
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
 # Claude alias
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
