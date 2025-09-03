@@ -3,6 +3,7 @@ font-size = 20
 background-blur-radius = 20
 cursor-click-to-move = true
 mouse-hide-while-typing = true
+mouse-scroll-multiplier = 0.5
 window-decoration = true
 keybind = global:cmd+shift+.=toggle_quick_terminal
 macos-option-as-alt = true
