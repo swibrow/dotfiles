@@ -1,29 +1,130 @@
 #!/bin/bash
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-stow */
 
-# ###############################################################################
-# ################################ HOMEBREW #####################################
-# ###############################################################################
+# Install script for dotfiles
+# Can be run directly or via Homebrew
+
+set -euo pipefail
+
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+# Detect if we're running from Homebrew or standalone
+if [ -n "${HOMEBREW_PREFIX:-}" ]; then
+    log_info "Installing via Homebrew..."
+    DOTFILES_DIR="${HOME}/dotfiles"
+else
+    log_info "Installing standalone..."
+    DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
 
 # Check if the OS is macOS
 if [[ "$(uname)" == "Darwin" ]]; then
-    echo "Detected macOS."
+    log_info "Detected macOS."
 
     # Check if Homebrew is installed
     if command -v brew &>/dev/null; then
-        echo "Homebrew is already installed."
+        log_info "Homebrew is already installed."
     else
-        echo "Homebrew is not installed. Would you like to install it now? (y/n)"
+        log_warning "Homebrew is not installed. Would you like to install it now? (y/n)"
         read -r response
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            echo "Installing Homebrew..."
+            log_info "Installing Homebrew..."
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         else
-            echo "Homebrew will not be installed."
+            log_warning "Homebrew will not be installed."
         fi
     fi
-    brew bundle --verbose --no-lock
+
+    # Install dependencies if Brewfile exists
+    if [ -f "Brewfile" ] && command -v brew &>/dev/null; then
+        log_info "Installing dependencies from Brewfile..."
+        brew bundle --verbose --no-lock
+    fi
 else
-    echo "This is not macOS. Exiting."
+    log_info "Not macOS. Skipping Homebrew setup."
 fi
+
+# Install GNU Stow if not present
+if ! command -v stow &> /dev/null; then
+    if command -v brew &> /dev/null; then
+        log_info "Installing GNU Stow via Homebrew..."
+        brew install stow
+    else
+        log_warning "GNU Stow not found. Please install it manually."
+        exit 1
+    fi
+fi
+
+# Install tmux plugin manager if not exists
+TPM_DIR="${HOME}/.config/tmux/plugins/tpm"
+if [ ! -d "$TPM_DIR" ]; then
+    log_info "Installing Tmux Plugin Manager..."
+    git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+
+# Change to dotfiles directory
+cd "${DOTFILES_DIR}"
+
+log_info "Creating necessary directories..."
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.local/scripts"
+mkdir -p "${HOME}/.local/bin"
+
+log_info "Stowing dotfiles..."
+
+# Stow all directories except Formula and special directories
+for dir in */; do
+    dir=${dir%/}  # Remove trailing slash
+
+    # Skip special directories
+    if [[ "$dir" == "Formula" ]] || [[ "$dir" == "homebrew-tap" ]] || [[ "$dir" == ".git" ]]; then
+        continue
+    fi
+
+    if [ -d "$dir" ]; then
+        log_info "Stowing $dir..."
+        stow --target="${HOME}" --restow "$dir" 2>/dev/null || log_warning "Failed to stow $dir"
+    fi
+done
+
+# Make scripts executable
+if [ -d "${HOME}/.local/scripts" ]; then
+    log_info "Making scripts executable..."
+    find "${HOME}/.local/scripts" -type f -name "*.sh" -exec chmod +x {} \;
+    [ -f "${HOME}/.local/scripts/tmux-calendar" ] && chmod +x "${HOME}/.local/scripts/tmux-calendar"
+fi
+
+# Make kubernetes scripts executable
+if [ -d "${HOME}/dotfiles/kubernetes/scripts" ]; then
+    find "${HOME}/dotfiles/kubernetes/scripts" -type f -name "*.sh" -exec chmod +x {} \;
+fi
+
+# Compile Go binaries if Go is available
+if command -v go &> /dev/null && [ -f "${HOME}/.local/scripts/tmux-calendar.go" ]; then
+    log_info "Compiling Go binaries..."
+    go build -o "${HOME}/.local/scripts/tmux-calendar" "${HOME}/.local/scripts/tmux-calendar.go"
+fi
+
+log_success "Dotfiles installation complete!"
+echo
+echo "Next steps:"
+echo "  1. Restart your terminal or run: source ~/.zshrc"
+echo "  2. In tmux, press prefix + I (Ctrl-A + I) to install plugins"
+echo "  3. Configure your ~/.env file with API keys"
+echo
+echo "For updates, run: cd ${DOTFILES_DIR} && git pull && ./install"

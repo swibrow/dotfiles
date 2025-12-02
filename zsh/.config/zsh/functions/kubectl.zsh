@@ -49,14 +49,41 @@ kdelete_namespaces_with_prefix() {
 
 kdelete_empty_namespaces() {
   local auto_delete=false
-  if [[ "$1" == "--yes" || "$1" == "-y" ]]; then
-    auto_delete=true
-  fi
+  local prefix=""
 
-  echo "🔍 Scanning for empty namespaces..."
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --yes|-y)
+        auto_delete=true
+        shift
+        ;;
+      --prefix|-p)
+        prefix="$2"
+        shift 2
+        ;;
+      *)
+        echo "Usage: kdelete_empty_namespaces [--yes|-y] [--prefix|-p <prefix>]"
+        echo "  --yes, -y        Auto-delete without confirmation"
+        echo "  --prefix, -p     Only delete namespaces with specified prefix"
+        return 1
+        ;;
+    esac
+  done
+
+  if [[ -n "$prefix" ]]; then
+    echo "🔍 Scanning for empty namespaces with prefix '$prefix'..."
+  else
+    echo "🔍 Scanning for empty namespaces..."
+  fi
 
   # Get all namespaces (excluding kube-system, default, kube-public, and kube-node-lease)
   local namespaces=$(kubectl get namespaces -o jsonpath='{.items[*].metadata.name}' | tr ' ' '\n' | grep -v -E '^(kube-system|default|kube-public|kube-node-lease)$')
+
+  # Filter by prefix if provided
+  if [[ -n "$prefix" ]]; then
+    namespaces=$(echo "$namespaces" | grep "^$prefix")
+  fi
 
   local empty_count=0
   local deleted=()

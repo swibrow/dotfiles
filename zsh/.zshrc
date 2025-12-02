@@ -140,6 +140,5 @@ fi
 # Style settings
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
-# Claude alias
-
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+# Task Master aliases added on 10/3/2025
+alias tm='task-master'

@@ -11,6 +11,13 @@
 [push]
 	autoSetupRemote = true
 [core]
+	editor = nvim
 	excludesfile = ~/.gitignore
 [pull]
 	rebase = true
+[alias]
+	housekeeping = "!git fsck && git fsck --unreachable && git gc --aggressive --prune && git prune && git prune-packed"
+	wipeout = "!git branch | sed 's/^[*]* *//' | gum choose --no-limit --header 'Wipeout which branches?' | xargs git branch -D"
+
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"

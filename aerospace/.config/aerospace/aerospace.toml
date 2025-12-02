@@ -178,6 +178,9 @@ alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
+# Toggle floating mode for current workspace (useful for workspace 4 with iPhone Simulator)
+alt-shift-space = 'layout floating tiling'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
@@ -216,7 +219,11 @@ run = 'move-node-to-workspace Y'
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace T'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iphonesimulator'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -233,10 +240,6 @@ run = 'move-node-to-workspace R'
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace R'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iphonesimulator'
-run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
