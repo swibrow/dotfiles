@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-test
+  namespace: default
+  labels:
+    app: curl-test
+    purpose: api-testing
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl:latest
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+  restartPolicy: Always
