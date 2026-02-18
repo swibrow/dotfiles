@@ -188,6 +188,51 @@ function cloner {
        | xargs -n1 git clone;
 }
 
+# Mirror a git repo from one org to another
+git_mirror_to_org() {
+  local source_org="$1"
+  local repo_name="$2"
+  local target_org="$3"
+  local visibility="${4:-private}"
+
+  if [ -z "$source_org" ] || [ -z "$repo_name" ] || [ -z "$target_org" ]; then
+    echo "Usage: git_mirror_to_org <source_org> <repo_name> <target_org> [visibility]"
+    echo "  visibility: private (default) or public"
+    return 1
+  fi
+
+  local tmp_dir=$(mktemp -d)
+  echo "Mirroring $source_org/$repo_name to $target_org/$repo_name..."
+
+  # Clone as bare mirror
+  echo "Cloning mirror from $source_org/$repo_name..."
+  if ! git clone --mirror "git@github.com:$source_org/$repo_name.git" "$tmp_dir/$repo_name.git"; then
+    echo "Failed to clone from source"
+    rm -rf "$tmp_dir"
+    return 1
+  fi
+
+  # Remove GitHub PR refs (read-only, can't be pushed)
+  git -C "$tmp_dir/$repo_name.git" for-each-ref --format='delete %(refname)' refs/pull | \
+    git -C "$tmp_dir/$repo_name.git" update-ref --stdin
+
+  # Create repo in target org
+  echo "Creating repo in $target_org..."
+  gh repo create "$target_org/$repo_name" --"$visibility" 2>/dev/null || echo "Repo may already exist, continuing..."
+
+  # Push mirror to target
+  echo "Pushing mirror to $target_org/$repo_name..."
+  if ! git -C "$tmp_dir/$repo_name.git" push --mirror "git@github.com:$target_org/$repo_name.git"; then
+    echo "Failed to push to target"
+    rm -rf "$tmp_dir"
+    return 1
+  fi
+
+  # Cleanup
+  rm -rf "$tmp_dir"
+  echo "Successfully mirrored $source_org/$repo_name to $target_org/$repo_name"
+}
+
 #
 eks_config() {
   aws eks update-kubeconfig --name="${1}" --alias "${2}"

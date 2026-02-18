@@ -45,7 +45,6 @@ brew "node", link: true
 brew "node@18", link: false
 brew "pinentry-mac"
 brew "pre-commit"
-brew "pyenv"
 brew "shellcheck"
 brew "sops"
 brew "starship"

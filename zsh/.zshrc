@@ -1,12 +1,15 @@
 # Optimized .zshrc for faster startup
 # Key optimizations:
-# 1. Lazy loading for slow tools (nvm, pyenv, etc.)
+# 1. Lazy loading for slow tools (nvm, etc.)
 # 2. Conditional loading based on command availability
 # 3. Deferred completion loading
 # 4. Cached environment variables
 
 # Early exit for non-interactive shells
 [[ $- != *i* ]] && return
+
+# Fix $TERM inside tmux
+[[ -n "$TMUX" ]] && export TERM="screen-256color"
 
 # Architecture-based Homebrew setup (cached)
 if [ -z "$HOMEBREW_PREFIX" ]; then
@@ -82,15 +85,6 @@ nvm() {
     nvm "$@"
 }
 
-# Lazy load pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-pyenv() {
-    unset -f pyenv
-    eval "$(command pyenv init -)"
-    pyenv "$@"
-}
-
 # Lazy load Angular CLI completion
 ng() {
     unset -f ng
@@ -103,42 +97,38 @@ if ! pgrep -x gpg-agent >/dev/null; then
     gpgconf --launch gpg-agent
 fi
 
-# Completion setup (deferred)
-() {
-    # Basic completion setup
-    autoload -Uz compinit
+# Add Homebrew completions to fpath
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
-    # Add Homebrew completions to fpath
-    fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+# Load fzf keybindings (needed for ctrl-r/ctrl-t)
+command -v fzf &>/dev/null && source <(fzf --zsh)
 
-    # Use completion cache and check once per day
-    local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-    if [[ $zcompdump -nt /usr/share/zsh ]] && [[ ! $zcompdump.zwc -ot $zcompdump ]]; then
-        compinit -C
-    else
-        compinit
-        [[ -f "$zcompdump" && ! -f "$zcompdump.zwc" ]] && zcompile "$zcompdump"
-    fi
+# Load critical completions
+command -v kubectl &>/dev/null && source <(kubectl completion zsh)
+command -v helm &>/dev/null && source <(helm completion zsh)
 
-    # Load fzf keybindings synchronously (needed for ctrl-r/ctrl-t)
-    command -v fzf &>/dev/null && source <(fzf --zsh)
-
-    # Load critical completions synchronously
-    command -v kubectl &>/dev/null && source <(kubectl completion zsh)
-    command -v helm &>/dev/null && source <(helm completion zsh)
-
-    # Defer other completions to background
-    {
-        # Only load completions for installed tools
-        command -v cr &>/dev/null && source <(cr completion zsh)
-        command -v talosctl &>/dev/null && source <(talosctl completion zsh)
-        command -v kubebuilder &>/dev/null && source <(kubebuilder completion zsh)
-        command -v carapace &>/dev/null && source <(carapace _carapace)
-    } &!
-}
+# Defer other completions to background
+{
+    command -v cr &>/dev/null && source <(cr completion zsh)
+    command -v talosctl &>/dev/null && source <(talosctl completion zsh)
+    command -v kubebuilder &>/dev/null && source <(kubebuilder completion zsh)
+    command -v carapace &>/dev/null && source <(carapace _carapace)
+} &!
 
 # Style settings
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
+# Override carapace's just completer — carapace escapes colons which breaks :: module completions in zsh
+_just_completion() {
+    local -a recipes
+    recipes=(${(s: :)$(just --summary 2>/dev/null)})
+    compadd -X 'recipes' -- "${recipes[@]}"
+}
+compdef _just_completion just
+
 # Task Master aliases added on 10/3/2025
 alias tm='task-master'
+
+# OpenClaw Completion
+source "/Users/bcfd@mediait.ch/.openclaw/completions/openclaw.zsh"
+export PATH="/opt/homebrew/opt/mariadb-connector-c/bin:$PATH"

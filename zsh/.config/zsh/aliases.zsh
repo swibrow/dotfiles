@@ -4,7 +4,7 @@ alias zreload="source ~/.zshrc"
 
 # Open editors
 alias cu="cursor ."
-alias co="zed ." # "code ."
+alias co="code ."
 alias nv="nvim ."
 
 # AWS Vault
