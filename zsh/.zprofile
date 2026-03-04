@@ -9,3 +9,6 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/scripts"
 
 eval "$(mise activate zsh --shims)"
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"

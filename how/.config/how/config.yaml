@@ -1,0 +1,10 @@
+provider: ollama
+anthropic:
+  api_key: ""
+  model: claude-sonnet-4-5-20250929
+openai:
+  api_key: ""
+  model: gpt-4o
+ollama:
+  model: 'qwen3:4b'
+  url: http://localhost:11434/v1

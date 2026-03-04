@@ -1,0 +1,20 @@
+# atuin configuration
+# https://docs.atuin.sh/configuration/config/
+
+# Local-only mode (no sync server)
+sync_address = ""
+
+# Search mode: prefix, fulltext, fuzzy, or skim
+search_mode = "fuzzy"
+
+# Filter mode: global (all hosts), host, session, directory
+filter_mode = "global"
+
+# Style: auto, full, compact
+style = "compact"
+
+# Inline height (0 = fullscreen)
+inline_height = 30
+
+# Key binding mode: auto (vim in vim, emacs elsewhere)
+keymap_mode = "auto"

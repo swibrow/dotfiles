@@ -103,6 +103,12 @@ fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 # Load fzf keybindings (needed for ctrl-r/ctrl-t)
 command -v fzf &>/dev/null && source <(fzf --zsh)
 
+# Smart cd with zoxide (replaces zsh-z)
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
+
+# Shell history with atuin (ctrl-r override, up-arrow kept for substring search)
+command -v atuin &>/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
+
 # Load critical completions
 command -v kubectl &>/dev/null && source <(kubectl completion zsh)
 command -v helm &>/dev/null && source <(helm completion zsh)
@@ -132,3 +138,10 @@ alias tm='task-master'
 # OpenClaw Completion
 source "/Users/bcfd@mediait.ch/.openclaw/completions/openclaw.zsh"
 export PATH="/opt/homebrew/opt/mariadb-connector-c/bin:$PATH"
+
+# bun completions
+[ -s "/Users/bcfd@mediait.ch/.bun/_bun" ] && source "/Users/bcfd@mediait.ch/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

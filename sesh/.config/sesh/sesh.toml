@@ -1,0 +1,13 @@
+# sesh configuration
+# https://github.com/joshmedeski/sesh
+
+[[default_sessions]]
+name = "main"
+path = "~"
+
+[zoxide]
+enabled = true
+
+[[directory_sources]]
+path = "~/dev"
+depth = 2

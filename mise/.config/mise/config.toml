@@ -1,0 +1,5 @@
+[tools]
+python = "3.14"
+uv = "latest"
+node = "22"
+go = "latest"

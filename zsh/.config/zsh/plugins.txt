@@ -17,7 +17,7 @@ zsh-users/zsh-autosuggestions
 zdharma-continuum/fast-syntax-highlighting kind:defer
 zsh-users/zsh-history-substring-search
 MichaelAquilina/zsh-you-should-use
-agkozak/zsh-z
+
 
 ahmetb/kubectx path:completion kind:fpath
 johanhaleby/kubetail
