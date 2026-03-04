@@ -1,0 +1,21 @@
+README.md
+CLAUDE.md
+LICENSE
+install
+install-remote.sh
+mise.toml
+.pre-commit-config.yaml
+.stow-local-ignore
+
+# Non-managed directories
+Formula/**
+homebrew-tap/**
+kubernetes/**
+
+# OS-specific
+{{ if ne .chezmoi.os "darwin" }}
+.config/aerospace/**
+.config/ghostty/**
+.config/homebrew/**
+.config/sesh/**
+{{ end }}
