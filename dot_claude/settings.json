@@ -1,0 +1,21 @@
+{
+  "env": {},
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": []
+  },
+  "model": "opus",
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase",
+    "github"
+  ],
+  "enabledPlugins": {
+    "code-documentation@claude-code-workflows": true,
+    "cloud-infrastructure@claude-code-workflows": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
+  }
+}

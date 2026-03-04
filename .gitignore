@@ -1,11 +1,9 @@
-
-# Environment variables
-.env
-
 # OS generated files
 .DS_Store
 .temp
 
-# Claude
-settings.json
-CLAUDE.md
+# Claude Code project files
+.claude/
+
+# chezmoi state (managed locally)
+.chezmoistate.bson

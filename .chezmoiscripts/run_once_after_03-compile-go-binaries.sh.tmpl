@@ -1,0 +1,9 @@
+{{ if lookPath "go" -}}
+#!/bin/bash
+set -euo pipefail
+
+if [ -f "${HOME}/.local/scripts/tmux-calendar.go" ]; then
+    echo "[INFO] Compiling tmux-calendar Go binary..."
+    go build -o "${HOME}/.local/scripts/tmux-calendar" "${HOME}/.local/scripts/tmux-calendar.go"
+fi
+{{ end -}}

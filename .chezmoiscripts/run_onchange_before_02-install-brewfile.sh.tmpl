@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Brewfile hash: {{ include "dot_config/homebrew/Brewfile" | sha256sum }}
+if command -v brew &>/dev/null; then
+    echo "[INFO] Installing Homebrew packages from Brewfile..."
+    brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/homebrew/Brewfile" --verbose --no-lock
+else
+    echo "[WARNING] Homebrew not found, skipping Brewfile install."
+fi
+{{ end -}}
