@@ -42,6 +42,8 @@ alias y="yazi"
 # alias gpf="git push --force-with-lease"
 # alias gl="git pull"
 
+alias ghpr="gh pr view --web 2>/dev/null || gh pr create --web"
+
 alias gcaa="git commit --amend -a --no-edit"
 alias gcaan="git commit --amend -an --no-edit"
 
@@ -86,6 +88,9 @@ alias bd="base64 --decode"
 alias b="base64"
 
 alias tg="task --global"
+
+# Chezmoi
+cm() { [ $# -eq 0 ] && chezmoi cd || chezmoi "$@"; }
 
 # Folder shortcuts
 alias pitower="cd ~/git/github.com/swibrow/pitower"
