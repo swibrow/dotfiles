@@ -69,7 +69,7 @@ format = '[$version | $workspace]($style) '
 
 [golang]
 disabled = false
-format = '[ ](bold cyan)'
+format = '[ $version](bold cyan) '
 
 [python]
 disabled = false

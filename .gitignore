@@ -5,5 +5,8 @@
 # Claude Code project files
 .claude/
 
+# Secrets
+private_dot_env
+
 # chezmoi state (managed locally)
 .chezmoistate.bson
