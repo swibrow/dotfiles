@@ -89,8 +89,13 @@ alias b="base64"
 
 alias tg="task --global"
 
-# Chezmoi
-cm() { [ $# -eq 0 ] && chezmoi cd || chezmoi "$@"; }
+# Worktrunk (git worktrees)
+alias wts="wt switch"
+alias wtc="wt switch --create"
+alias wtl="wt list"
+alias wtr="wt remove"
+alias wtm="wt merge"
+alias wsc="wt switch --create -x claude"
 
 # Folder shortcuts
 alias pitower="cd ~/git/github.com/swibrow/pitower"

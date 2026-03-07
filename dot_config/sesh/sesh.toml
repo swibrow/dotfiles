@@ -11,3 +11,8 @@ enabled = true
 [[directory_sources]]
 path = "~/dev"
 depth = 2
+
+[[directory_sources]]
+path = "~/dev"
+depth = 4
+glob = ".worktrees/*"

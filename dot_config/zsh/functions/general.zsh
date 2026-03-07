@@ -1,3 +1,7 @@
+# Chezmoi
+cm() { [ $# -eq 0 ] && chezmoi cd || chezmoi "$@"; }
+compdef cm=chezmoi
+
 install_or_update_brew_app() {
     APP_NAME="$1"
 
