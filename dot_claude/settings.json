@@ -19,6 +19,10 @@
     "frontend-design@claude-plugins-official": true,
     "worktrunk@worktrunk": true
   },
+  "statusLine": {
+    "type": "command",
+    "command": "wt list statusline --format=claude-code"
+  },
   "extraKnownMarketplaces": {
     "worktrunk": {
       "source": {
