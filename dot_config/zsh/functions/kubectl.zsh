@@ -164,6 +164,38 @@ kdelete_empty_namespaces() {
   fi
 }
 
+kdebug() {
+  local image="busybox"
+  local -a ns_args=()
+  local -a cmd=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -n) ns_args=(-n "$2"); shift 2 ;;
+      -i|--image) image="$2"; shift 2 ;;
+      --) shift; cmd=("$@"); break ;;
+      *) cmd=("$@"); break ;;
+    esac
+  done
+
+  kubectl run -it --rm "debug-$(date +%s)" --image="$image" --restart=Never "${ns_args[@]}" -- "${cmd[@]:-sh}"
+}
+
+kadmin() {
+  local -a ns_args=()
+  local -a cmd=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -n) ns_args=(-n "$2"); shift 2 ;;
+      --) shift; cmd=("$@"); break ;;
+      *) cmd=("$@"); break ;;
+    esac
+  done
+
+  kubectl run -it --rm "admin-$(date +%s)" --image=nicolaka/netshoot --restart=Never "${ns_args[@]}" -- "${cmd[@]:-bash}"
+}
+
 inline_kubectl_editor() {
   local action=${1:-create}
   local tmpfile=$(mktemp)
