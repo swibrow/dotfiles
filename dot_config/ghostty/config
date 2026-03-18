@@ -9,4 +9,4 @@ keybind = global:cmd+shift+.=toggle_quick_terminal
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = shift+enter=text:\n
-command = /bin/zsh -lc "tmux new-session -A -s main"
+command = /bin/zsh -lc tmux-start.sh
