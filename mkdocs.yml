@@ -1,0 +1,120 @@
+site_name: Dotfiles
+site_description: Terminal setup, workflows, and tool documentation
+site_author: Samuel
+repo_url: https://github.com/swibrow/dotfiles
+repo_name: swibrow/dotfiles
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: deep purple
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - Installation: getting-started/installation.md
+      - Chezmoi: getting-started/chezmoi.md
+  - Shell:
+      - shell/index.md
+      - Zsh Configuration: shell/zsh.md
+      - Aliases: shell/aliases.md
+      - Functions: shell/functions.md
+  - Tools:
+      - tools/index.md
+      - Tmux: tools/tmux.md
+      - Neovim: tools/neovim.md
+      - Starship Prompt: tools/starship.md
+      - Ghostty: tools/ghostty.md
+      - Aerospace: tools/aerospace.md
+      - Git: tools/git.md
+      - FZF & Search: tools/search.md
+  - Cloud & Infrastructure:
+      - cloud/index.md
+      - AWS: cloud/aws.md
+      - Kubernetes: cloud/kubernetes.md
+      - Terraform: cloud/terraform.md
+      - Talos: cloud/talos.md
+  - Workflows:
+      - workflows/index.md
+      - Development: workflows/development.md
+      - Claude Code: workflows/claude-code.md
+      - Task Automation: workflows/tasks.md
+  - Reference:
+      - reference/index.md
+      - Keybindings: reference/keybindings.md
+      - Scripts: reference/scripts.md
+      - Brewfile: reference/brewfile.md
+  - Changelog: changelog.md

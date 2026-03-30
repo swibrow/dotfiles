@@ -10,3 +10,7 @@ private_dot_env
 
 # chezmoi state (managed locally)
 .chezmoistate.bson
+
+# Docs build
+site/
+.venv/

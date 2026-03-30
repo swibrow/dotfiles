@@ -1,14 +1,21 @@
+# Hardcoded Homebrew env (avoids expensive eval of brew shellenv)
 if [ "$(arch)" = arm64 ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
 else
-    eval "$(/usr/local/bin/brew shellenv)"
+    export HOMEBREW_PREFIX="/usr/local"
+    export HOMEBREW_CELLAR="/usr/local/Cellar"
+    export HOMEBREW_REPOSITORY="/usr/local/Homebrew"
 fi
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+[ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
+export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 
 export GOPATH="$HOME/go"
-
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/scripts"
 
-eval "$(mise activate zsh --shims)"
+# mise shims for non-interactive shells (scripts, IDEs)
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-# Added by Obsidian
 export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"

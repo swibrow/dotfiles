@@ -32,20 +32,19 @@ alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-r
 alias y="yazi"
 
 # Git
-# alias g="git"
-# alias gcm="git checkout $(git_main_branch)"
-# alias gst="git status"
-# alias gco="git checkout"
-# alias gcb="git checkout -b"
-# alias gc="git commit"
-# alias gp="git push"
-# alias gpf="git push --force-with-lease"
-# alias gl="git pull"
+alias g="git"
+alias gst="git status"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gc="git commit"
+alias gp="git push"
+alias gpf="git push --force-with-lease"
+alias gl="git pull"
+alias gcaa="git commit --amend -a"
+alias gcaan="git commit --amend -an --no-edit"
+gcm() { git checkout "$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')" }
 
 alias ghpr="gh pr view --web 2>/dev/null || gh pr create --web"
-
-alias gcaa="git commit --amend -a --no-edit"
-alias gcaan="git commit --amend -an --no-edit"
 
 # Terraform
 alias tf="terraform"

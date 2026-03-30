@@ -7,6 +7,13 @@ mise.toml
 .pre-commit-config.yaml
 .stow-local-ignore
 
+# Docs & CI
+docs/**
+mkdocs.yml
+.github/**
+site/**
+.venv/**
+
 # Non-managed directories
 Formula/**
 homebrew-tap/**

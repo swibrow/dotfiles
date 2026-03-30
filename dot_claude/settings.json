@@ -6,22 +6,21 @@
     "deny": [],
     "ask": []
   },
-  "model": "opus",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
     "github"
   ],
+  "statusLine": {
+    "type": "command",
+    "command": "wt list statusline --format=claude-code"
+  },
   "enabledPlugins": {
     "code-documentation@claude-code-workflows": true,
     "cloud-infrastructure@claude-code-workflows": true,
     "gopls-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "worktrunk@worktrunk": true
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "wt list statusline --format=claude-code"
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -30,5 +29,6 @@
         "repo": "max-sixty/worktrunk"
       }
     }
-  }
+  },
+  "skipDangerousModePermissionPrompt": true
 }

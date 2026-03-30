@@ -1,0 +1,26 @@
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #cdd6f4;
+  --md-primary-bg-color: #11111b;
+  --md-accent-fg-color: #89b4fa;
+}
+
+.md-header {
+  background-color: #11111b;
+}
+
+.md-tabs {
+  background-color: #181825;
+}
+
+.md-header .md-header__title,
+.md-header .md-header__topic,
+.md-header .md-header__ellipsis,
+.md-header nav,
+.md-tabs .md-tabs__link,
+.md-tabs .md-tabs__link--active {
+  color: #cdd6f4;
+}
+
+.md-search__input {
+  color: #cdd6f4;
+}

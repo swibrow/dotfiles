@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a personal dotfiles repository containing configuration files and utilities for a macOS development environment. The repository uses [chezmoi](https://www.chezmoi.io/) for dotfile management and includes configurations for:
 
 - Terminal: Ghostty, Tmux, Starship prompt
-- Shell: Zsh with Antidote plugin manager
+- Shell: Zsh (no plugin manager — autosuggestions and syntax highlighting from Homebrew)
 - Editor: Neovim (LazyVim)
 - Development tools: Git, K9s, Mise, Bat
 - Window management: Aerospace
@@ -48,6 +48,13 @@ The repository uses Taskrunner (go-task) for automation:
 ### Terraform Tasks
 - `task tf:init` - Initialize Terraform with S3 backend (requires AWS authentication)
 - `task tf:plan` - Run terraform plan with sandbox environment variables
+
+### Brewfile Management
+- When regenerating the Brewfile, always use `--no-vscode` to exclude VS Code extensions:
+  ```shell
+  brew bundle dump --file=dot_config/homebrew/Brewfile --force --no-vscode
+  ```
+- The Brewfile is auto-installed by chezmoi via `.chezmoiscripts/run_onchange_before_02-install-brewfile.sh.tmpl`
 
 ## Architecture Notes
 
