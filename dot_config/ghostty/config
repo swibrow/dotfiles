@@ -10,3 +10,5 @@ macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = shift+enter=text:\n
 command = /bin/zsh -lc tmux-start.sh
+
+background-opacity = 1.00

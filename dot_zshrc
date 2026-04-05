@@ -76,9 +76,9 @@ fi
 
 # Cached tool inits (~1ms each to source)
 _cached_eval fzf fzf --zsh
-_cached_eval zoxide zoxide init zsh
 _cached_eval atuin atuin init zsh --disable-up-arrow
 _cached_eval carapace carapace _carapace
+_cached_eval zoxide zoxide init zsh
 _cached_eval mise mise activate zsh
 _cached_eval wt wt config shell init zsh
 _cached_eval kubectl kubectl completion zsh
