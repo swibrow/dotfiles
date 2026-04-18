@@ -14,6 +14,9 @@ mkdocs.yml
 site/**
 .venv/**
 
+# Binary / runtime data
+.config/how/memory.db
+
 # Non-managed directories
 Formula/**
 homebrew-tap/**

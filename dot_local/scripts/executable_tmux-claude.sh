@@ -9,7 +9,7 @@ if [[ -n "$selected_dir" ]]; then
     # Split vertically (side by side) with same directory
     tmux split-window -h -c "$full_path"
     # Start claude in the right pane (current pane after split)
-    tmux send-keys "claude" Enter
+    tmux send-keys "mise exec -- claude" Enter
     # Focus the left pane
     tmux select-pane -L
 else

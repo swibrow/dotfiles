@@ -1,3 +1,8 @@
+[env]
+HOME_ASSISTANT_TOKEN = "{{exec(command='pass-cli item view --vault-name Dev --item-title home-assistant-mcp-token --field \"API Key\"')}}"
+GITHUB_ACCESS_TOKEN = "{{exec(command='pass-cli item view --vault-name Dev --item-title github-classic-pat --field \"GITHUB_ACCESS_TOKEN\"')}}"
+JIRA_API_TOKEN = "{{exec(command='pass-cli item view --vault-name Dev --item-title jira-api-token --field \"JIRA_API_TOKEN\"')}}"
+
 [tools]
 python = "3.14"
 uv = "latest"

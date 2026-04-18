@@ -238,6 +238,48 @@ git_mirror_to_org() {
 }
 
 #
+keyring-set() {
+  local service="$1"
+  local value="$2"
+  if [ -z "$service" ]; then
+    echo "Usage: keyring-set <service> [value]"
+    echo "  If value is omitted, you'll be prompted (hidden input)"
+    return 1
+  fi
+  if [ -z "$value" ]; then
+    echo -n "Enter value for '$service': "
+    read -rs value
+    echo
+  fi
+  security add-generic-password -s "$service" -a "$USER" -w "$value" -U
+  echo "Saved '$service' to keychain"
+}
+
+keyring-get() {
+  local service="$1"
+  if [ -z "$service" ]; then
+    echo "Usage: keyring-get <service>"
+    return 1
+  fi
+  security find-generic-password -s "$service" -w 2>/dev/null || {
+    echo "No entry found for '$service'"
+    return 1
+  }
+}
+
+keyring-del() {
+  local service="$1"
+  if [ -z "$service" ]; then
+    echo "Usage: keyring-del <service>"
+    return 1
+  fi
+  security delete-generic-password -s "$service" -a "$USER" 2>/dev/null || {
+    echo "No entry found for '$service'"
+    return 1
+  }
+  echo "Deleted '$service' from keychain"
+}
+
 eks_config() {
   aws eks update-kubeconfig --name="${1}" --alias "${2}"
 }

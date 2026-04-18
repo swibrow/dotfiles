@@ -81,6 +81,32 @@ git_mirror_to_org source_org repo_name target_org [visibility]
 
 Mirrors a repository from one GitHub org to another.
 
+### Keychain Helpers
+
+Wrappers around macOS `security` for storing and retrieving secrets in the system keychain:
+
+| Function | Usage | Description |
+|----------|-------|-------------|
+| `keyring-set` | `keyring-set <service> [value]` | Store a secret (prompts for hidden input if value omitted) |
+| `keyring-get` | `keyring-get <service>` | Retrieve a secret |
+| `keyring-del` | `keyring-del <service>` | Delete a secret |
+
+```bash
+# Store a secret (prompted, hidden input)
+keyring-set anthropic-api-key
+
+# Store inline
+keyring-set anthropic-api-key sk-ant-...
+
+# Retrieve
+keyring-get anthropic-api-key
+
+# Delete
+keyring-del anthropic-api-key
+```
+
+Used by mise configs to inject secrets as environment variables without storing them in plaintext. See [Claude Code — Dual Account Setup](../workflows/claude-code.md#dual-account-setup).
+
 ### `eks_config` — Configure EKS Kubeconfig
 
 ```bash

@@ -88,6 +88,9 @@ alias b="base64"
 
 alias tg="task --global"
 
+# Launchpad
+alias lpad="launchpad"
+
 # Worktrunk (git worktrees)
 alias wts="wt switch"
 alias wtc="wt switch --create"
