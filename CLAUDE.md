@@ -66,7 +66,7 @@ The repository uses Taskrunner (go-task) for automation:
 - `.chezmoiscripts/` contains run scripts (Homebrew install, brew bundle, etc.)
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
 - `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key)
-- Secrets managed via Proton Pass CLI integration in templates
+- Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`
 - Task definitions are split across multiple files using Taskrunner's include feature
 - AWS operations assume aws-vault for credential management
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)

@@ -1,0 +1,24 @@
+#!/bin/bash
+# Interactive kubectl log tailer
+# Select resource type, namespace, and resource via fzf, then tail logs
+
+set -euo pipefail
+
+TYPES="pod
+deployment
+statefulset
+daemonset
+replicaset
+job
+cronjob"
+
+type=$(echo "$TYPES" | fzf --height=10 --border --prompt="Resource type: ")
+[ -z "$type" ] && exit 0
+
+ns=$(kubectl get ns -o name | sed 's|namespace/||' | fzf --height=15 --border --prompt="Namespace: ")
+[ -z "$ns" ] && exit 0
+
+resource=$(kubectl -n "$ns" get "$type" -o name | fzf --height=15 --border --prompt="$type: ")
+[ -z "$resource" ] && exit 0
+
+exec kubectl -n "$ns" logs -f --tail=100 --all-containers=true --max-log-requests=20 "$resource" "$@"

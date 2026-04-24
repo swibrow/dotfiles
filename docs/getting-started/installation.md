@@ -50,7 +50,7 @@ Displays manual steps:
 
 - Restart terminal or `source ~/.zshrc`
 - Install tmux plugins: ++prefix+shift+i++
-- Set up Proton Pass CLI for secrets
+- Add secrets to macOS keychain via `keychain-secret set <NAME>`
 - Import shell history into zoxide and atuin
 
 ## Post-Install Manual Steps
