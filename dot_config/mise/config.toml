@@ -2,6 +2,7 @@
 HOME_ASSISTANT_TOKEN = "{{exec(command='security find-generic-password -s env -a HOME_ASSISTANT_TOKEN -w', cache_key='HOME_ASSISTANT_TOKEN')}}"
 GITHUB_ACCESS_TOKEN  = "{{exec(command='security find-generic-password -s env -a GITHUB_ACCESS_TOKEN -w',  cache_key='GITHUB_ACCESS_TOKEN')}}"
 JIRA_API_TOKEN       = "{{exec(command='security find-generic-password -s env -a JIRA_API_TOKEN -w',       cache_key='JIRA_API_TOKEN')}}"
+BACKSTAGE_TOKEN      = "{{exec(command='security find-generic-password -s env -a BACKSTAGE_TOKEN -w',     cache_key='BACKSTAGE_TOKEN')}}"
 
 [tools]
 python = "3.14"

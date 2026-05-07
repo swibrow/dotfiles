@@ -99,6 +99,23 @@ alias wtr="wt remove"
 alias wtm="wt merge"
 alias wsc="wt switch --create -x claude"
 
+# Claude Code: yolo agent in a fresh worktree + tmux, with remote-control
+# Usage: cyolo                    # auto-named worktree, interactive
+#        cyolo my-feature         # named worktree
+#        cyolo my-feature "..."   # named worktree + initial prompt
+cyolo() {
+  local name=""
+  if [[ -n "$1" && "$1" != -* ]]; then
+    name="$1"; shift
+  fi
+  claude \
+    --dangerously-skip-permissions \
+    --remote-control \
+    --tmux \
+    --worktree ${name:+"$name"} \
+    "$@"
+}
+
 # Folder shortcuts
 alias pitower="cd ~/git/github.com/swibrow/pitower"
 alias dev="cd ~/git/github.com/swibrow/"

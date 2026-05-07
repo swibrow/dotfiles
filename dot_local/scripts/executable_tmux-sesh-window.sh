@@ -9,7 +9,9 @@ selected=$(sesh list --icons | fzf \
   --bind 'ctrl-a:change-prompt(> )+reload(sesh list --icons)' \
   --bind 'ctrl-t:change-prompt(tmux> )+reload(sesh list --icons -t)' \
   --bind 'ctrl-x:change-prompt(zoxide> )+reload(sesh list --icons -z)' \
-  --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)')
+  --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
+  --preview-window 'right:55%' \
+  --preview 'sesh preview {2..}')
 
 [[ -z "$selected" ]] && exit 0
 

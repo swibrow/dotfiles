@@ -1,9 +1,9 @@
 // Finicky routes URLs to the right browser/profile based on rules.
 // Docs: https://github.com/johnste/finicky
-module.exports = {
+export default {
   defaultBrowser: {
     name: "Google Chrome",
-    profile: "Profile 6", // Personal (sam.wibrow@gmail.com)
+    profile: "Samuel (private)", // sam.wibrow@gmail.com
   },
   handlers: [
     {
@@ -20,17 +20,21 @@ module.exports = {
     {
       // Work URLs → Chrome Profile 1 (samuel.wibrow@tamedia.ch)
       match: [
-        "*.tamedia.ch/*",
-        "*.tx.group/*",
-        "*.dnd.tx.group/*",
-        "github.com/dnd-it/*",
-        "github.com/tx-pts-dai/*",
-        "github.com/tx-group-adm/*",
-        "github.com/20minuten/*",
+        /(^|\.)tamedia\.ch(\/|$)/,
+        /(^|\.)tamedia\.tech(\/|$)/,
+        /(^|\.)tx\.group(\/|$)/,
+        /(^|\.)atlassian\.com(\/|$)/,
+        /(^|\.)atlassian\.net(\/|$)/,
+        /(^|\.)datadoghq\.com(\/|$)/,
+        /(^|\.)datadoghq\.eu(\/|$)/,
+        /github\.com\/dnd-it($|[/?#])/i,
+        /github\.com\/tx-pts-dai($|[/?#])/i,
+        /github\.com\/tx-group-adm($|[/?#])/i,
+        /github\.com\/20minuten($|[/?#])/i,
       ],
       browser: {
         name: "Google Chrome",
-        profile: "Profile 1",
+        profile: "Samuel Wibrow (main)", // samuel.wibrow@tamedia.ch
       },
     },
   ],
