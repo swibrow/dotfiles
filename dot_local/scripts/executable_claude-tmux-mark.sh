@@ -1,31 +1,24 @@
 #!/usr/bin/env zsh
-# Claude Code hook + tmux focus hook: mark the containing tmux window.
+# Claude Code hook: mark the containing tmux window with agent state.
 # Usage: claude-tmux-mark <state>
 #   notification — needs permission/input  -> 🔔
 #   stop         — turn complete            -> 🤖
 #   prompt       — user submitted, running  -> 🚀
 #   clear        — strip all markers
-#   focus        — strip 🔔 only (user has acknowledged the alert)
 
-action="$1"
-
-# Claude hooks send JSON on stdin; consume it so Claude doesn't block.
-case "$action" in
-  notification|stop|prompt|clear) cat >/dev/null ;;
-esac
-
-if [[ "$action" == "focus" ]]; then
-  # Demote 🔔 (alert) to 🤖 (idle) — both mean "waiting on user", but
-  # the alert is no longer needed since the user is now looking.
-  current=$(tmux display-message -p '#W' 2>/dev/null) || exit 0
-  [[ "$current" == 🔔* ]] && tmux rename-window "🤖 ${current#🔔 }"
-  exit 0
-fi
+# Claude hooks send JSON on stdin; capture it so Claude doesn't block.
+input=$(cat)
 
 [[ -z "$TMUX_PANE" ]] && exit 0
 
-case "$action" in
-  notification) marker="🔔" ;;
+case "$1" in
+  notification)
+    # Notification fires for both permission requests and idle reminders.
+    # Only mark on permission — idle would overwrite 🤖 unnecessarily.
+    msg=$(printf '%s' "$input" | jq -r '.message // ""' 2>/dev/null)
+    [[ "$msg" == *permission* ]] || exit 0
+    marker="🔔"
+    ;;
   stop)         marker="🤖" ;;
   prompt)       marker="🚀" ;;
   clear)        marker="" ;;
