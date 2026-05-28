@@ -6,7 +6,7 @@
 if tmux has-session -t main 2>/dev/null && [ -n "$(tmux list-clients -t main)" ]; then
   # main is already attached — show sesh picker
   selected=$(sesh list --icons | fzf \
-    --no-sort --ansi --border-label ' sesh ' --prompt '> ' \
+    --ansi --border-label ' sesh ' --prompt '> ' \
     --header 'ctrl-a: all / ctrl-t: tmux / ctrl-x: zoxide / ctrl-d: kill' \
     --bind 'tab:down,btab:up' \
     --bind 'ctrl-a:change-prompt(> )+reload(sesh list --icons)' \

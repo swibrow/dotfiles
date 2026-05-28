@@ -3,7 +3,7 @@
 # Intended to be run from a new Ghostty window (outside tmux)
 
 selected=$(sesh list --icons | fzf \
-  --no-sort --ansi --border-label ' sesh ' --prompt '> ' \
+  --ansi --border-label ' sesh ' --prompt '> ' \
   --header 'ctrl-a: all / ctrl-t: tmux / ctrl-x: zoxide / ctrl-d: kill' \
   --bind 'tab:down,btab:up' \
   --bind 'ctrl-a:change-prompt(> )+reload(sesh list --icons)' \
