@@ -17,7 +17,6 @@ Run from anywhere with `tg` (alias for `task --global`):
 
 | Task | Usage | Description |
 |------|-------|-------------|
-| `task aws:auth` | `task aws:auth -- myprofile` | Auth with aws-vault |
 | `task aws:list_users` | `task aws:list_users` | List IAM users + access keys |
 | `task eks:latestaddons` | `task eks:latestaddons -- 1.29` | Get latest addon versions for EKS |
 

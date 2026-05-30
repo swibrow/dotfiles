@@ -6,9 +6,6 @@ dotenv:
   - .env
 
 includes:
-  aws:
-    taskfile: .taskfiles/aws/Taskfile.yaml
-    optional: true
   kubectl:
     taskfile: .taskfiles/kubectl/Taskfile.yaml
     optional: false
@@ -84,7 +81,6 @@ tasks:
       AWS_ACCOUNT_ID:
         sh: aws sts get-caller-identity | jq -r .Account
     cmds:
-      # - aws-vault exec disco_sandbox-admin
       - echo {{.AWS_ACCOUNT_ID}}
       - terraform init -reconfigure -backend-config="bucket=tf-state-{{.AWS_ACCOUNT_ID}}"
 

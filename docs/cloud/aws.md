@@ -20,19 +20,8 @@ af
 
 | Alias | Action |
 |-------|--------|
-| `av` | `aws-vault` |
-| `avl` | `aws-vault login` (open console) |
-| `ave` | `aws-vault exec` (run command with creds) |
 | `afc` | Clear all AWS env vars |
 | `afp` | Print current AWS profile |
-
-## AWS Vault
-
-Credentials are managed via [aws-vault](https://github.com/99designs/aws-vault) with the macOS keychain backend:
-
-```bash
-export AWS_VAULT_BACKEND=keychain
-```
 
 ## CLI Aliases
 

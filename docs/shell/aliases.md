@@ -50,9 +50,6 @@ All aliases are defined in `~/.config/zsh/aliases.zsh`.
 
 | Alias | Command | Description |
 |-------|---------|-------------|
-| `av` | `aws-vault` | AWS Vault shorthand |
-| `avl` | `aws-vault login` | Login to AWS console |
-| `ave` | `aws-vault exec` | Execute with AWS credentials |
 | `afc` | unset AWS vars | Clear AWS credentials from env |
 | `afp` | print profile | Show current AWS profile |
 

@@ -38,12 +38,6 @@ git_clone_or_update() {
     fi
 }
 
-_a() {
-    # kubectl config use-context "${1}"
-    unset AWS_VAULT
-    aws-vault exec "${1}"
-}
-
 # PostgreSQL Docker Helper Functions
 pg_up() {
   local port="${1:-5432}"

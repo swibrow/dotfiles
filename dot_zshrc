@@ -17,7 +17,6 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export HOMEBREW_BUNDLE_FILE="$HOME/.config/homebrew/Brewfile"
 export HOMEBREW_BUNDLE_LOCK=1
 export LANG=en_US.UTF-8
-export AWS_VAULT_BACKEND=keychain
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 export GPG_TTY=$(tty)

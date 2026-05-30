@@ -78,7 +78,6 @@ The Brewfile is auto-installed during `chezmoi apply` via a hash-tracked run scr
 | Package | Description |
 |---------|-------------|
 | `awscli` | AWS CLI |
-| `aws-vault` | Credential management |
 | `localstack` | Local AWS emulation |
 
 ### Infrastructure
