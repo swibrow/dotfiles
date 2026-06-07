@@ -17,7 +17,9 @@ All keyboard shortcuts across the terminal environment.
 
 | Binding | Action |
 |---------|--------|
-| ++prefix+f++ | Sesh directory/session picker |
+| ++prefix+f++ | Sesh picker — open directory as a new window (tab) |
+| ++prefix+s++ | Sesh picker — open directory/session as a new session |
+| ++prefix+shift+s++ | Scratch session popup |
 | ++prefix+shift+f++ | Window switcher |
 | ++prefix+period++ | Rename current window |
 
@@ -35,7 +37,8 @@ All keyboard shortcuts across the terminal environment.
 | Binding | Action |
 |---------|--------|
 | ++prefix+t++ | Switch worktree (worktrunk) |
-| ++prefix+shift+t++ | Create new worktree |
+| ++prefix+shift+t++ | Create worktree and open it as a new named tab |
+| ++prefix+shift+x++ | Remove current worktree and close its tab |
 
 ### Plugins
 

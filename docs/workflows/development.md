@@ -53,7 +53,8 @@ wsc feature-name    # Create worktree + open Claude Code
 Or via tmux:
 
 - ++prefix+t++ — Switch between worktrees
-- ++prefix+shift+t++ — Create a new worktree
+- ++prefix+shift+t++ — Create a worktree and open it as a new named tab
+- ++prefix+shift+x++ — Remove the current worktree and close its tab
 
 ### 5. Commit & Push
 

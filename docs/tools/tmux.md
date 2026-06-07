@@ -25,7 +25,9 @@
 
 | Binding | Action |
 |---------|--------|
-| ++prefix+f++ | Sesh directory/session picker |
+| ++prefix+f++ | Sesh picker — open directory as a new window (tab); connects to existing sessions |
+| ++prefix+s++ | Sesh picker — open directory/session as a new session |
+| ++prefix+shift+s++ | Scratch session popup |
 | ++prefix+shift+f++ | Window switcher |
 | ++prefix+period++ | Rename current window (auto-fills basename) |
 
@@ -43,7 +45,8 @@
 | Binding | Action |
 |---------|--------|
 | ++prefix+t++ | Worktrunk — switch git worktree |
-| ++prefix+shift+t++ | Worktrunk — create new worktree |
+| ++prefix+shift+t++ | Worktrunk — create worktree and open it as a new named tab |
+| ++prefix+shift+x++ | Worktrunk — remove current worktree and close its tab |
 
 ## Plugins
 

@@ -19,6 +19,13 @@ Sesh-powered directory/session picker. Triggered by ++prefix+f++.
 - Filters: all / tmux sessions / zoxide / kill
 - Opens as new tmux window or switches to existing session
 
+### `tmux-sesh-connect.sh`
+
+Sesh-powered picker that opens the selection as a new tmux **session**. Triggered by ++prefix+s++.
+
+- Same sources and filters as `tmux-sesh-window.sh`
+- Runs `sesh connect`, creating the session if it doesn't exist
+
 ### `tmux-claude.sh`
 
 Claude Code launcher for tmux. Triggered by ++prefix+g++.
