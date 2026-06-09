@@ -21,6 +21,15 @@
 | ++prefix+k++ | Focus up pane |
 | ++prefix+l++ | Focus right pane |
 
+### Splits
+
+Both open in the current pane's directory.
+
+| Binding | Action |
+|---------|--------|
+| ++prefix+shift+backslash++ (`\|`) | Full-height split to the right |
+| ++prefix+shift+minus++ (`_`) | Full-width split along the bottom |
+
 ### Sessions & Windows
 
 | Binding | Action |
