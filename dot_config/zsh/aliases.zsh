@@ -20,6 +20,13 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+# zoxide: make `z` open the interactive fzf picker (fuzzy find), like `zi`.
+#   z        → fuzzy-find across the whole directory db
+#   z foo    → pre-filter the db to "foo" matches, then fuzzy-find in fzf
+# Use `\z foo` or `zz foo` for a direct (non-interactive) jump.
+z()  { __zoxide_zi "$@"; }
+zz() { __zoxide_z  "$@"; }
+
 # fzf
 alias f="fzf"
 alias ff="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
