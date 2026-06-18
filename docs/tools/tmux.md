@@ -53,9 +53,14 @@ Both open in the current pane's directory.
 
 | Binding | Action |
 |---------|--------|
-| ++prefix+t++ | Worktrunk — switch git worktree |
-| ++prefix+shift+t++ | Worktrunk — create worktree and open it as a new named tab |
+| ++prefix+t++ | Worktrunk — switch git worktree (current repo) |
+| ++prefix+shift+t++ | Worktrunk — create worktree of the **current** repo and open it as a new named tab |
+| ++prefix+shift+w++ | Worktrunk — pick **any** repo, create a worktree, open it as a new tab running Claude Code |
 | ++prefix+shift+x++ | Worktrunk — remove current worktree and close its tab |
+
+++prefix+shift+t++ is pinned to the current pane's repo (`#{pane_current_path}`). Use
+++prefix+shift+w++ when you want a worktree of a *different* repo than the one you're sitting in —
+it picks the repo first, so it works from any session/window.
 
 ## Plugins
 
@@ -114,6 +119,23 @@ Opens an fzf picker, then creates a 2-pane window:
 |      shell        |  claude  |
 |                   |          |
 +-------------------+----------+
+```
+
+## Worktree + Claude (`Prefix + W`)
+
+For starting work on a new branch of a repo other than the one you're currently in:
+
+1. fzf picker for `~/dev` repos → pick the target repo
+2. Prompt for a branch name
+3. Worktrunk creates the worktree (`wt -C <repo> switch --create <branch> --no-cd`)
+4. Opens a new window named after the branch, in the worktree, running `claude`
+
+```
++--------------------------------+
+| <branch>                       |
+|  claude (in <repo> worktree)   |
+|                                |
++--------------------------------+
 ```
 
 ## Startup
