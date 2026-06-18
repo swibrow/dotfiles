@@ -3,9 +3,16 @@ HOME_ASSISTANT_TOKEN = "{{exec(command='security find-generic-password -s env -a
 GITHUB_ACCESS_TOKEN  = "{{exec(command='security find-generic-password -s env -a GITHUB_ACCESS_TOKEN -w',  cache_key='GITHUB_ACCESS_TOKEN')}}"
 JIRA_API_TOKEN       = "{{exec(command='security find-generic-password -s env -a JIRA_API_TOKEN -w',       cache_key='JIRA_API_TOKEN')}}"
 BACKSTAGE_TOKEN      = "{{exec(command='security find-generic-password -s env -a BACKSTAGE_TOKEN -w',     cache_key='BACKSTAGE_TOKEN')}}"
+AGENTMEMORY_URL = "https://agentmemory-api.wibrow.dev"
+AGENTMEMORY_SECRET = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuaWc3Z2MzMTdiMUJLUDF4LzRCQ2ZsOEtpa3poT3A3OVlVMERzQlNSMkZJCmo1V0pCTnNnU0xtSlI4TjZOb1hEZzJCTVczRG1Sa2E4Y1ZFaGF0MGZHalUKLT4gISFMb0gtZ3JlYXNlIEF6IHBabApZNEZ2UHVBVzJibThsVnY3ZUV3NmZlcEtQaWJxZEo0Q3BXWmVzMElWSEZHTDNrdXp6YWFTMmprS1FzL1B0TG1zClNjNnEvOG1qMDVGYStFcTVnK0gwaXZWV1drZ1JYVVIvMzIxTjR0NE5mUlphR2N4Q0dMYwotLS0gV01qNXp5aGU3U3RrbzZSaE9rVHgyWUJZNkJZYTJQbFNaUFkxWURGQ01xcwoEaCwL98qDbeP27p+FdMZWsIep/iEiP2drvoeP3JOPyiUVx6K40DieK6Kdz16TrMINQ3cdbTne4hj3sLjzo29Rj8iinrHDMbqlKtPkDSzBPB8DlWZbD3GkEq4Spr3m/q0" }
 
 [tools]
 python = "3.14"
 uv = "latest"
 node = "22"
 go = "latest"
+opentofu = "latest"
+
+[settings]
+experimental = true
+

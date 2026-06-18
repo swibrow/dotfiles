@@ -29,3 +29,6 @@ kubernetes/**
 .config/homebrew/**
 .config/sesh/**
 {{ end }}
+
+# never publish the mise age identity (cluster private key)
+.config/mise/age.txt
