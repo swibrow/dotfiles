@@ -40,3 +40,7 @@ to the board owner.
 - Default `--repo` to the current repository; if it's not a DND-IT platform repo,
   ask before filing.
 - Mention the filed issue URL in your reply so it's visible in the conversation.
+
+<!-- newsagent:begin -->
+@/Users/bcfd@mediait.ch/.newsagent/standards/bug-feature-tracker.md
+<!-- newsagent:end -->
