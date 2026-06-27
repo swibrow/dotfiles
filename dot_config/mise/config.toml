@@ -9,7 +9,7 @@ AGENTMEMORY_SECRET = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuaWc3Z2
 [tools]
 python = "3.14"
 uv = "latest"
-node = "22"
+node = "24"
 go = "latest"
 opentofu = "latest"
 
