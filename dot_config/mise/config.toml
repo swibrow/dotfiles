@@ -13,6 +13,14 @@ node = "24"
 go = "latest"
 opentofu = "latest"
 
+[tasks."keys:top"]
+description = "Show most-used keys (keyfreq). Args: number of keys, e.g. mise run keys:top 30"
+run = "keyfreq top"
+
+[tasks."keys:reset"]
+description = "Reset keyfreq counts"
+run = "keyfreq reset"
+
 [settings]
 experimental = true
 
