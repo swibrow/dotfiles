@@ -1,5 +1,11 @@
 Only create .yaml for yaml files
 
+Don't add inline comments to code unless it's genuinely complex and the code can't speak for itself. Prefer clear names and structure over explanatory comments.
+
+## Containers
+
+Use `container` instead of `docker` for building and running containers. Instead of `docker compose`, use a kind cluster for multi-service local environments.
+
 # Bug / Feature Tracker Workflow
 
 When working on a task and you discover a **bug** or identify a **feature/improvement**
