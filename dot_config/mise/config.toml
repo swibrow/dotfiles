@@ -14,6 +14,39 @@ node = "24"
 go = "latest"
 opentofu = "latest"
 
+[tasks."secret:set"]
+description = "Age-encrypt a secret into the mise config (chezmoi source) and apply. Usage: mise run secret:set NAME (prompts hidden; also accepts value on stdin)"
+usage = 'arg "<name>"'
+raw = true
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+name="$usage_name"
+if [ -t 0 ]; then
+  printf "Enter value for '%s': " "$name" >&2
+  stty -echo; IFS= read -r value || true; stty echo; echo >&2
+else
+  IFS= read -r value || true
+fi
+[ -n "$value" ] || { echo "error: empty value" >&2; exit 1; }
+src="$(chezmoi source-path ~/.config/mise/config.toml)"
+mise trust --quiet "$src" 2>/dev/null || true
+mise set --age-encrypt --file "$src" "$name=$value"
+chezmoi apply ~/.config/mise/config.toml
+echo "Stored '$name' age-encrypted in mise config and applied" >&2
+'''
+
+[tasks."secret:rm"]
+description = "Remove a secret from the mise config (chezmoi source) and apply. Usage: mise run secret:rm NAME"
+usage = 'arg "<name>"'
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+src="$(chezmoi source-path ~/.config/mise/config.toml)"
+mise unset --file "$src" "$usage_name"
+chezmoi apply ~/.config/mise/config.toml
+'''
+
 [tasks."keys:top"]
 description = "Show most-used keys (keyfreq). Args: number of keys, e.g. mise run keys:top 30"
 run = "keyfreq top"
