@@ -19,6 +19,7 @@
 [alias]
 	housekeeping = "!git fsck && git fsck --unreachable && git gc --aggressive --prune && git prune && git prune-packed"
 	wipeout = "!git branch | sed 's/^[*]* *//' | gum choose --no-limit --header 'Wipeout which branches?' | xargs git branch -D"
+	tidy = "!f() { git fetch --prune >/dev/null 2>&1; cur=$(git symbolic-ref --short HEAD); trunk=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main); git for-each-ref --format='%(refname:short) %(upstream) %(upstream:track)' refs/heads | while read br up track; do [ x$up = x ] && continue; [ x$br = x$cur ] && continue; case $br in main|master) continue;; esac; if printf %s $track | grep -q gone || git merge-base --is-ancestor $br $trunk; then echo $br; fi; done | gum choose --no-limit --header 'Delete stale pushed branches?' | xargs -r git branch -D; }; f"
 
 [url "git@github.com:"]
 	insteadOf = "https://github.com/"

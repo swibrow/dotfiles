@@ -96,14 +96,15 @@ alias tg="task --global"
 alias lpad="launchpad"
 
 # Worktrunk (git worktrees)
-alias wts="wt switch"
+alias wts="wt switch --branches --remotes"
 alias wtc="wt switch --create"
 alias wtl="wt list"
 alias wtr="wt remove"
 alias wtm="wt merge"
 alias wsc="wt switch --create -x claude"
 
-# Claude Code: yolo agent in a fresh worktree + tmux, with remote-control
+# Claude Code: yolo agent in a fresh worktrunk worktree, opened in a new
+# tmux window of the current session (runs inline if not inside tmux)
 # Usage: cyolo                    # auto-named worktree, interactive
 #        cyolo my-feature         # named worktree
 #        cyolo my-feature "..."   # named worktree + initial prompt
@@ -112,12 +113,21 @@ cyolo() {
   if [[ -n "$1" && "$1" != -* ]]; then
     name="$1"; shift
   fi
-  claude \
-    --dangerously-skip-permissions \
-    --remote-control \
-    --tmux \
-    --worktree ${name:+"$name"} \
-    "$@"
+  [[ -z "$name" ]] && name="yolo-$(date +%m%d-%H%M%S)"
+
+  local -a claude_args=(--dangerously-skip-permissions --remote-control "$@")
+
+  if [[ -z "$TMUX" ]]; then
+    wt switch --create "$name" -x claude -- "${claude_args[@]}"
+    return
+  fi
+
+  local cmd="wt switch --create ${(q)name} -x claude --"
+  local arg
+  for arg in "${claude_args[@]}"; do
+    cmd+=" ${(q)arg}"
+  done
+  tmux new-window -n "$name" -c "$PWD" "$cmd"
 }
 
 # Folder shortcuts

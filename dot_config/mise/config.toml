@@ -5,6 +5,7 @@ JIRA_API_TOKEN       = "{{exec(command='security find-generic-password -s env -a
 BACKSTAGE_TOKEN      = "{{exec(command='security find-generic-password -s env -a BACKSTAGE_TOKEN -w',     cache_key='BACKSTAGE_TOKEN')}}"
 KANIDM_ADMIN_PASSWORD = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjWWlvUmZPNDZSdDYyWlUxb09rcXRpNnpMV3ZmT2g1czYwVW4vb2hiNTJ3CmJzK1hlZFJ3YUx4RFZtSDNyMlFtbDdTQ0xWeUorL2dFV0hhOTdvalVnYkkKLT4gc3NoLWVkMjU1MTkgWDZZRDhnIEZWaEJWNUNqYmVyNlo3VWx5SUVTWWd1SVRDc0F1RTlLT2twMEs3Sk1vVjAKUjJYN3VDUVZQdVp3cmtlaWNINzZ6TTg0dlA5WWE2bGQxdHV3ZHZ0aFhicwotPiAseTltLWdyZWFzZSBWbXV3IFlPR2J4ICtPUkVJdmlIICUhR1t7O1EKRXJCSWd0VnRBODJjSHhWaW0rZkpNOHIzRXcKLS0tIFJTekJINytwdytBSjNwbFA2ZElBdGxRTEQwaEFxS0dVbjh2aXRzRGs0OUkKfVMU3bZHszDfdBrNnWBCnIP3St7chJoznFN3APsgVz68FLlDKzyOKBRLpBB2Q341UiTNAWkwEPjIsC2YVqzhVjFykwsT4N7X5bQtQensbUg" }
 AGENTMEMORY_URL = "https://agentmemory-api.wibrow.dev"
+KANIDM_URL = "https://idm.wibrow.dev"
 AGENTMEMORY_SECRET = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuaWc3Z2MzMTdiMUJLUDF4LzRCQ2ZsOEtpa3poT3A3OVlVMERzQlNSMkZJCmo1V0pCTnNnU0xtSlI4TjZOb1hEZzJCTVczRG1Sa2E4Y1ZFaGF0MGZHalUKLT4gISFMb0gtZ3JlYXNlIEF6IHBabApZNEZ2UHVBVzJibThsVnY3ZUV3NmZlcEtQaWJxZEo0Q3BXWmVzMElWSEZHTDNrdXp6YWFTMmprS1FzL1B0TG1zClNjNnEvOG1qMDVGYStFcTVnK0gwaXZWV1drZ1JYVVIvMzIxTjR0NE5mUlphR2N4Q0dMYwotLS0gV01qNXp5aGU3U3RrbzZSaE9rVHgyWUJZNkJZYTJQbFNaUFkxWURGQ01xcwoEaCwL98qDbeP27p+FdMZWsIep/iEiP2drvoeP3JOPyiUVx6K40DieK6Kdz16TrMINQ3cdbTne4hj3sLjzo29Rj8iinrHDMbqlKtPkDSzBPB8DlWZbD3GkEq4Spr3m/q0" }
 
 [tools]
@@ -13,6 +14,7 @@ uv = "latest"
 node = "24"
 go = "latest"
 opentofu = "latest"
+terraform = "1.15.7"
 
 [tasks."secret:set"]
 description = "Age-encrypt a secret into the mise config (chezmoi source) and apply. Usage: mise run secret:set NAME (prompts hidden; also accepts value on stdin)"

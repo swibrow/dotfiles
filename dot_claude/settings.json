@@ -1,11 +1,13 @@
 {
   "env": {},
+  "cleanupPeriodDays": 999999,
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [],
     "deny": [],
     "ask": []
   },
+  "model": "sonnet",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
@@ -43,13 +45,13 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Edit|Write|Read|Glob|Grep",
         "hooks": [
           {
             "type": "command",
             "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/pre-tool-use.mjs\""
           }
-        ],
-        "matcher": "Edit|Write|Read|Glob|Grep"
+        ]
       }
     ],
     "PostToolUse": [
@@ -148,14 +150,13 @@
     "command": "wt list statusline --format=claude-code"
   },
   "enabledPlugins": {
-    "code-documentation@claude-code-workflows": true,
-    "cloud-infrastructure@claude-code-workflows": true,
     "gopls-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "worktrunk@worktrunk": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true,
-    "obsidian@obsidian-skills": true
+    "obsidian@obsidian-skills": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -172,6 +173,7 @@
     }
   },
   "awaySummaryEnabled": false,
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "agentPushNotifEnabled": true

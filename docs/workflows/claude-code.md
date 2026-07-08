@@ -120,3 +120,15 @@ wt list statusline --format=claude-code
 ```
 
 Worktrunk also uses Claude Haiku for auto-generating commit messages.
+
+### `cyolo` — Autonomous Agent in a Fresh Worktree
+
+Creates a Worktrunk worktree and launches Claude in it with `--dangerously-skip-permissions --remote-control`, in a new tmux window of the current session:
+
+```bash
+cyolo                            # auto-named worktree (yolo-<MMDD-HHMMSS>)
+cyolo my-feature                 # named worktree
+cyolo my-feature "Fix the bug"   # named worktree + initial prompt
+```
+
+Under the hood it runs `wt switch --create <name> -x claude` via `tmux new-window`, so the window is named after the worktree and Worktrunk hooks run as usual. Outside tmux it runs inline in the current terminal.

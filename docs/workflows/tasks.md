@@ -50,6 +50,28 @@ cd ~/dev/dnd-it/my-project
 task gh:actions    # Opens https://github.com/dnd-it/my-project/actions
 ```
 
+## Mise Tasks
+
+Global [mise](https://mise.jdx.dev/) tasks defined in `~/.config/mise/config.toml`, runnable from anywhere with `mise run`:
+
+| Task | Usage | Description |
+|------|-------|-------------|
+| `keys:top` | `mise run keys:top 30` | Show most-used keys (keyfreq) |
+| `keys:reset` | `mise run keys:reset` | Reset keyfreq counts |
+| `secret:rm` | `mise run secret:rm NAME` | Remove a secret from the mise config (chezmoi source) and apply |
+| `secret:set` | `mise run secret:set NAME` | Age-encrypt a secret into the mise config (chezmoi source) and apply |
+
+### Encrypted Secrets
+
+`secret:set` prompts for the value with hidden input, or reads it from stdin — the value never appears on the command line:
+
+```bash
+mise run secret:set KANIDM_ADMIN_PASSWORD                  # prompted, hidden input
+keyring-get some-key | mise run secret:set MY_SECRET       # from stdin
+```
+
+The value is encrypted with [age](https://age-encryption.org/) to the key at `~/.config/mise/age.txt` and written inline to the `[env]` section of the mise config in the chezmoi source, then applied. The encrypted blob is safe to commit — it can only be decrypted on machines that have the age key, which is not chezmoi-managed.
+
 ## Adding Tasks
 
 ### Project Tasks

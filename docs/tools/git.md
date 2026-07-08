@@ -57,12 +57,14 @@ Presents a multi-select list of branches to delete.
 
 | Alias | Command | Action |
 |-------|---------|--------|
-| `wts` | `wt switch` | Switch to a worktree |
-| `wtc` | `wt create` | Create a new worktree |
+| `wts` | `wt switch --branches --remotes` | Switch to a worktree (picker includes branches + remotes) |
+| `wtc` | `wt switch --create` | Create a new worktree |
 | `wtl` | `wt list` | List all worktrees |
 | `wtr` | `wt remove` | Remove a worktree |
 | `wtm` | `wt merge` | Merge a worktree |
 | `wsc` | `wt switch --create -x claude` | Create worktree + open Claude |
+
+For a fully autonomous flow, [`cyolo`](../workflows/claude-code.md#cyolo-autonomous-agent-in-a-fresh-worktree) creates a worktree and launches Claude in a new tmux window.
 
 ### Commit Message Generation
 
