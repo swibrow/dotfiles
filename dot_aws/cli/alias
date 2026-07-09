@@ -8,6 +8,13 @@ assume-help = !f() { ~/.aws/assume-role.sh help; }; f
 
 eks-update = !f() { cluster="${1:-central-sandbox-68d23d2e}"; region="${2:-eu-central-1}"; role_arn="${3:-arn:aws:iam::911453050078:role/dai-dev-eks-access}"; aws eks update-kubeconfig --region "$region" --name "$cluster" --role-arn "$role_arn"; }; f
 eks-list = !f() { aws eks list-clusters --region "${1:-eu-central-1}"; }; f
+
+# Update kubeconfig for the DAI central-dev / central-prod clusters while staying
+# logged into Titan SSO; kubectl assumes a cross-account role into the DAI account.
+#   aws central-eks            # dev (default)
+#   aws central-eks prod
+# Overrides: DAI_EKS_ROLE_ARN, AWS_PROFILE/TITAN_PROFILE
+central-eks = !f() { env="${1:-dev}"; region="eu-central-1"; case "$env" in dev) cluster="central-dev-68ff06d4"; acct="851725213542";; prod) cluster="central-prod-6938f11a"; acct="730335665754";; *) echo "usage: aws central-eks [dev|prod]" >&2; return 1;; esac; profile="${TITAN_PROFILE:-${AWS_PROFILE:-titan_${env}-admin}}"; role="${DAI_EKS_ROLE_ARN:-arn:aws:iam::${acct}:role/dai-${env}-eks-access}"; aws eks update-kubeconfig --name "$cluster" --region "$region" --profile "$profile" --role-arn "$role" --alias "central-${env}"; }; f
 eks-config = !f() { ~/.local/scripts/aws-eks-config.sh "$@"; }; f
 
 whoami = sts get-caller-identity
