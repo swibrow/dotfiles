@@ -6,6 +6,7 @@ mouse-hide-while-typing = true
 mouse-scroll-multiplier = 0.5
 window-decoration = true
 keybind = global:cmd+shift+.=toggle_quick_terminal
+quick-terminal-size = 75%
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = shift+enter=text:\n
