@@ -15,7 +15,7 @@ uv = "latest"
 node = "24"
 go = "latest"
 opentofu = "latest"
-terraform = "1.15.7"
+terraform = "1.15.8"
 
 [tasks."secret:set"]
 description = "Age-encrypt a secret into the mise config (chezmoi source) and apply. Usage: mise run secret:set NAME (prompts hidden; also accepts value on stdin)"
