@@ -34,37 +34,6 @@ gh-browse myorg    # Browse repos in GitHub org interactively
 
 Uses `gh` CLI and `fzf` to select and open repos.
 
-### PostgreSQL Docker Helpers
-
-Spin up PostgreSQL instances in Docker for local development:
-
-| Function | Usage | Description |
-|----------|-------|-------------|
-| `pg_up` | `pg_up [port] [version] [name] [db] [user] [pass]` | Start a PostgreSQL container |
-| `pg_down` | `pg_down [name]` | Stop container |
-| `pg_status` | `pg_status [name]` | Show container status |
-| `pg_logs` | `pg_logs [name] [lines]` | View logs |
-| `pg_exec` | `pg_exec [name] [db] [user]` | Open psql shell |
-| `pg_backup` | `pg_backup [name] [db] [user] [file]` | Backup database |
-| `pg_restore` | `pg_restore [name] [db] [user] <file>` | Restore from backup |
-| `pg_list` | `pg_list` | List all PostgreSQL containers |
-| `pg_shell` | `pg_shell [name]` | Bash into container |
-| `pg_help` | `pg_help` | Show help |
-
-**Defaults:** port `5432`, PostgreSQL `17`, container `postgres-dev`, db `devdb`, user `devuser`, password `devpass`.
-
-```bash
-# Quick start with defaults
-pg_up
-
-# Custom setup
-pg_up 5433 16 myproject mydb myuser mypass
-
-# Backup and restore
-pg_backup myproject mydb myuser ./backup.sql
-pg_restore myproject mydb myuser ./backup.sql
-```
-
 ### `cloner` — Clone All Org Repos
 
 ```bash
@@ -81,39 +50,8 @@ git_mirror_to_org source_org repo_name target_org [visibility]
 
 Mirrors a repository from one GitHub org to another.
 
-### Keychain Helpers
-
-Wrappers around macOS `security` for storing and retrieving secrets in the system keychain:
-
-| Function | Usage | Description |
-|----------|-------|-------------|
-| `keyring-set` | `keyring-set <service> [value]` | Store a secret (prompts for hidden input if value omitted) |
-| `keyring-get` | `keyring-get <service>` | Retrieve a secret |
-| `keyring-del` | `keyring-del <service>` | Delete a secret |
-
-```bash
-# Store a secret (prompted, hidden input)
-keyring-set anthropic-api-key
-
-# Store inline
-keyring-set anthropic-api-key sk-ant-...
-
-# Retrieve
-keyring-get anthropic-api-key
-
-# Delete
-keyring-del anthropic-api-key
-```
-
-Used by mise configs to inject secrets as environment variables without storing them in plaintext. See [Claude Code — Dual Account Setup](../workflows/claude-code.md#dual-account-setup).
-
-### `eks_config` — Configure EKS Kubeconfig
-
-```bash
-eks_config my-cluster my-alias
-```
-
-Adds an EKS cluster to kubeconfig with an optional alias.
+!!! tip "Keychain secrets"
+    Secrets live in the macOS login keychain and are managed with the [`keychain-secret`](../reference/scripts.md) script, not a shell function.
 
 ---
 

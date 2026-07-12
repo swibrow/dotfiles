@@ -19,7 +19,7 @@ Runs once when a login shell starts. Sets up foundational paths:
 - **Homebrew**: Hardcoded paths (avoids expensive `brew shellenv` eval)
     - ARM: `/opt/homebrew`
     - Intel: `/usr/local`
-- **PATH additions**: `~/.local/bin`, `~/.local/scripts`, Go bin
+- **PATH additions**: `~/.local/bin`, mise shims
 - **Mise**: Shims for non-interactive shells + `mise activate` for interactive
 
 ### `.zshrc` — Interactive Shell

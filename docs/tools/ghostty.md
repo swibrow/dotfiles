@@ -26,10 +26,10 @@
 Ghostty launches with:
 
 ```bash
-/bin/zsh -lc tmux-start.sh
+/bin/zsh -lc "tmux-sesh start"
 ```
 
-This opens a login shell that runs `tmux-start.sh`, which attaches to (or creates) a tmux session. You're always in tmux when using Ghostty.
+This opens a login shell that runs `tmux-sesh start`, which attaches to (or creates) a tmux session. You're always in tmux when using Ghostty.
 
 ## Configuration
 

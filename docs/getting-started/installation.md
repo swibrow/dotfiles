@@ -24,7 +24,6 @@ Creates the directory structure:
 
 ```
 ~/.config/
-~/.local/scripts/
 ~/.local/bin/
 ```
 
@@ -36,12 +35,12 @@ Installs Homebrew if not already present (macOS only).
 
 Runs `brew bundle` to install all packages from the [Brewfile](../reference/brewfile.md). This step is hash-tracked — it only re-runs when the Brewfile changes.
 
-### Phase 3: Compile Go Binaries
+### Phase 3: Compile keyfreq
 
-Compiles custom Go utilities:
+Compiles the `keyfreq` Swift utility (re-runs when the source changes):
 
 ```bash
-go build -o ~/.local/scripts/tmux-calendar ~/.local/scripts/tmux-calendar.go
+swiftc -O -o ~/.local/bin/keyfreq ~/.local/bin/keyfreq.swift
 ```
 
 ### Phase 4: Post-Install Notes

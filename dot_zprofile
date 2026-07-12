@@ -13,7 +13,7 @@ export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 
 export GOPATH="$HOME/go"
-export PATH="$PATH:$HOME/.local/bin:$HOME/.local/scripts"
+export PATH="$PATH:$HOME/.local/bin"
 
 # mise shims for non-interactive shells (scripts, IDEs)
 export PATH="$HOME/.local/share/mise/shims:$PATH"

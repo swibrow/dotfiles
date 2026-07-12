@@ -95,7 +95,6 @@ All aliases are defined in `~/.config/zsh/aliases.zsh`.
 |-------|---------|-------------|
 | `bd` | base64 decode | Decode base64 string |
 | `b` | base64 encode | Encode to base64 |
-| `tg` | `task --global` | Run global tasks |
 | `tm` | `task-master` | Task master shorthand |
 
 ## Worktrunk (Git Worktrees)

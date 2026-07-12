@@ -2,6 +2,20 @@
 
 Notable changes to the dotfiles setup.
 
+## 2026-07-12
+
+### Changed
+- Moved all local scripts from `~/.local/scripts` to `~/.local/bin` and dropped `.sh` extensions
+- Merged `tmux-sesh-connect.sh`/`tmux-sesh-window.sh`/`tmux-start.sh` into `tmux-sesh <connect|window|start>`
+- Merged `tmux-claude.sh`/`tmux-dev.sh` into `tmux-workspace <claude|dev>`
+
+### Removed
+- go-task (Taskfile) automation — replaced by shell functions and scripts
+- Legacy installers (`install`, `install-remote.sh`, Homebrew formula) — chezmoi bootstrap is the only install path
+- `kubernetes/` manifests and debug scripts — equivalent functionality in `kubectl.zsh` functions
+- Tmux calendar Go binary — status bar now reads gcalcli directly
+- `pg_*` PostgreSQL helpers, `keyring-*` functions (use `keychain-secret`), and `eks_config`
+
 ## 2026-03-30
 
 ### Added

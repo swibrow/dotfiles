@@ -8,7 +8,6 @@ tap "dnd-it/tap"
 tap "env0/terratag"
 tap "fairwindsops/tap"
 tap "fluxcd/tap"
-tap "go-task/tap"
 tap "gromgit/brewtils"
 tap "hcavarsan/kftray"
 tap "helm/tap"
@@ -204,7 +203,6 @@ brew "env0/terratag/terratag"
 brew "fairwindsops/tap/pluto"
 brew "fluxcd/tap/flux", link: false
 brew "fluxcd/tap/flux@0.41", link: true
-brew "go-task/tap/go-task", link: false
 brew "gromgit/brewtils/taproom"
 brew "hcavarsan/kftray/kftui"
 brew "infisical/get-cli/infisical"

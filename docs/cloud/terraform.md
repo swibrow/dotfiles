@@ -49,28 +49,6 @@ clean_terraform
 
 Removes `.terraform.lock.hcl` and `.terraform/` directories from the current tree.
 
-## Task Automation
-
-### Init with Dynamic Backend
-
-```bash
-task tf:init
-```
-
-Automatically resolves the S3 bucket name from the current AWS account:
-
-```bash
-terraform init -reconfigure -backend-config="bucket=tf-state-$(aws sts get-caller-identity | jq -r .Account)"
-```
-
-### Plan with Sandbox Vars
-
-```bash
-task tf:plan
-```
-
-Runs plan with `environments/sandbox.tfvars`.
-
 ## Aliases
 
 | Alias | Command |

@@ -1,13 +1,13 @@
 {
-  "env": {},
   "cleanupPeriodDays": 999999,
+  "env": {},
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [],
     "deny": [],
     "ask": []
   },
-  "model": "sonnet",
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
@@ -21,125 +21,6 @@
           {
             "type": "command",
             "command": "/Users/bcfd@mediait.ch/dev/swibrow/hops/bin/hops update --auto"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/session-start.mjs\""
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/prompt-submit.mjs\""
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write|Read|Glob|Grep",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/pre-tool-use.mjs\""
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/post-tool-use.mjs\""
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/post-tool-failure.mjs\""
-          }
-        ]
-      }
-    ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/pre-compact.mjs\""
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/subagent-start.mjs\""
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/subagent-stop.mjs\""
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/notification.mjs\""
-          }
-        ]
-      }
-    ],
-    "TaskCompleted": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/task-completed.mjs\""
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/stop.mjs\""
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"/Users/bcfd@mediait.ch/.local/share/mise/installs/node/22.22.0/lib/node_modules/@agentmemory/agentmemory/plugin/scripts/session-end.mjs\""
           }
         ]
       }

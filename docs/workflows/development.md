@@ -93,17 +93,6 @@ Workspaces in Aerospace assign apps to screens:
 - ++alt+d++ — Editor (VS Code/Cursor)
 - ++alt+r++ — Browser
 
-## PostgreSQL for Local Dev
-
-Quick database for development:
-
-```bash
-pg_up                    # Start PostgreSQL in Docker
-pg_exec                  # Open psql shell
-pg_backup . mydb . dump  # Backup
-pg_down                  # Stop when done
-```
-
 ## Cheat Sheets
 
 Look up any command:

@@ -111,7 +111,6 @@ nav:
       - workflows/index.md
       - Development: workflows/development.md
       - Claude Code: workflows/claude-code.md
-      - Task Automation: workflows/tasks.md
   - Reference:
       - reference/index.md
       - Keybindings: reference/keybindings.md

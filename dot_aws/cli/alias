@@ -15,7 +15,7 @@ eks-list = !f() { aws eks list-clusters --region "${1:-eu-central-1}"; }; f
 #   aws central-eks prod
 # Overrides: DAI_EKS_ROLE_ARN, AWS_PROFILE/TITAN_PROFILE
 central-eks = !f() { env="${1:-dev}"; region="eu-central-1"; case "$env" in dev) cluster="central-dev-68ff06d4"; acct="851725213542";; prod) cluster="central-prod-6938f11a"; acct="730335665754";; *) echo "usage: aws central-eks [dev|prod]" >&2; return 1;; esac; profile="${TITAN_PROFILE:-${AWS_PROFILE:-titan_${env}-admin}}"; role="${DAI_EKS_ROLE_ARN:-arn:aws:iam::${acct}:role/dai-${env}-eks-access}"; aws eks update-kubeconfig --name "$cluster" --region "$region" --profile "$profile" --role-arn "$role" --alias "central-${env}"; }; f
-eks-config = !f() { ~/.local/scripts/aws-eks-config.sh "$@"; }; f
+eks-config = !f() { ~/.local/bin/aws-eks-config "$@"; }; f
 
 whoami = sts get-caller-identity
 identity = !f() { aws sts get-caller-identity --query '[Account,Arn,UserId]' --output table; }; f

@@ -2,9 +2,9 @@
 #!/bin/bash
 set -euo pipefail
 
-# recompile when the source changes: {{ include "dot_local/scripts/keyfreq.swift" | sha256sum }}
+# recompile when the source changes: {{ include "dot_local/bin/keyfreq.swift" | sha256sum }}
 
-SRC="${HOME}/.local/scripts/keyfreq.swift"
+SRC="${HOME}/.local/bin/keyfreq.swift"
 OUT="${HOME}/.local/bin/keyfreq"
 PLIST="${HOME}/Library/LaunchAgents/com.swibrow.keyfreq.plist"
 

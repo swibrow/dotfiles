@@ -11,7 +11,7 @@ This is a personal dotfiles repository containing configuration files and utilit
 - Editor: Neovim (LazyVim)
 - Development tools: Git, K9s, Mise, Bat
 - Window management: Aerospace
-- Task automation: Taskrunner with AWS and Kubernetes utilities
+- Personal CLI tools and tmux popup scripts in `dot_local/bin/` (deployed to `~/.local/bin`)
 
 ## Key Commands
 
@@ -28,27 +28,17 @@ This is a personal dotfiles repository containing configuration files and utilit
 sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 ```
 
-### Task Management
-The repository uses Taskrunner (go-task) for automation:
-- `task` - Show available tasks
-- `task dotfiles:install` - Install dotfiles
-- `task dotfiles:update` - Update dotfiles from remote repository
-- `task gh:repo` - Open current repository in GitHub
-- `task gh:actions` - Open GitHub Actions for current repository
+### Scripts (`~/.local/bin`, on PATH via `.zprofile`)
+- `tmux-sesh <connect|window|start>` - sesh/fzf session picker (tmux bindings `s`/`f`; Ghostty launches `tmux-sesh start`)
+- `tmux-workspace <claude|dev>` - pick a `~/dev` project, open tmux window with claude/nvim layout (bindings `g`/`d`)
+- `tmux-cht`, `tmux-notes`, `tmux-scratch`, `tmux-bins`, `tmux-worktree-claude` - other tmux popup tools
+- `aws-eks-config` - interactive EKS kubeconfig setup (also via `aws eks-config` alias)
+- `aws-rds-connect` - interactive RDS connection via Secrets Manager
+- `kubelog` - interactive kubectl log tailer
+- `keychain-secret` - macOS keychain secret helper
+- `claude-work`, `claude-tmux-mark` - Claude Code helpers
 
-### AWS Tasks
-- `task aws:list_users` - List all IAM users and their access keys
-- `task eks:latestaddons <version>` - Get latest EKS addon versions for specified Kubernetes version
-
-Profile switching uses the `af` shell function (AWS SSO via the native CLI); see `dot_config/zsh/functions/general.zsh`.
-
-### Kubernetes Tasks
-- `task kubectl:drain:condoned` - Drain all cordoned nodes
-- `task kubectl:pods:clean` - Delete all Succeeded and Failed pods across namespaces
-
-### Terraform Tasks
-- `task tf:init` - Initialize Terraform with S3 backend (requires AWS authentication)
-- `task tf:plan` - Run terraform plan with sandbox environment variables
+AWS profile switching uses the `af` shell function (AWS SSO via the native CLI); see `dot_config/zsh/functions/general.zsh`. Kubernetes helpers (`kclean`, `kdebug`, `kadmin`, etc.) live in `dot_config/zsh/functions/kubectl.zsh`.
 
 ### Brewfile Management
 - When regenerating the Brewfile, always use `--no-vscode` to exclude VS Code extensions:
@@ -68,6 +58,5 @@ Profile switching uses the `af` shell function (AWS SSO via the native CLI); see
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
 - `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key)
 - Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise run secret:set` / `secret:rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
-- Task definitions are split across multiple files using Taskrunner's include feature
 - AWS credentials managed via AWS SSO (`aws sso login`); profile switching via the `af` function
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)

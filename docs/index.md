@@ -26,7 +26,7 @@ Personal macOS development environment managed with [chezmoi](https://www.chezmo
 
     ---
 
-    AWS, Kubernetes, Terraform, and Talos OS helpers, functions, and task automation.
+    AWS, Kubernetes, Terraform, and Talos OS helpers and functions.
 
     [:octicons-arrow-right-24: Cloud workflows](cloud/index.md)
 
@@ -34,7 +34,7 @@ Personal macOS development environment managed with [chezmoi](https://www.chezmo
 
     ---
 
-    Development flows, Claude Code integration, worktree management, and task automation.
+    Development flows, Claude Code integration, and worktree management.
 
     [:octicons-arrow-right-24: Workflows](workflows/index.md)
 

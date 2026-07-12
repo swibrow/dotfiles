@@ -82,10 +82,8 @@ Managed via [TPM](https://github.com/tmux-plugins/tpm) (installed automatically 
 
 The status bar shows (left to right):
 
-- **Left**: Session name
-- **Right**: Google Calendar events, Pomodoro timer, Date/Time
-
-The calendar widget uses `gcalcli` via a custom Go binary (`tmux-calendar`).
+- **Left**: Next Google Calendar event (via `gcalcli` in `status-left`)
+- **Right**: Pomodoro timer, Date/Time
 
 ## Pomodoro Timer
 
@@ -140,9 +138,9 @@ For starting work on a new branch of a repo other than the one you're currently 
 
 ## Startup
 
-Ghostty launches with `tmux-start.sh` which:
+Ghostty launches with `tmux-sesh start` which:
 
-1. If a `main` session exists and has active clients → creates a new ephemeral session
-2. Otherwise → attaches to `main` (creating it if needed)
+1. Attaches to the `main` session if it exists and is unattached (creating it if needed)
+2. Otherwise → opens the sesh picker to connect to a session or directory
 
 This ensures you always land in tmux when opening Ghostty.

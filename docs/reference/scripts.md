@@ -1,47 +1,36 @@
 # Local Scripts
 
-Scripts in `~/.local/scripts/`, managed by chezmoi.
+Scripts in `~/.local/bin/`, managed by chezmoi.
 
 ## Tmux Scripts
 
-### `tmux-start.sh`
+### `tmux-sesh`
 
-Intelligent tmux startup, used as Ghostty's launch command.
+Single entry point for sesh session/directory picking:
 
-- If `main` session exists and has clients &rarr; creates new ephemeral session
-- Otherwise &rarr; attaches to `main` (creating if needed)
-
-### `tmux-sesh-window.sh`
-
-Sesh-powered directory/session picker. Triggered by ++prefix+f++.
+```bash
+tmux-sesh connect    # Pick, then sesh connect (new/existing session) — Prefix + s
+tmux-sesh window     # Pick, open directories as new tmux windows — Prefix + f
+tmux-sesh start      # Attach to "main" if unattached, otherwise pick — Ghostty startup
+```
 
 - Sources: zoxide history, tmux sessions, `~/dev` tree
 - Filters: all / tmux sessions / zoxide / kill
-- Opens as new tmux window or switches to existing session
 
-### `tmux-sesh-connect.sh`
+### `tmux-workspace`
 
-Sesh-powered picker that opens the selection as a new tmux **session**. Triggered by ++prefix+s++.
+Pick a project under `~/dev` and open it in a new tmux window with a layout:
 
-- Same sources and filters as `tmux-sesh-window.sh`
-- Runs `sesh connect`, creating the session if it doesn't exist
+```bash
+tmux-workspace claude    # shell left, claude right — Prefix + g
+tmux-workspace dev       # nvim left, claude top-right, shell bottom-right — Prefix + d
+```
 
-### `tmux-claude.sh`
+### `tmux-worktree-claude`
 
-Claude Code launcher for tmux. Triggered by ++prefix+g++.
+Pick a repo under `~/dev`, create a git worktree via Worktrunk, and open a new tmux window in it running Claude. Triggered by ++prefix+shift+w++.
 
-1. FZF picker of `~/dev` directories (2 levels deep)
-2. Creates a new window with a split layout
-3. Starts Claude in the right pane
-
-### `tmux-dev.sh`
-
-Full development environment. Triggered by ++prefix+d++.
-
-1. FZF picker of `~/dev` directories
-2. Creates a 3-pane layout: nvim (left), claude (top-right), shell (bottom-right)
-
-### `tmux-cht.sh`
+### `tmux-cht`
 
 Interactive cheat sheet via [cht.sh](https://cht.sh/). Triggered by ++prefix+i++.
 
@@ -49,30 +38,63 @@ Interactive cheat sheet via [cht.sh](https://cht.sh/). Triggered by ++prefix+i++
 2. Enter a query
 3. Displays results in a new tmux window
 
-### `tmux-calendar.go` / `tmux-calendar`
+### `tmux-scratch`
 
-Go source compiled to a binary. Displays Google Calendar events in the tmux status bar via `gcalcli`.
+Persistent `scratch` tmux session opened in a popup — state survives popup close. Triggered by ++prefix+shift+s++.
+
+### `tmux-notes`
+
+Fuzzy-find notes in the Obsidian vault and open in `$EDITOR`; ++ctrl+n++ creates a new note in `inbox/`.
+
+### `tmux-bins`
+
+Fuzzy-pick an executable from `$PATH` and run it in a popup.
+
+## Claude Code Scripts
+
+### `claude-tmux-mark`
+
+Claude Code hook that marks the containing tmux window with agent state (needs input, done, running).
+
+### `claude-work`
+
+Launches the Claude desktop app with the work configuration (`CLAUDE_CONFIG_DIR=~/.claude_work`).
 
 ## AWS Scripts
 
-### `aws-eks-config.sh`
+### `aws-eks-config`
 
 Interactive EKS cluster configuration. See [AWS docs](../cloud/aws.md#eks-configuration-script).
 
-### `aws-rds-connect.sh`
+### `aws-rds-connect`
 
-Helper for connecting to RDS instances with environment-specific settings.
+Interactive RDS connection tool — picks an instance and a Secrets Manager secret for credentials via fzf.
 
-### `find-ip.sh`
-
-Searches for an IP address across multiple AWS profiles and regions.
-
-```bash
-find-ip.sh 10.0.1.50
-```
-
-Checks profiles against regions `eu-central-1` and `eu-west-1`.
-
-### `max-pods-calculator.sh`
+### `max-pods-calculator`
 
 From [AWS Labs](https://github.com/aws/amazon-eks-ami). Calculates max pods per node based on instance type and CNI settings.
+
+## Utilities
+
+### `keychain-secret`
+
+Manages environment secrets in the macOS login keychain (service `env`, account = variable name):
+
+```bash
+keychain-secret set GITHUB_ACCESS_TOKEN    # Prompt and store
+keychain-secret get GITHUB_ACCESS_TOKEN    # Print value
+```
+
+Read by mise configs via `exec()` to inject secrets as environment variables.
+
+### `kubelog`
+
+Interactive kubectl log tailer — pick resource type, namespace, and resource via fzf.
+
+### `browser-open`
+
+Opens a URL in the right browser profile (work vs personal) based on the URL and current directory.
+
+### `keyfreq.swift` / `keyfreq`
+
+Swift source compiled to a binary by a chezmoi script. Logs keyboard usage frequency via a LaunchAgent.

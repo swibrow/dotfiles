@@ -47,20 +47,6 @@ kclean              # Delete all Succeeded pods
 kclean Failed       # Delete all Failed pods
 ```
 
-Or via task:
-
-```bash
-task kubectl:pods:clean    # Delete both Succeeded and Failed pods
-```
-
-### Drain Cordoned Nodes
-
-```bash
-task kubectl:drain:condoned
-```
-
-Finds all cordoned (unschedulable) nodes and drains them.
-
 ### Delete Namespaces
 
 ```bash

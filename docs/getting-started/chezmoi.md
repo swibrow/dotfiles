@@ -9,7 +9,7 @@ Source files use special prefixes that chezmoi interprets:
 | Prefix | Effect | Example |
 |--------|--------|---------|
 | `dot_` | Deployed with `.` prefix | `dot_zshrc` &rarr; `~/.zshrc` |
-| `executable_` | Sets file executable (755) | `executable_tmux-start.sh` &rarr; `tmux-start.sh` (executable) |
+| `executable_` | Sets file executable (755) | `executable_tmux-sesh` &rarr; `tmux-sesh` (executable) |
 | `private_` | Sets permissions to 0600 | `private_dot_env` &rarr; `~/.env` (private) |
 | `*.tmpl` | Processed as Go template | `dot_gitconfig.tmpl` &rarr; `~/.gitconfig` (templated) |
 | `create_` | Only create, never update | Preserves user modifications |
@@ -68,7 +68,7 @@ These values are prompted once on first `chezmoi init` and cached. Use them in t
 
 ## Ignored Files
 
-`.chezmoiignore` lists files that chezmoi should not manage — things like `README.md`, `CLAUDE.md`, `Taskfile.yaml`, and other repo-only files.
+`.chezmoiignore` lists files that chezmoi should not manage — things like `README.md`, `CLAUDE.md`, the docs site, and other repo-only files.
 
 ## Run Scripts
 

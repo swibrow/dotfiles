@@ -90,8 +90,6 @@ alias kdrain="kubectl drain --ignore-daemonsets --delete-emptydir-data"
 alias bd="base64 --decode"
 alias b="base64"
 
-alias tg="task --global"
-
 # Launchpad
 alias lpad="launchpad"
 

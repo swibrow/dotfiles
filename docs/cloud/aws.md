@@ -61,15 +61,15 @@ aws clear-creds          # Clear cached credentials
 
 ## EKS Configuration Script
 
-The `aws-eks-config.sh` script provides interactive EKS cluster setup:
+The `aws-eks-config` script provides interactive EKS cluster setup:
 
 ```bash
-aws-eks-config.sh
-aws-eks-config.sh -r eu-west-1                    # Specify region
-aws-eks-config.sh -R arn:aws:iam::123:role/Admin   # With role
-aws-eks-config.sh --role-lookup                     # Interactive role picker
-aws-eks-config.sh -a my-cluster-alias              # Custom context name
-aws-eks-config.sh -l                               # List clusters only
+aws-eks-config
+aws-eks-config -r eu-west-1                    # Specify region
+aws-eks-config -R arn:aws:iam::123:role/Admin   # With role
+aws-eks-config --role-lookup                     # Interactive role picker
+aws-eks-config -a my-cluster-alias              # Custom context name
+aws-eks-config -l                               # List clusters only
 ```
 
 Features:
@@ -80,18 +80,10 @@ Features:
 - Kubeconfig context aliasing
 - Auth verification after configuration
 
-## IAM User Audit
-
-```bash
-task aws:list_users
-```
-
-Lists all IAM users with their access key IDs and last-used dates.
-
 ## Max Pods Calculator
 
 ```bash
-max-pods-calculator.sh --instance-type m5.large --cni-version 1.12.0
+max-pods-calculator --instance-type m5.large --cni-version 1.12.0
 ```
 
 Calculates the maximum number of pods for an EKS node based on instance type, CNI version, and prefix delegation settings.
