@@ -11,6 +11,9 @@ alias nv="nvim ."
 alias afc='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE; echo "AWS credentials cleared"'
 alias afp='echo "Current AWS_PROFILE: ${AWS_PROFILE:-none}"'
 
+# Tmux
+alias s='tmux send-keys C-Space s'
+
 # Bat
 # alias cat="bat"
 

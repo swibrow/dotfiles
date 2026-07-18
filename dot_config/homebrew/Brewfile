@@ -1,243 +1,470 @@
-tap "anomalyco/tap"
-tap "aws/tap"
-tap "barutsrb/tap"
-tap "certak-com/kafkio"
-tap "clowdhaus/taps"
-tap "dart-lang/dart"
-tap "dnd-it/tap"
-tap "env0/terratag"
-tap "fairwindsops/tap"
-tap "fluxcd/tap"
-tap "gromgit/brewtils"
-tap "hcavarsan/kftray"
-tap "helm/tap"
-tap "infisical/get-cli"
-tap "jesseduffield/lazygit"
-tap "johanhaleby/kubetail"
-tap "lance0/tap"
-tap "localstack/tap"
-tap "mk-5/mk-5"
-tap "mongodb/brew"
-tap "nikitabobko/tap"
-tap "norwoodj/tap"
-tap "oktadev/tap"
-tap "robscott/tap"
-tap "sass/sass"
-tap "siderolabs/tap"
-tap "sst/tap"
-tap "swibrow/tap"
-tap "tj-actions/tap"
-tap "vladimirvivien/oss-tools"
-tap "warrensbox/tap"
-tap "yakitrak/yakitrak"
+tap "anomalyco/tap", trusted: true
+tap "aws/tap", trusted: true
+tap "barutsrb/tap", "https://github.com/BarutSRB/homebrew-tap", trusted: true
+tap "certak-com/kafkio", trusted: true
+tap "clowdhaus/taps", trusted: true
+tap "dart-lang/dart", trusted: true
+tap "dnd-it/tap", trusted: true
+tap "env0/terratag", trusted: true
+tap "fairwindsops/tap", trusted: true
+tap "fluxcd/tap", trusted: true
+tap "go-task/tap", trusted: true
+tap "gromgit/brewtils", trusted: true
+tap "hcavarsan/kftray", trusted: true
+tap "helm/tap", trusted: true
+tap "infisical/get-cli", trusted: true
+tap "jesseduffield/lazygit", trusted: true
+tap "johanhaleby/kubetail", trusted: true
+tap "kanidm/kanidm"
+tap "lance0/tap", trusted: true
+tap "localstack/tap", trusted: true
+tap "mk-5/mk-5", trusted: true
+tap "modem-dev/tap"
+tap "mongodb/brew", trusted: true
+tap "nikitabobko/tap", trusted: true
+tap "norwoodj/tap", trusted: true
+tap "oktadev/tap", "https://github.com/oktadev/homebrew-tap.git", trusted: true
+tap "postfinance/tap"
+tap "robscott/tap", trusted: true
+tap "robusta-dev/krr"
+tap "sass/sass", trusted: true
+tap "siderolabs/tap", trusted: true
+tap "sst/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
+tap "swibrow/tap", trusted: true
+tap "tj-actions/tap", trusted: true
+tap "vladimirvivien/oss-tools", trusted: true
+tap "warrensbox/tap", trusted: true
+tap "yakitrak/yakitrak", trusted: true
+# Run your GitHub Actions locally
 brew "act"
-brew "age"
-brew "icu4c@77"
-brew "openssl@3"
-brew "xz"
-brew "node", link: false
-brew "angular-cli"
-brew "aom"
-brew "argocd"
-brew "argocd-autopilot"
-brew "atuin"
-brew "pycparser"
-brew "aws-sam-cli"
-brew "awscli"
-brew "awscurl"
-brew "bash"
-brew "bat"
-brew "bottom"
-brew "btop"
-brew "bzip2"
-brew "carapace"
-brew "chart-releaser"
-brew "chart-testing"
-brew "chezmoi"
-brew "circleci"
-brew "cocoapods"
-brew "cookiecutter"
-brew "coreutils"
-brew "direnv"
-brew "docker"
-brew "docutils"
-brew "eksctl"
-brew "eza"
-brew "fastfetch"
-brew "fd"
-brew "fluent-bit"
-brew "fzf"
-brew "gcalcli"
-brew "libavif"
-brew "gh"
-brew "pango"
-brew "ghostscript"
-brew "git"
-brew "glances"
-brew "glow"
-brew "unbound"
-brew "gnutls"
-brew "libassuan"
-brew "pinentry"
-brew "gnupg"
-brew "go"
-brew "goaccess"
-brew "golangci-lint"
-brew "librsvg"
-brew "graphviz"
-brew "gum"
-brew "hadolint"
-brew "helix"
-brew "helm"
-brew "hey"
-brew "htop"
-brew "hugo"
-brew "imagemagick"
-brew "infracost"
-brew "inframap"
-brew "ios-deploy"
-brew "ipcalc"
-brew "iperf"
-brew "iperf3"
-brew "jira-cli"
-brew "jq"
-brew "just"
-brew "k6"
-brew "k9s"
-brew "kind"
-brew "ktop"
-brew "kubebuilder"
-brew "kubeconform"
-brew "kubectx"
-brew "kubernetes-cli"
-brew "kubeval"
-brew "kubie"
-brew "kustomize"
-brew "lazygit"
-brew "libffi"
-brew "libfido2"
-brew "libxmlsec1"
-brew "llmfit"
-brew "localstack"
-brew "logstash"
-brew "luarocks"
-brew "macchina"
-brew "make"
-brew "mariadb-connector-c"
-brew "openjdk"
-brew "maven"
-brew "mise"
-brew "mkcert"
-brew "models"
-brew "mongosh"
-brew "mtr"
-brew "mycli"
-brew "ncspot"
-brew "neofetch"
-brew "neovim"
-brew "nmap"
-brew "python@3.10"
-brew "node@14"
-brew "node@18"
-brew "node@20"
-brew "oha"
-brew "ollama"
-brew "openjdk@17"
-brew "parallel"
-brew "pgcli"
-brew "pinentry-mac"
-brew "pipx"
-brew "postgresql@14"
-brew "postgresql@17", link: true
-brew "pre-commit"
-brew "pulumi"
-brew "pv"
-brew "python@3.11"
-brew "qrencode"
-brew "rainfrog"
-brew "renovate"
-brew "ripgrep"
-brew "sentry-cli"
-brew "sesh"
-brew "sha2"
+# Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
-brew "socat"
-brew "sops"
-brew "starship"
-brew "stow"
-brew "t-rec"
-brew "telnet"
-brew "terminal-notifier"
-brew "terraform-docs"
-brew "tfk8s"
-brew "tflint"
-brew "the_silver_searcher"
-brew "tldr"
-brew "tmux"
-brew "tree"
+# Static checker for GitHub Actions workflow files
+brew "actionlint"
+# Simple, modern, secure file encryption
+brew "age"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
+# GitOps Continuous Delivery for Kubernetes
+brew "argocd"
+# Opinionated way of installing Argo CD and managing GitOps repositories
+brew "argocd-autopilot"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
+# Mozilla CA certificate store
+brew "ca-certificates"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
+# C parser in Python
+brew "pycparser"
+# General-purpose data compression with high compression ratio
+brew "xz"
+# CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
+brew "aws-sam-cli"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Curl like simplicity to access AWS resources
+brew "awscurl"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Yet another cross-platform graphical process/system monitor
+brew "bottom"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# New way of working with Protocol Buffers
+brew "buf"
+# Freely available high-quality data compressor
+brew "bzip2"
+# Multi-shell multi-command argument completer
+brew "carapace"
+# Hosting Helm Charts via GitHub Pages and Releases
+brew "chart-releaser"
+# Testing and linting Helm charts
+brew "chart-testing"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Cross-platform make
+brew "cmake"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
+# Create and run Linux containers using lightweight virtual machines
+brew "container"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# TIFF library and utilities
+brew "libtiff"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Text processing system for reStructuredText
+brew "docutils"
+# Simple command-line tool for creating clusters on Amazon EKS
+brew "eksctl"
+# Modern, maintained replacement for ls
+brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Easily access your Google Calendar(s) from a command-line
+brew "gcalcli"
+# Library for encoding and decoding .avif files
+brew "libavif"
+# GitHub command-line tool
+brew "gh"
+# Framework for layout and rendering of i18n text
+brew "pango"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
+# Distributed revision control system
+brew "git"
+# Highly customizable changelog generator
+brew "git-cliff"
+# Alternative to top/htop
+brew "glances"
+# Render markdown on the CLI
+brew "glow"
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
+# Assuan IPC Library
+brew "libassuan"
+# Passphrase entry dialog utilizing the Assuan protocol
+brew "pinentry"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Log analyzer and interactive viewer for the Apache Webserver
+brew "goaccess"
+# Fast linters runner for Go
+brew "golangci-lint"
+# Library to render SVG files using Cairo
+brew "librsvg"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
+# Tool for glamorous shell scripts
+brew "gum"
+# Smarter Dockerfile linter to validate best practices
+brew "hadolint"
+# Post-modern modal text editor
+brew "helix"
+# Kubernetes package manager
+brew "helm"
+# HTTP load generator, ApacheBench (ab) replacement
+brew "hey"
+# Improved top (interactive process viewer)
+brew "htop"
+# Configurable static site generator
+brew "hugo"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# Cost estimates for Terraform, Terragrunt, and CloudFormation
+brew "infracost"
+# Read your tfstate or HCL to generate a graph
+brew "inframap"
+# Install and debug iPhone apps from the command-line
+brew "ios-deploy"
+# Calculate various network masks, etc. from a given IP address
+brew "ipcalc"
+# Tool to measure maximum TCP and UDP bandwidth
+brew "iperf"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Feature-rich interactive Jira CLI
+brew "jira-cli"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
+# Modern load testing tool, using Go and JavaScript
+brew "k6"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Run local Kubernetes cluster in Docker
+brew "kind"
+# Top-like tool for your Kubernetes clusters
+brew "ktop"
+# SDK for building Kubernetes APIs using CRDs
+brew "kubebuilder"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# Tool that can switch between kubectl contexts easily and create aliases
+brew "kubectx"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Logging tool for Kubernetes with a real-time web dashboard
+brew "kubetail"
+# Much more powerful alternative to kubectx and kubens
+brew "kubie"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Provides library functionality for FIDO U2F & FIDO 2.0, including USB
+brew "libfido2"
+# XML security library
+brew "libxmlsec1"
+# Find what models run on your hardware
+brew "llmfit"
+# Tool for managing events and logs
+brew "logstash"
+# Package manager for the Lua programming language
+brew "luarocks"
+# System information fetcher, with an emphasis on performance and minimalism
+brew "macchina"
+# Utility for directing compilation
+brew "make"
+# MariaDB database connector for C applications
+brew "mariadb-connector-c"
+# Development kit for the Java programming language
+brew "openjdk"
+# Java-based project management
+brew "maven"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
+# Fast TUI and CLI for browsing AI models, benchmarks, and coding agents
+brew "models"
+# 'traceroute' and 'ping' in a single tool
+brew "mtr"
+# CLI for MySQL with auto-completion and syntax highlighting
+brew "mycli"
+# Open source relational database management system
+brew "mysql"
+# Open source relational database management system
+brew "mysql@8.4"
+# Cross-platform ncurses Spotify client written in Rust
+brew "ncspot"
+# Incremental parsing library
 brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Port scanning utility for large networks
+brew "nmap"
+# Manage multiple Node.js versions
+brew "nvm"
+# HTTP load generator, inspired by rakyll/hey with tui animation
+brew "oha"
+# Create, run, and share large language models (LLMs)
+brew "ollama"
+# Development kit for the Java programming language
+brew "openjdk@17"
+# Shell command parallelization utility
+brew "parallel"
+# CLI for Postgres with auto-completion and syntax highlighting
+brew "pgcli"
+# Pinentry for GPG on Mac
+brew "pinentry-mac"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# Object-relational database system
+brew "postgresql@17", link: true
+# Object-relational database system
+brew "postgresql@18"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
+# Cloud native development platform
+brew "pulumi"
+# Monitor data's progress through a pipe
+brew "pv"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
+# QR Code generation
+brew "qrencode"
+# Database management TUI for PostgreSQL/MySQL/SQLite
+brew "rainfrog"
+# Automated dependency updates. Flexible so you don't need to be
+brew "renovate"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Command-line utility to interact with Sentry
+brew "sentry-cli"
+# Smart session manager for the terminal
+brew "sesh"
+# Work with remote images registries
+brew "skopeo"
+# SOcket CAT: netcat on steroids
+brew "socat"
+# Editor of encrypted files
+brew "sops"
+# Non-interactive SSH password auth
+brew "sshpass"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# Blazingly fast terminal recorder that generates animated gif images for the web
+brew "t-rec"
+# General purpose fuzzy finder TUI
+brew "television"
+# User interface to the TELNET protocol
+brew "telnet"
+# Send macOS User Notifications from the command-line
+brew "terminal-notifier"
+# Tool to generate documentation from Terraform modules
+brew "terraform-docs"
+# Kubernetes YAML manifests to Terraform HCL converter
+brew "tfk8s"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# High-performance data structure server that primarily serves key/value workloads
 brew "valkey"
+# Tool for creating isolated virtual python environments
 brew "virtualenv"
+# Executes a program periodically, showing output fullscreen
 brew "watch"
+# Watch files and take action when they change
 brew "watchman"
+# Command-line client for WebSockets
 brew "websocat"
+# Internet file retriever
 brew "wget"
+# Userspace Go implementation of WireGuard
 brew "wireguard-go"
+# Tools for the WireGuard secure network tunnel
 brew "wireguard-tools"
+# CLI for Git worktree management, designed for parallel AI agent workflows
 brew "worktrunk"
+# Linter for YAML files
 brew "yamllint"
+# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
+# General-purpose lossless data-compression library
 brew "zlib"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# UNIX shell (command interpreter)
 brew "zsh"
+# Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# Additional completion definitions for zsh
 brew "zsh-completions"
+# Feature-rich syntax highlighting for Zsh
 brew "zsh-fast-syntax-highlighting"
+# The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode"
+# eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
-brew "clowdhaus/taps/eksup"
+# Launchpad CLI — deploy apps to the PaaS platform
+brew "dnd-it/tap/launchpad"
+# Complete suite of AWS and Kubernetes productivity tools - Tamedia Edition
 brew "dnd-it/tap/tamedia-tools"
+# Automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources on Terraform
 brew "env0/terratag/terratag"
+# Detect deprecated Kubernetes apiVersions
 brew "fairwindsops/tap/pluto"
-brew "fluxcd/tap/flux", link: false
+# Flux CLI
 brew "fluxcd/tap/flux@0.41", link: true
+# Interactive TUI for Homebrew
 brew "gromgit/brewtils/taproom"
+# TUI application for managing multiple kubectl port-forward configurations
 brew "hcavarsan/kftray/kftui"
+# The official Infisical CLI
 brew "infisical/get-cli/infisical"
-brew "johanhaleby/kubetail/kubetail", args: ["with-short-names"]
+# Kanidm CLI
+brew "kanidm/kanidm/kanidm", trusted: true
+# Modern traceroute/mtr-style TUI with hop stats and ASN/geo enrichment
 brew "lance0/tap/ttl"
 brew "mk-5/mk-5/fjira"
+# Desktop-inspired terminal diff viewer for agent-authored changesets
+brew "modem-dev/tap/hunk", trusted: true
+# Automatically generate markdown documentation for helm charts
 brew "norwoodj/tap/helm-docs"
+# kube-capacity provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
 brew "robscott/tap/kube-capacity"
+# Kubernetes Resource Recommender by Robusta
+brew "robusta-dev/krr/krr", trusted: true
+# Stylesheet Preprocessor
 brew "sass/sass/sass"
+# CLI for out-of-band management of Kubernetes nodes created by Talos
 brew "siderolabs/tap/talosctl"
+# TUI for monitoring and resuming Claude Code agent sessions in tmux
 brew "swibrow/tap/agent-ops"
+# Terminal UI for GitHub Actions
+brew "swibrow/tap/gha", trusted: true
+# Generate markdown tables for your Github action and reusable workflow with ease.
 brew "tj-actions/tap/auto-doc"
-brew "yakitrak/yakitrak/obsidian-cli"
-cask "nikitabobko/tap/aerospace"
-cask "warrensbox/tap/tfswitch"
-cask "amethyst"
-cask "aptakube"
+brew "yakitrak/yakitrak/notesmd-cli", link: false
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace", trusted: true
+# Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+# Open source IDE for exploring and testing APIs
 cask "bruno"
+# OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Create and run Linux containers using lightweight virtual machines
 cask "container"
+# Launch builds and start simulators from your menu bar
 cask "expo-orbit"
+# Utility for customizing which browser to start
 cask "finicky"
 cask "font-hack-nerd-font"
 cask "font-meslo-lg-nerd-font"
+# Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Free and open-source image editor
 cask "gimp"
+# UI for Kubernetes
+cask "headlamp"
+# Keyboard customiser
 cask "karabiner-elements"
+# Open-source keystroke visualiser
 cask "keycastr"
-cask "mongodb-compass"
+# Visual tool to design, develop and administer MySQL servers
 cask "mysqlworkbench"
+# Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
+# Open-source software for live streaming and screen recording
 cask "obs"
 cask "oktadev/tap/okta"
-cask "barutsrb/tap/omniwm"
+# Tiling window manager for macOS with Niri-inspired column-based layout
+cask "barutsrb/tap/omniwm", trusted: true
+# Whisper dictation/transcription app
+cask "opensuperwhisper"
+# Utility to uninstall apps and remove leftover files from old/uninstalled apps
 cask "pearcleaner"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Mesh VPN based on WireGuard
 cask "tailscale-app"
+# The tfswitch command lets you switch between terraform versions.
+cask "warrensbox/tap/tfswitch", trusted: true
+# Talos Orchestrator by PostFinance
+cask "postfinance/tap/topf", trusted: true
+# Binary releases of VS Code without MS branding/telemetry/licensing
+cask "vscodium"
+# GPU-accelerated cross-platform terminal emulator and multiplexer
+cask "wezterm"
+# Network monitoring and troubleshooting tool
+cask "wifiman"
+# Multiplayer code editor
+cask "zed"
+go "cmd/go"
+go "cmd/gofmt"
+uv "mempalace"
+npm "corepack"

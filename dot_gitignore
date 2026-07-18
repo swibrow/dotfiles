@@ -3,13 +3,12 @@
 .env*
 !.env.example
 
+# Local settings overrides (e.g. .claude/settings.local.json)
+*.local.json
+
 # OS generated files
 .DS_Store
 .temp
-
-# Claude
-.claude/
-.mcp.json
 
 # Logs
 logs
@@ -29,8 +28,3 @@ node_modules/
 *.njsproj
 *.sln
 *.sw?
-# OS specific
-
-# Task files
-# tasks.json
-# tasks/ 
