@@ -2,6 +2,9 @@
 alias zconfig="code ~/.zshrc"
 alias zreload="source ~/.zshrc"
 
+# Topgrade: one-shot upgrade of everything (brew, mise, etc.)
+alias upgrade="topgrade"
+
 # Open editors
 alias cu="cursor ."
 alias co="code ."

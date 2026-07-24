@@ -327,6 +327,8 @@ brew "terraform-docs"
 brew "tfk8s"
 # Terminal multiplexer
 brew "tmux"
+# Upgrade all the things
+brew "topgrade"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Validating, recursive, caching DNS resolver
