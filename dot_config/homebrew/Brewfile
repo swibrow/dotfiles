@@ -43,8 +43,6 @@ brew "shellcheck"
 brew "actionlint"
 # Simple, modern, secure file encryption
 brew "age"
-# Plugin manager for zsh, inspired by antigen and antibody
-brew "antidote"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # GitOps Continuous Delivery for Kubernetes
@@ -87,16 +85,12 @@ brew "chart-releaser"
 brew "chart-testing"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
-# Enables you to reproduce the CircleCI environment locally
-brew "circleci"
 # Cross-platform make
 brew "cmake"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
 # Create and run Linux containers using lightweight virtual machines
 brew "container"
-# Utility that creates projects from templates
-brew "cookiecutter"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # TIFF library and utilities
