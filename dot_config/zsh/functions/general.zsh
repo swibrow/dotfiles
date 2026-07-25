@@ -95,6 +95,43 @@ gh-browse() {
   gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
 }
 
+# Assume an IAM role and export its credentials into the current shell.
+# Pass a role ARN, or omit it to pick one with fzf.
+function aws-assume {
+  local role_arn="$1"
+  if [ -z "$role_arn" ]; then
+    role_arn=$(aws iam list-roles --query 'Roles[].Arn' --output text | tr '\t' '\n' | sort | fzf --prompt="role> ")
+  fi
+  [ -n "$role_arn" ] || return 1
+
+  local creds
+  creds=$(aws sts assume-role \
+    --role-arn "$role_arn" \
+    --role-session-name "${USER}-${$}" \
+    --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
+    --output text) || return 1
+
+  # Static credentials and AWS_PROFILE together are ambiguous; park the profile
+  # so aws-unassume can put it back.
+  AWS_ASSUME_PREV_PROFILE="$AWS_PROFILE"
+  unset AWS_PROFILE
+  read -r AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN <<< "$creds"
+  export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+
+  echo "✓ Assumed: $(aws sts get-caller-identity --query Arn --output text)"
+}
+
+function aws-unassume {
+  unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+  if [ -n "$AWS_ASSUME_PREV_PROFILE" ]; then
+    export AWS_PROFILE="$AWS_ASSUME_PREV_PROFILE"
+    unset AWS_ASSUME_PREV_PROFILE
+    echo "✓ Credentials cleared, back on profile: $AWS_PROFILE"
+  else
+    echo "✓ Credentials cleared"
+  fi
+}
+
 # AWS profile switching function using native AWS CLI
 function af {
   # Get list of AWS profiles from ~/.aws/config

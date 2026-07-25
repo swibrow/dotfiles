@@ -1,10 +1,16 @@
 # Brewfile
 
-All packages managed by Homebrew, defined in `~/.config/homebrew/Brewfile`.
+All packages managed by Homebrew, split across two files:
+
+- `~/.config/homebrew/Brewfile` — cross-platform CLI tools, installed on both
+  the `osx` and `linux-dev` profiles.
+- `~/.config/homebrew/Brewfile.macos` — GUI casks and the handful of
+  macOS-only formulas, installed only on the `osx` profile.
 
 ## Regenerating
 
-After installing new packages:
+After installing new packages, dump and then manually move any new
+cask/macOS-only entries into `Brewfile.macos`:
 
 ```bash
 brew bundle dump --file=dot_config/homebrew/Brewfile --force --no-vscode
@@ -13,7 +19,7 @@ brew bundle dump --file=dot_config/homebrew/Brewfile --force --no-vscode
 !!! warning
     Always use `--no-vscode` to exclude VS Code extensions.
 
-The Brewfile is auto-installed during `chezmoi apply` via a hash-tracked run script.
+Both Brewfiles are auto-installed during `chezmoi apply` via a hash-tracked run script.
 
 ## Categories
 

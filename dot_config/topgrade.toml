@@ -1,0 +1,8 @@
+# One-shot upgrade of everything: `topgrade` (aliased to `upgrade`).
+# https://github.com/topgrade-rs/topgrade
+
+[misc]
+# softwareupdate prompts for sudo and can pull down large macOS updates
+# unexpectedly — handle OS updates manually instead.
+disable = ["system"]
+assume_yes = false

@@ -10,7 +10,8 @@ This will:
 
 1. Install chezmoi
 2. Clone the dotfiles repo to `~/.local/share/chezmoi`
-3. Prompt for user-specific data (email, name, GPG key)
+3. Prompt for user-specific data (email, name, GPG key), and on non-macOS,
+   the machine profile (default `linux-dev` — macOS always auto-selects `osx`)
 4. Run setup scripts in order
 5. Apply all dotfiles to the home directory
 
@@ -29,11 +30,15 @@ Creates the directory structure:
 
 ### Phase 1: Install Homebrew
 
-Installs Homebrew if not already present (macOS only).
+Installs Homebrew if not already present. Runs on the `osx` and `linux-dev`
+profiles (Homebrew's installer supports both macOS and Linux).
 
 ### Phase 2: Install Brewfile
 
-Runs `brew bundle` to install all packages from the [Brewfile](../reference/brewfile.md). This step is hash-tracked — it only re-runs when the Brewfile changes.
+Runs `brew bundle` to install all packages from the [Brewfile](../reference/brewfile.md).
+On the `osx` profile, also installs from `Brewfile.macos` (GUI casks and the
+handful of macOS-only formulas). This step is hash-tracked — it only re-runs
+when either Brewfile changes.
 
 ### Phase 3: Compile keyfreq
 

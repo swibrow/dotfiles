@@ -1,25 +1,20 @@
 [toplevel]
 
-assume-role = !f() { ~/.aws/assume-role.sh assume "$@"; }; f
-dai-dev = !f() { ~/.aws/assume-role.sh dai-dev "$@"; }; f
-dai-dev-eks = !f() { ~/.aws/assume-role.sh dai-dev-eks "$@"; }; f
-clear-creds = !f() { ~/.aws/assume-role.sh clear; }; f
-assume-help = !f() { ~/.aws/assume-role.sh help; }; f
+# Pickers (need fzf). Each prints its selection so it can be captured:
+#   export AWS_PROFILE=$(aws profile-pick)
+#   EKS_ROLE_ARN=$(aws role-pick eks) aws eks-update
+profile-list = !f() { awk '/^\[/{ if (n) print n, a, r; n=$0; gsub(/^\[(profile )?|\]$/, "", n); a="-"; r="-" } /sso_account_id/{ a=$0; sub(/.*=[ \t]*/, "", a) } /sso_role_name/{ r=$0; sub(/.*=[ \t]*/, "", r) } END{ if (n) print n, a, r }' ~/.aws/config | sort | column -t; }; f
+profile-pick = !f() { aws profile-list | fzf --height=15 --border --prompt="profile> " --query "${1:-}" | awk '{print $1}'; }; f
+role-pick = !f() { aws iam list-roles --query 'Roles[].Arn' --output text | tr '\t' '\n' | sort | fzf --height=15 --border --prompt="role> " --query "${1:-}"; }; f
+cluster-pick = !f() { region="${1:-}"; set --; [ -n "$region" ] && set -- --region "$region"; aws eks list-clusters "$@" --query 'clusters[]' --output text | tr '\t' '\n' | sort | fzf --height=15 --border --prompt="cluster> "; }; f
 
-eks-update = !f() { cluster="${1:-central-sandbox-68d23d2e}"; region="${2:-eu-central-1}"; role_arn="${3:-arn:aws:iam::911453050078:role/dai-dev-eks-access}"; aws eks update-kubeconfig --region "$region" --name "$cluster" --role-arn "$role_arn"; }; f
-eks-list = !f() { aws eks list-clusters --region "${1:-eu-central-1}"; }; f
-
-# Update kubeconfig for the DAI central-dev / central-prod clusters while staying
-# logged into Titan SSO; kubectl assumes a cross-account role into the DAI account.
-#   aws central-eks            # dev (default)
-#   aws central-eks prod
-# Overrides: DAI_EKS_ROLE_ARN, AWS_PROFILE/TITAN_PROFILE
-central-eks = !f() { env="${1:-dev}"; region="eu-central-1"; case "$env" in dev) cluster="central-dev-68ff06d4"; acct="851725213542";; prod) cluster="central-prod-6938f11a"; acct="730335665754";; *) echo "usage: aws central-eks [dev|prod]" >&2; return 1;; esac; profile="${TITAN_PROFILE:-${AWS_PROFILE:-titan_${env}-admin}}"; role="${DAI_EKS_ROLE_ARN:-arn:aws:iam::${acct}:role/dai-${env}-eks-access}"; aws eks update-kubeconfig --name "$cluster" --region "$region" --profile "$profile" --role-arn "$role" --alias "central-${env}"; }; f
-eks-config = !f() { ~/.local/bin/aws-eks-config "$@"; }; f
+# Pick an EKS cluster and update kubeconfig (context alias = cluster name).
+#   aws eks-update                       # region/profile from the environment
+#   aws eks-update eu-west-1
+#   EKS_ROLE_ARN=... aws eks-update      # cross-account: kubectl assumes that role
+eks-update = !f() { region="${1:-}"; cluster=$(aws cluster-pick "$region") || return 1; [ -n "$cluster" ] || return 1; set --; [ -n "$region" ] && set -- --region "$region"; [ -n "${EKS_ROLE_ARN:-}" ] && set -- "$@" --role-arn "$EKS_ROLE_ARN"; aws eks update-kubeconfig --name "$cluster" --alias "$cluster" "$@"; }; f
+eks-list = !f() { region="${1:-}"; set --; [ -n "$region" ] && set -- --region "$region"; aws eks list-clusters "$@" --query 'clusters[]' --output text | tr '\t' '\n'; }; f
 
 whoami = sts get-caller-identity
 identity = !f() { aws sts get-caller-identity --query '[Account,Arn,UserId]' --output table; }; f
 
-dev-profile = !f() { export AWS_PROFILE=dev; echo "Switched to dev profile"; }; f
-prod-profile = !f() { export AWS_PROFILE=prod; echo "Switched to prod profile"; }; f
-default-profile = !f() { unset AWS_PROFILE; echo "Using default profile"; }; f

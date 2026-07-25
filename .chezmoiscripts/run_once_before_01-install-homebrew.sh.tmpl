@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if or (eq .profile "osx") (eq .profile "linux-dev") -}}
 #!/bin/bash
 set -euo pipefail
 

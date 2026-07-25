@@ -32,13 +32,12 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 - `tmux-sesh <connect|window|start>` - sesh/fzf session picker (tmux bindings `s`/`f`; Ghostty launches `tmux-sesh start`)
 - `tmux-workspace <claude|dev>` - pick a `~/dev` project, open tmux window with claude/nvim layout (bindings `g`/`d`)
 - `tmux-cht`, `tmux-notes`, `tmux-scratch`, `tmux-bins`, `tmux-worktree-claude` - other tmux popup tools
-- `aws-eks-config` - interactive EKS kubeconfig setup (also via `aws eks-config` alias)
-- `aws-rds-connect` - interactive RDS connection via Secrets Manager
+- `aws-rds-connect` - interactive RDS connection via Secrets Manager (shares `aws-common.sh`)
 - `kubelog` - interactive kubectl log tailer
 - `keychain-secret` - macOS keychain secret helper
 - `claude-work`, `claude-tmux-mark` - Claude Code helpers
 
-AWS profile switching uses the `af` shell function (AWS SSO via the native CLI); see `dot_config/zsh/functions/general.zsh`. Kubernetes helpers (`kclean`, `kdebug`, `kadmin`, etc.) live in `dot_config/zsh/functions/kubectl.zsh`.
+AWS profile switching uses the `af` shell function (AWS SSO via the native CLI), role assumption `aws-assume`/`aws-unassume`; see `dot_config/zsh/functions/general.zsh`. EKS/profile/role pickers are fzf-based `aws` CLI aliases in `dot_aws/cli/alias`. Kubernetes helpers (`kclean`, `kdebug`, `kadmin`, etc.) live in `dot_config/zsh/functions/kubectl.zsh`.
 
 ### Brewfile Management
 - When regenerating the Brewfile, always use `--no-vscode` to exclude VS Code extensions:
@@ -56,7 +55,7 @@ AWS profile switching uses the `af` shell function (AWS SSO via the native CLI);
 - `*.tmpl` files are processed as Go templates with chezmoi data
 - `.chezmoiscripts/` contains run scripts (Homebrew install, brew bundle, etc.)
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
-- `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key)
+- `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key) and resolves the active machine `profile` (`osx` on macOS, always; prompted on other OSes, defaulting to `linux-dev`). `.profile` gates which packages (Brewfile vs Brewfile.macos) and macOS-only app configs get installed — see `.chezmoiignore`
 - Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise run secret:set` / `secret:rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
 - AWS credentials managed via AWS SSO (`aws sso login`); profile switching via the `af` function
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)
