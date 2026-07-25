@@ -34,51 +34,38 @@ aws whoami      # Quick: sts get-caller-identity
 aws identity    # Full: identity in table format
 ```
 
-### Profile Switching
+### Profiles
+
+Parsed from `~/.aws/config`, showing SSO account and role alongside each name:
 
 ```bash
-aws dev-profile       # Set AWS_PROFILE=dev
-aws prod-profile      # Set AWS_PROFILE=prod
-aws default-profile   # Unset AWS_PROFILE
+aws profile-list             # name / sso_account_id / sso_role_name, aligned
+aws profile-pick [query]     # same list through fzf, prints the name only
+export AWS_PROFILE=$(aws profile-pick)
 ```
+
+Use `af` to switch and handle SSO login - an `aws` alias runs in a subprocess and
+cannot change the current shell.
 
 ### EKS
 
 ```bash
-aws eks-list                              # List clusters in current region
-aws eks-update <cluster> <region> <role>  # Update kubeconfig
-aws eks-config                            # Interactive configuration script
+aws eks-list [region]                     # List clusters
+aws eks-update [region]                   # Pick a cluster (fzf) and update kubeconfig
+
+EKS_ROLE_ARN=$(aws role-pick eks) aws eks-update   # cross-account: kubectl assumes that role
 ```
 
-### Role Assumption
+## Role Assumption
+
+Shell functions (`dot_config/zsh/functions/general.zsh`), not CLI aliases: the
+credentials have to land in the current shell, and `aws` aliases run in a subprocess.
 
 ```bash
-aws assume-role <role>   # Assume an IAM role
-aws dai-dev              # Shortcut: assume dev role
-aws dai-dev-eks          # Shortcut: assume dev EKS role
-aws clear-creds          # Clear cached credentials
+aws-assume                          # pick a role with fzf, export its credentials
+aws-assume arn:aws:iam::123:role/X  # or pass the ARN
+aws-unassume                        # drop the credentials, restore AWS_PROFILE
 ```
-
-## EKS Configuration Script
-
-The `aws-eks-config` script provides interactive EKS cluster setup:
-
-```bash
-aws-eks-config
-aws-eks-config -r eu-west-1                    # Specify region
-aws-eks-config -R arn:aws:iam::123:role/Admin   # With role
-aws-eks-config --role-lookup                     # Interactive role picker
-aws-eks-config -a my-cluster-alias              # Custom context name
-aws-eks-config -l                               # List clusters only
-```
-
-Features:
-
-- Interactive cluster selection with fzf
-- Region configuration
-- IAM role assumption
-- Kubeconfig context aliasing
-- Auth verification after configuration
 
 ## Max Pods Calculator
 

@@ -62,10 +62,6 @@ Launches the Claude desktop app with the work configuration (`CLAUDE_CONFIG_DIR=
 
 ## AWS Scripts
 
-### `aws-eks-config`
-
-Interactive EKS cluster configuration. See [AWS docs](../cloud/aws.md#eks-configuration-script).
-
 ### `aws-rds-connect`
 
 Interactive RDS connection tool — picks an instance and a Secrets Manager secret for credentials via fzf.
