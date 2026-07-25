@@ -10,9 +10,6 @@ mkdocs.yml
 site/**
 .venv/**
 
-# Binary / runtime data
-.config/how/memory.db
-
 # OS-specific
 {{ if ne .chezmoi.os "darwin" }}
 .config/aerospace/**

@@ -106,8 +106,6 @@ source $HOME/.config/zsh/functions/terraform.zsh
 source $HOME/.config/zsh/functions/talos.zsh
 source $HOME/.config/zsh/aliases.zsh
 
-alias tm='task-master'
-
 # Plugins (from brew)
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOMEBREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh

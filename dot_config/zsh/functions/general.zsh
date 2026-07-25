@@ -95,7 +95,45 @@ gh-browse() {
   gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
 }
 
+gcm() { git checkout "$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')" }
+
+# zoxide: make `z` open the interactive fzf picker (fuzzy find), like `zi`.
+#   z        → fuzzy-find across the whole directory db
+#   z foo    → pre-filter the db to "foo" matches, then fuzzy-find in fzf
+# Use `\z foo` or `zz foo` for a direct (non-interactive) jump.
+z()  { __zoxide_zi "$@"; }
+zz() { __zoxide_z  "$@"; }
+
+# Claude Code: yolo agent in a fresh worktrunk worktree, opened in a new
+# tmux window of the current session (runs inline if not inside tmux)
+# Usage: cyolo                    # auto-named worktree, interactive
+#        cyolo my-feature         # named worktree
+#        cyolo my-feature "..."   # named worktree + initial prompt
+cyolo() {
+  local name=""
+  if [[ -n "$1" && "$1" != -* ]]; then
+    name="$1"; shift
+  fi
+  [[ -z "$name" ]] && name="yolo-$(date +%m%d-%H%M%S)"
+
+  local -a claude_args=(--dangerously-skip-permissions --remote-control "$@")
+
+  if [[ -z "$TMUX" ]]; then
+    wt switch --create "$name" -x claude -- "${claude_args[@]}"
+    return
+  fi
+
+  local cmd="wt switch --create ${(q)name} -x claude --"
+  local arg
+  for arg in "${claude_args[@]}"; do
+    cmd+=" ${(q)arg}"
+  done
+  tmux new-window -n "$name" -c "$PWD" "$cmd"
+}
+
 # AWS profile switching function using native AWS CLI
+alias afc='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE; echo "AWS credentials cleared"'
+alias afp='echo "Current AWS_PROFILE: ${AWS_PROFILE:-none}"'
 function af {
   # Get list of AWS profiles from ~/.aws/config
   local profile=$(aws configure list-profiles | fzf)

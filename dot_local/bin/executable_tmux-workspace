@@ -6,11 +6,10 @@
 
 layout="${1:-claude}"
 
-selected_dir=$(cd ~/dev; fd -t d -d 2 . --color=always | fzf --ansi --highlight-line -e)
-[[ -z "$selected_dir" ]] && { echo "No directory selected"; exit 0 }
+full_path=$("$(dirname "$0")/dev-pick")
+[[ -z "$full_path" ]] && { echo "No directory selected"; exit 0 }
 
-full_path="$HOME/dev/$selected_dir"
-dir_basename=$(basename "$selected_dir")
+dir_basename=$(basename "$full_path")
 
 tmux new-window -a -n "$dir_basename" -c "$full_path" -k
 

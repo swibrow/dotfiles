@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+# Pick a directory (depth 2) under ~/dev with fzf.
+# Prints the absolute path, or nothing if cancelled. Extra args pass through to fzf.
+
+selected_dir=$(cd ~/dev; fd -t d -d 2 . --color=always | fzf --ansi --highlight-line -e "$@")
+[[ -z "$selected_dir" ]] && exit 0
+
+echo "$HOME/dev/$selected_dir"

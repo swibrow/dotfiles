@@ -20,13 +20,13 @@ The mise config in each work directory:
 # ~/dev/dnd-it/.mise.toml
 [env]
 CLAUDE_CONFIG_DIR = "{{env.HOME}}/.claude_work"
-ANTHROPIC_API_KEY = "{{exec(command='security find-generic-password -s env -a ANTHROPIC_API_KEY -w', cache_key='ANTHROPIC_API_KEY')}}"
+ANTHROPIC_API_KEY = { age = "..." }
 ```
 
-The API key is stored in the macOS login keychain (service `env`, account = variable name) and injected at shell time — never committed to disk. Use the `keychain-secret` script to manage it:
+The API key is age-encrypted directly in the mise config — never committed as plaintext. Use the `secret:set` mise task (defined in `dot_config/mise/config.toml`) to manage it:
 
 ```bash
-keychain-secret set ANTHROPIC_API_KEY
+mise run secret:set ANTHROPIC_API_KEY
 ```
 
 !!! note "First-time setup"

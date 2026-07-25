@@ -1,62 +1,24 @@
-tf_init() {
-  if [[ $# -ne 2 ]]; then
-    echo "Usage: tf_init STACK ENVIRONMENT"
+_tf_run() {
+  local action=$1 stack=$2 environment=$3
+  if [[ $# -ne 3 ]]; then
+    echo "Usage: tf_$action STACK ENVIRONMENT"
     return 1
   fi
-  
-  local STACK=$1
-  local ENVIRONMENT=$2
-  
+
   (
-    cd "$STACK" || { echo "Error: Directory $STACK not found"; return 1; }
-    terraform init -backend-config=environments/${ENVIRONMENT}.s3.tfbackend -var-file=environments/${ENVIRONMENT}.tfvars -reconfigure
+    cd "$stack" || { echo "Error: Directory $stack not found"; return 1; }
+    if [[ "$action" == "init" ]]; then
+      terraform init -backend-config=environments/${environment}.s3.tfbackend -var-file=environments/${environment}.tfvars -reconfigure
+    else
+      terraform "$action" -var-file=environments/${environment}.tfvars
+    fi
   )
 }
 
-tf_plan() {
-  if [[ $# -ne 2 ]]; then
-    echo "Usage: tf_plan STACK ENVIRONMENT"
-    return 1
-  fi
-  
-  local STACK=$1
-  local ENVIRONMENT=$2
-  
-  (
-    cd "$STACK" || { echo "Error: Directory $STACK not found"; return 1; }
-    terraform plan -var-file=environments/${ENVIRONMENT}.tfvars
-  )
-}
-
-tf_apply() {
-  if [[ $# -ne 2 ]]; then
-    echo "Usage: tf_apply STACK ENVIRONMENT"
-    return 1
-  fi
-  
-  local STACK=$1
-  local ENVIRONMENT=$2
-  
-  (
-    cd "$STACK" || { echo "Error: Directory $STACK not found"; return 1; }
-    terraform apply -var-file=environments/${ENVIRONMENT}.tfvars
-  )
-}
-
-tf_destroy() {
-  if [[ $# -ne 2 ]]; then
-    echo "Usage: tf_destroy STACK ENVIRONMENT"
-    return 1
-  fi
-  
-  local STACK=$1
-  local ENVIRONMENT=$2
-  
-  (
-    cd "$STACK" || { echo "Error: Directory $STACK not found"; return 1; }
-    terraform destroy -var-file=environments/${ENVIRONMENT}.tfvars
-  )
-}
+tf_init()    { _tf_run init    "$@" }
+tf_plan()    { _tf_run plan    "$@" }
+tf_apply()   { _tf_run apply   "$@" }
+tf_destroy() { _tf_run destroy "$@" }
 
 clean_terraform() {
   read "confirm?Are you sure you want to delete all .terraform.lock.hcl files and .terraform directories? (y/n) "
@@ -68,4 +30,3 @@ clean_terraform() {
     echo "Clean operation aborted."
   fi
 }
-

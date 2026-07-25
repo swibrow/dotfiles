@@ -49,7 +49,7 @@ Displays manual steps:
 
 - Restart terminal or `source ~/.zshrc`
 - Install tmux plugins: ++prefix+shift+i++
-- Add secrets to macOS keychain via `keychain-secret set <NAME>`
+- Add secrets via `mise run secret:set <NAME>` (age-encrypted into the mise config)
 - Import shell history into zoxide and atuin
 
 ## Post-Install Manual Steps

@@ -4,10 +4,8 @@
 # and open a new tmux window in that worktree running claude.
 # Works from any session/window regardless of the current pane's repo.
 
-selected_dir=$(cd ~/dev; fd -t d -d 2 . --color=always | fzf --ansi --highlight-line -e --prompt="repo> ")
-[[ -z "$selected_dir" ]] && { echo "No repo selected"; exit 0 }
-
-repo_path="$HOME/dev/$selected_dir"
+repo_path=$("$(dirname "$0")/dev-pick" --prompt="repo> ")
+[[ -z "$repo_path" ]] && { echo "No repo selected"; exit 0 }
 
 read "branch?new worktree branch: "
 [[ -z "$branch" ]] && { echo "No branch given"; exit 0 }

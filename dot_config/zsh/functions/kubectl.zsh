@@ -18,6 +18,32 @@ kremovefinalizers() {
   kubectl patch $1 $2 -p '{"metadata":{"finalizers":[]}}' --type=merge
 }
 
+# kg/kd: short dispatchers for `kubectl get`/`kubectl describe` on common
+# resource types. `kgp`/`kdp` etc. in aliases.zsh delegate here.
+kg() {
+  case "$1" in
+    p) shift; kubectl get pods "$@" ;;
+    s) shift; kubectl get svc "$@" ;;
+    c) shift; kubectl get configmap "$@" ;;
+    i) shift; kubectl get ingress "$@" ;;
+    n) shift; kubectl get nodes "$@" ;;
+    r) shift; kubectl get rs "$@" ;;
+    *) kubectl get "$@" ;;
+  esac
+}
+
+kd() {
+  case "$1" in
+    p) shift; kubectl describe pod "$@" ;;
+    s) shift; kubectl describe svc "$@" ;;
+    c) shift; kubectl describe configmap "$@" ;;
+    i) shift; kubectl describe ingress "$@" ;;
+    n) shift; kubectl describe nodes "$@" ;;
+    r) shift; kubectl describe rs "$@" ;;
+    *) kubectl describe "$@" ;;
+  esac
+}
+
 kdelete_namespaces_with_prefix() {
     local prefix=$1
     if [ -z "$prefix" ]; then
@@ -95,58 +121,40 @@ kdelete_empty_namespaces() {
     local resources=$(kubectl get all -n $ns 2>/dev/null)
     local resource_count=$(echo "$resources" | grep -v "No resources found" | wc -l)
 
-    # Check specifically for any resources not caught by 'kubectl get all'
-    # Some resources aren't included in 'get all' like secrets, configmaps, etc.
-    local additional_types=(
-      # "configmaps"
-      # "secrets"
-      "persistentvolumeclaims"
-      # "roles"
-      # "rolebindings"
-      # "serviceaccounts"
-    )
-
     local has_resources=false
     if [[ $resource_count -gt 1 ]]; then  # Count > 1 because the header line is counted
       has_resources=true
       echo "  - Found resources via 'kubectl get all'"
     else
-      # Check additional resource types
-      for resource in $additional_types; do
-        local count=$(kubectl get $resource -n $ns -o name 2>/dev/null | wc -l)
-        if [[ $count -gt 0 ]]; then
-          has_resources=true
-          echo "  - Found $count $resource"
-          break
-        fi
-      done
+      # PVCs aren't included in 'kubectl get all', check separately
+      local pvc_count=$(kubectl get persistentvolumeclaims -n $ns -o name 2>/dev/null | wc -l)
+      if [[ $pvc_count -gt 0 ]]; then
+        has_resources=true
+        echo "  - Found $pvc_count persistentvolumeclaims"
+      fi
     fi
 
-    if [[ $has_resources == "false" ]]; then
-      echo "  ✅ Namespace '$ns' is empty"
-
-      # Auto-delete if --yes flag is provided, otherwise ask for confirmation
-      if [[ $auto_delete == true ]]; then
-        echo "  🗑️  Deleting empty namespace: $ns"
-        kubectl delete namespace $ns
-        deleted+=($ns)
-        ((empty_count++))
-      else
-        # Ask for confirmation before deleting
-        read -q "REPLY?  🗑️  Delete namespace '$ns'? (y/n) "
-        echo ""
-
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-          echo "  🗑️  Deleting empty namespace: $ns"
-          kubectl delete namespace $ns
-          deleted+=($ns)
-          ((empty_count++))
-        else
-          echo "  ⏭️  Skipping namespace: $ns"
-        fi
-      fi
-    else
+    if [[ $has_resources == "true" ]]; then
       echo "  ⏭️  Namespace '$ns' has resources, skipping"
+      continue
+    fi
+
+    echo "  ✅ Namespace '$ns' is empty"
+
+    local should_delete=$auto_delete
+    if [[ $auto_delete == false ]]; then
+      read -q "REPLY?  🗑️  Delete namespace '$ns'? (y/n) "
+      echo ""
+      [[ $REPLY =~ ^[Yy]$ ]] && should_delete=true
+    fi
+
+    if [[ $should_delete == true ]]; then
+      echo "  🗑️  Deleting empty namespace: $ns"
+      kubectl delete namespace $ns
+      deleted+=($ns)
+      ((empty_count++))
+    else
+      echo "  ⏭️  Skipping namespace: $ns"
     fi
   done
 
@@ -164,8 +172,13 @@ kdelete_empty_namespaces() {
   fi
 }
 
-kdebug() {
-  local image="busybox"
+# Shared arg-parsing for kdebug/kadmin: -n <namespace>, -i/--image <image>,
+# then either `-- cmd...` or trailing args as the command to run.
+_krun_ephemeral() {
+  local name_prefix=$1 default_image=$2 default_cmd=$3
+  shift 3
+
+  local image="$default_image"
   local -a ns_args=()
   local -a cmd=()
 
@@ -178,23 +191,11 @@ kdebug() {
     esac
   done
 
-  kubectl run -it --rm "debug-$(date +%s)" --image="$image" --restart=Never "${ns_args[@]}" -- "${cmd[@]:-sh}"
+  kubectl run -it --rm "${name_prefix}-$(date +%s)" --image="$image" --restart=Never "${ns_args[@]}" -- "${cmd[@]:-$default_cmd}"
 }
 
-kadmin() {
-  local -a ns_args=()
-  local -a cmd=()
-
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-      -n) ns_args=(-n "$2"); shift 2 ;;
-      --) shift; cmd=("$@"); break ;;
-      *) cmd=("$@"); break ;;
-    esac
-  done
-
-  kubectl run -it --rm "admin-$(date +%s)" --image=nicolaka/netshoot --restart=Never "${ns_args[@]}" -- "${cmd[@]:-bash}"
-}
+kdebug() { _krun_ephemeral debug busybox sh "$@" }
+kadmin() { _krun_ephemeral admin nicolaka/netshoot bash "$@" }
 
 inline_kubectl_editor() {
   local action=${1:-create}

@@ -85,7 +85,14 @@ keychain-secret set GITHUB_ACCESS_TOKEN    # Prompt and store
 keychain-secret get GITHUB_ACCESS_TOKEN    # Print value
 ```
 
-Read by mise configs via `exec()` to inject secrets as environment variables.
+Useful for ad hoc secrets outside mise. For secrets consumed by mise configs,
+prefer `mise run secret:set NAME` (defined in `dot_config/mise/config.toml`),
+which age-encrypts the value directly into the mise config and applies it:
+
+```bash
+mise run secret:set GITHUB_ACCESS_TOKEN    # prompt and age-encrypt into mise config
+mise run secret:rm GITHUB_ACCESS_TOKEN     # remove it
+```
 
 ### `kubelog`
 

@@ -57,6 +57,6 @@ AWS profile switching uses the `af` shell function (AWS SSO via the native CLI);
 - `.chezmoiscripts/` contains run scripts (Homebrew install, brew bundle, etc.)
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
 - `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key)
-- Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise run secret:set` / `secret:rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
+- Secrets are age-encrypted inline in `dot_config/mise/config.toml` via `mise run secret:set NAME` / `secret:rm NAME` (key at `~/.config/mise/age.txt`, not chezmoi-managed). The macOS Keychain (service=`env`, account=VAR_NAME) + `keychain-secret` helper is still available for ad hoc use outside mise, but is no longer the default for mise-consumed secrets.
 - AWS credentials managed via AWS SSO (`aws sso login`); profile switching via the `af` function
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)

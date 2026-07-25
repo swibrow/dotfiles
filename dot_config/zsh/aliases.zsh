@@ -1,24 +1,18 @@
 # Aliases
 alias zconfig="code ~/.zshrc"
-alias zreload="source ~/.zshrc"
+alias zreload="exec zsh"
 
 # Topgrade: one-shot upgrade of everything (brew, mise, etc.)
 alias upgrade="topgrade"
+alias tm='task-master'
 
 # Open editors
 alias cu="cursor ."
 alias co="code ."
 alias nv="nvim ."
 
-# AWS
-alias afc='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE; echo "AWS credentials cleared"'
-alias afp='echo "Current AWS_PROFILE: ${AWS_PROFILE:-none}"'
-
 # Tmux
 alias s='tmux send-keys C-Space s'
-
-# Bat
-# alias cat="bat"
 
 # Directory shortcuts
 alias ..="cd .."
@@ -26,18 +20,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-# zoxide: make `z` open the interactive fzf picker (fuzzy find), like `zi`.
-#   z        → fuzzy-find across the whole directory db
-#   z foo    → pre-filter the db to "foo" matches, then fuzzy-find in fzf
-# Use `\z foo` or `zz foo` for a direct (non-interactive) jump.
-z()  { __zoxide_zi "$@"; }
-zz() { __zoxide_z  "$@"; }
-
 # fzf
 alias f="fzf"
 alias ff="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 alias ft="fzf-tmux -p --preview 'bat --color=always --style=header,grid --line-range :500 {}'"
-# export FZF_CTRL_T_COMMAND=$(ft)
 
 alias y="yazi"
 
@@ -52,7 +38,6 @@ alias gpf="git push --force-with-lease"
 alias gl="git pull"
 alias gcaa="git commit --amend -a"
 alias gcaan="git commit --amend -an --no-edit"
-gcm() { git checkout "$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')" }
 
 alias ghpr="gh pr view --web 2>/dev/null || gh pr create --web"
 
@@ -70,20 +55,18 @@ alias kns="kubens"
 alias kt="kubetail"
 
 alias kgpa="kubectl get pods --all-namespaces"
-alias kg="kubectl get"
-alias kgp="kubectl get pods"
-alias kgs="kubectl get svc"
-alias kgc="kubectl get configmap"
-alias kgi="kubectl get ingress"
-alias kgn="kubectl get nodes"
-alias kgr="kubectl get rs"
-alias kd="kubectl describe"
-alias kdp="kubectl describe pod"
-alias kds="kubectl describe svc"
-alias kdc="kubectl describe configmap"
-alias kdi="kubectl describe ingress"
-alias kdn="kubectl describe nodes"
-alias kdr="kubectl describe rs"
+alias kgp="kg p"
+alias kgs="kg s"
+alias kgc="kg c"
+alias kgi="kg i"
+alias kgn="kg n"
+alias kgr="kg r"
+alias kdp="kd p"
+alias kds="kd s"
+alias kdc="kd c"
+alias kdi="kd i"
+alias kdn="kd n"
+alias kdr="kd r"
 
 alias kdel="kubectl delete"
 
@@ -105,34 +88,6 @@ alias wtc="wt switch --create"
 alias wtl="wt list"
 alias wtr="wt remove"
 alias wtm="wt merge"
-alias wsc="wt switch --create -x claude"
-
-# Claude Code: yolo agent in a fresh worktrunk worktree, opened in a new
-# tmux window of the current session (runs inline if not inside tmux)
-# Usage: cyolo                    # auto-named worktree, interactive
-#        cyolo my-feature         # named worktree
-#        cyolo my-feature "..."   # named worktree + initial prompt
-cyolo() {
-  local name=""
-  if [[ -n "$1" && "$1" != -* ]]; then
-    name="$1"; shift
-  fi
-  [[ -z "$name" ]] && name="yolo-$(date +%m%d-%H%M%S)"
-
-  local -a claude_args=(--dangerously-skip-permissions --remote-control "$@")
-
-  if [[ -z "$TMUX" ]]; then
-    wt switch --create "$name" -x claude -- "${claude_args[@]}"
-    return
-  fi
-
-  local cmd="wt switch --create ${(q)name} -x claude --"
-  local arg
-  for arg in "${claude_args[@]}"; do
-    cmd+=" ${(q)arg}"
-  done
-  tmux new-window -n "$name" -c "$PWD" "$cmd"
-}
 
 # Folder shortcuts
 alias pitower="cd ~/git/github.com/swibrow/pitower"
