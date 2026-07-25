@@ -1,11 +1,17 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if or (eq .profile "osx") (eq .profile "linux-dev") -}}
 #!/bin/bash
 set -euo pipefail
 
 # Brewfile hash: {{ include "dot_config/homebrew/Brewfile" | sha256sum }}
+{{ if eq .profile "osx" -}}
+# Brewfile.macos hash: {{ include "dot_config/homebrew/Brewfile.macos" | sha256sum }}
+{{ end -}}
 if command -v brew &>/dev/null; then
     echo "[INFO] Installing Homebrew packages from Brewfile..."
     brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/homebrew/Brewfile" --verbose
+{{ if eq .profile "osx" -}}
+    brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/homebrew/Brewfile.macos" --verbose
+{{ end -}}
 else
     echo "[WARNING] Homebrew not found, skipping Brewfile install."
 fi

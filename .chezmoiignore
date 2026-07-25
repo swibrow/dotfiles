@@ -13,12 +13,17 @@ site/**
 # Binary / runtime data
 .config/how/memory.db
 
-# OS-specific
-{{ if ne .chezmoi.os "darwin" }}
+# macOS-only (profile != osx)
+{{ if ne .profile "osx" }}
 .config/aerospace/**
 .config/ghostty/**
-.config/homebrew/**
+.config/homebrew/Brewfile.macos
 .config/sesh/**
+.config/karabiner/**
+.finicky.js
+Library/LaunchAgents/**
+.local/bin/keychain-secret
+.local/bin/keyfreq.swift
 {{ end }}
 
 # never publish the mise age identity (cluster private key)

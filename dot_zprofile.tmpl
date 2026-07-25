@@ -1,8 +1,14 @@
+export DOTFILES_PROFILE="{{ .profile }}"
+
 # Hardcoded Homebrew env (avoids expensive eval of brew shellenv)
-if [ "$(arch)" = arm64 ]; then
+if [ "$(arch)" = arm64 ] && [ -d "/opt/homebrew" ]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
     export HOMEBREW_REPOSITORY="/opt/homebrew"
+elif [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
 else
     export HOMEBREW_PREFIX="/usr/local"
     export HOMEBREW_CELLAR="/usr/local/Cellar"
@@ -18,4 +24,6 @@ export PATH="$PATH:$HOME/.local/bin"
 # mise shims for non-interactive shells (scripts, IDEs)
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
+{{ if eq .profile "osx" -}}
 export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+{{ end -}}
