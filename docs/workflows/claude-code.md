@@ -8,29 +8,38 @@ Two separate Claude Code configurations — personal and work — managed via mi
 
 | Directory | Config Dir | Account |
 |-----------|-----------|---------|
-| `~/dev/dnd-it/**` | `~/.claude_work` | Work (OAuth) |
-| `~/dev/tx-pts-dai/**` | `~/.claude_work` | Work (OAuth) |
-| Everything else | `~/.claude` | Personal (OAuth) |
+| Work project dirs under `~/dev` | `~/.claude_work` | Work |
+| Everything else | default (`CLAUDE_CONFIG_DIR` unset) | Personal (OAuth) |
 
 **How it works:** Mise sets `CLAUDE_CONFIG_DIR` based on the current directory. Each config dir has its own OAuth session, settings, history, and MCP servers.
 
-The mise config in each work directory:
+The mise config in each work directory (these live in the project repos, not in this one):
 
 ```toml
-# ~/dev/dnd-it/.mise.toml
+# <work project>/.mise.toml
 [env]
 CLAUDE_CONFIG_DIR = "{{env.HOME}}/.claude_work"
-ANTHROPIC_API_KEY = "{{exec(command='security find-generic-password -s env -a ANTHROPIC_API_KEY -w', cache_key='ANTHROPIC_API_KEY')}}"
+ANTHROPIC_API_KEY = "{{env.ANTHROPIC_WORK_API_KEY}}"
 ```
 
-The API key is stored in the macOS login keychain (service `env`, account = variable name) and injected at shell time — never committed to disk. Use the `keychain-secret` script to manage it:
+`ANTHROPIC_WORK_API_KEY` is age-encrypted in the private config layer (see [Private Layer](../getting-started/chezmoi.md#private-layer)), so it decrypts everywhere but only becomes `ANTHROPIC_API_KEY` where a work config opts in. Rotate it with:
 
 ```bash
-keychain-secret set ANTHROPIC_API_KEY
+mise run secret:set ANTHROPIC_WORK_API_KEY
 ```
 
 !!! note "First-time setup"
     The first time you run `claude` in a work directory, it will prompt for OAuth login with your work account.
+
+### Overriding the Directory Profile
+
+Inline assignments beat mise's exported env, so these aliases pick a profile from any directory:
+
+| Alias | Config Dir | Auth |
+|-------|-----------|------|
+| `ccmain` | default (`CLAUDE_CONFIG_DIR` unset) | Personal OAuth (API key unset) |
+| `ccwork` | `~/.claude_work` | `ANTHROPIC_WORK_API_KEY` |
+| `ccent` | `~/.claude_work` | Work OAuth (API key unset) |
 
 ## Tmux Integration
 

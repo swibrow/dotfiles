@@ -107,6 +107,14 @@ alias wtr="wt remove"
 alias wtm="wt merge"
 alias wsc="wt switch --create -x claude"
 
+# Claude Code profiles. Inline assignments beat the mise-exported env, so these
+# work from any directory regardless of the repo's mise.toml.
+# ccmain unsets CLAUDE_CONFIG_DIR rather than setting it: the default resolves
+# the state file to ~/.claude.json, but any explicit dir moves it inside that dir.
+alias ccmain='env -u ANTHROPIC_API_KEY -u CLAUDE_CONFIG_DIR claude'
+alias ccwork='ANTHROPIC_API_KEY="$ANTHROPIC_WORK_API_KEY" CLAUDE_CONFIG_DIR="$HOME/.claude_work" claude'
+alias ccent='env -u ANTHROPIC_API_KEY CLAUDE_CONFIG_DIR="$HOME/.claude_work" claude'
+
 # Claude Code: yolo agent in a fresh worktrunk worktree, opened in a new
 # tmux window of the current session (runs inline if not inside tmux)
 # Usage: cyolo                    # auto-named worktree, interactive
