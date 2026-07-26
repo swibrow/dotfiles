@@ -7,7 +7,7 @@
     "deny": [],
     "ask": []
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
@@ -37,7 +37,8 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true,
     "obsidian@obsidian-skills": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "claude-code-tracing@coding-harness-tracing": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -50,6 +51,12 @@
       "source": {
         "source": "github",
         "repo": "kepano/obsidian-skills"
+      }
+    },
+    "coding-harness-tracing": {
+      "source": {
+        "source": "github",
+        "repo": "Arize-ai/coding-harness-tracing"
       }
     }
   },
