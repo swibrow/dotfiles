@@ -7,7 +7,8 @@ if [[ -z "$url" ]]; then
   exit 1
 fi
 
-work_dirs=(dnd-it tx-pts-dai tx-group-adm 20minuten)
+work_orgs=()
+[[ -r "$HOME/.config/dotfiles-private/work.zsh" ]] && source "$HOME/.config/dotfiles-private/work.zsh"
 
 cwd="$(pwd)"
 profile="personal"
@@ -15,7 +16,7 @@ profile="personal"
 if [[ "$url" =~ (signin\.aws\.amazon\.com|console\.aws\.amazon\.com|awsapps\.com/start|sso\..*\.amazonaws\.com) ]]; then
   profile="aws"
 else
-  for d in "${work_dirs[@]}"; do
+  for d in "${work_orgs[@]}"; do
     if [[ "$cwd" == *"/dev/${d}"* ]]; then
       profile="work"
       break

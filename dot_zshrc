@@ -106,6 +106,9 @@ source $HOME/.config/zsh/functions/terraform.zsh
 source $HOME/.config/zsh/functions/talos.zsh
 source $HOME/.config/zsh/aliases.zsh
 
+# Work config (private repo, cloned by chezmoi; absent on machines without it)
+[ -r "$HOME/.config/dotfiles-private/work.zsh" ] && source "$HOME/.config/dotfiles-private/work.zsh"
+
 alias tm='task-master'
 
 # Plugins (from brew)
@@ -127,7 +130,7 @@ unset _zsh_cache
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # pnpm
-export PNPM_HOME="/Users/bcfd@mediait.ch/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

@@ -1,0 +1,25 @@
+// Finicky routes URLs to the right browser/profile based on rules.
+// Docs: https://github.com/johnste/finicky
+export default {
+  defaultBrowser: {
+    name: "Google Chrome",
+    profile: "Samuel (private)", // sam.wibrow@gmail.com
+  },
+  handlers: [
+    {
+      // AWS console / SSO → Zen
+      match: [
+        /signin\.aws\.amazon\.com/,
+        /console\.aws\.amazon\.com/,
+        /.*\.console\.aws\.amazon\.com/,
+        /.*\.awsapps\.com\/start/,
+        /.*\.sso\..*\.amazonaws\.com/,
+      ],
+      browser: "Zen",
+    },
+{{- $work := joinPath .chezmoi.homeDir ".config/dotfiles-private/finicky-work.js" }}
+{{- if stat $work }}
+{{ output "cat" $work | trimSuffix "\n" }}
+{{- end }}
+  ],
+};

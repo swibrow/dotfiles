@@ -3,7 +3,6 @@ tap "aws/tap", trusted: true
 tap "certak-com/kafkio", trusted: true
 tap "clowdhaus/taps", trusted: true
 tap "dart-lang/dart", trusted: true
-tap "dnd-it/tap", trusted: true
 tap "env0/terratag", trusted: true
 tap "fairwindsops/tap", trusted: true
 tap "fluxcd/tap", trusted: true
@@ -366,10 +365,6 @@ brew "anomalyco/tap/opencode"
 brew "aws/tap/eks-node-viewer"
 # A CLI to aid in upgrading Amazon EKS clusters
 brew "clowdhaus/taps/eksup"
-# Launchpad CLI — deploy apps to the PaaS platform
-brew "dnd-it/tap/launchpad"
-# Complete suite of AWS and Kubernetes productivity tools - Tamedia Edition
-brew "dnd-it/tap/tamedia-tools"
 # Automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources on Terraform
 brew "env0/terratag/terratag"
 # Detect deprecated Kubernetes apiVersions

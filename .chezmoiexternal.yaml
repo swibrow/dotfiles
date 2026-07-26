@@ -1,3 +1,10 @@
+# Private layer: secrets and work-identifiable config. Absent on machines
+# without access; everything that reads it degrades gracefully.
+".config/dotfiles-private":
+  type: git-repo
+  url: "git@github.com:swibrow/dotfiles-private.git"
+  refreshPeriod: 168h
+
 ".config/tmux/plugins/tpm":
   type: git-repo
   url: "https://github.com/tmux-plugins/tpm"

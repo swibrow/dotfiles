@@ -91,7 +91,7 @@ git_mirror_to_org() {
 }
 
 gh-browse() {
-  local org=${1:-dnd-it}
+  local org=${1:-$GH_DEFAULT_ORG}
   gh repo list $org -L 100 --json name | jq '.[].name' -r | fzf | xargs -I {} gh repo view --web $org/{}
 }
 

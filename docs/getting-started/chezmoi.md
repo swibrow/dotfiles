@@ -50,6 +50,28 @@ These values are prompted once on first `chezmoi init` and cached. Use them in t
     args: ["--depth", "1"]
 ```
 
+## Private Layer
+
+This repo is public, so two things stay out of it: secret env values, and any
+string naming the employer or its GitHub orgs. Both live in a private repo
+cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`. Everything
+else — tool config, aliases, completions — stays here.
+
+| Path | Consumed by |
+|------|-------------|
+| `mise.toml` | mise, via a `~/.config/mise/conf.d/work.toml` symlink — all age-encrypted secrets |
+| `work.zsh` | `.zshrc` and `browser-open` — `work_orgs`, `GH_DEFAULT_ORG` |
+| `finicky-work.js` | inlined into `~/.finicky.js` by the `dot_finicky.js.tmpl` template |
+| `claude_work/CLAUDE.md` | `~/.claude_work/CLAUDE.md` symlink |
+| `Brewfile` | the brew bundle run script — private tap and its formulae |
+
+Everything public degrades gracefully when the private repo is absent: `.zshrc`
+and `browser-open` source `work.zsh` only if it is readable, the finicky
+template omits the work handler, and the symlinks simply dangle.
+
+Add or rotate a secret with `mise run secret:set NAME`, which writes the
+age-encrypted value into the private repo (commit it there).
+
 ## Key Commands
 
 | Command | Purpose |
