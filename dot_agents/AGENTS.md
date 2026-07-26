@@ -38,6 +38,15 @@ ln -s .agents .claude
 ## Environment
 
 - Dotfiles are managed with chezmoi (source: `~/.local/share/chezmoi`). Edit dotfiles in the chezmoi source, not the rendered files in `$HOME`.
+- That dotfiles repo is **public**. Two things must never land in it: secret env values, and strings naming the employer, its GitHub orgs, its domains, or the work email inside absolute paths. Use `$HOME` or `{{ .chezmoi.homeDir }}` rather than absolute `/Users/...` paths.
+- Those excluded bits live in a **private layer**: a separate git repo cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`. Public config reads it but must degrade gracefully when it is absent. Its current org-name list is in `~/.config/dotfiles-private/work.zsh`; check a change against that file before committing to the public repo.
+- The private layer is a plain git repo, not chezmoi-managed files, so `chezmoi diff`/`status` say nothing about it and changes there need their own commit and push:
+  ```shell
+  git -C ~/.config/dotfiles-private add -A
+  git -C ~/.config/dotfiles-private commit -s -m "..."
+  git -C ~/.config/dotfiles-private push
+  ```
+  This matters most after `mise run secret:set NAME`, which writes an age-encrypted value into that repo and leaves it uncommitted. An unpushed rotation stays invisible until a new machine clones the layer without it.
 - Shell is zsh, no plugin manager.
 - Use `container` instead of `docker` for building and running containers. Instead of `docker compose`, use a kind cluster for multi-service local environments.
 

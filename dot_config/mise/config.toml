@@ -3,6 +3,7 @@ AGENTMEMORY_URL = "https://agentmemory-api.wibrow.dev"
 MEMINI_BASE_URL = "https://memini-api.wibrow.dev"
 KANIDM_URL = "https://idm.wibrow.dev"
 GOAT_API_URL = "https://goat.wibrow.dev"
+INFISICAL_DOMAIN = "https://eu.infisical.com"
 
 [tools]
 python = "3.14"
