@@ -26,14 +26,13 @@ projects. Project-level AGENTS.md / CLAUDE.md files take precedence over this fi
 
 ## Agent configuration
 
-Use a tool-agnostic layout so config works across all AI tooling. In each repo, put agent config in `.agents/` and `AGENTS.md`, then symlink the Claude-specific paths to them:
+Use a tool-agnostic layout so config works across all AI tooling. In each repo, `AGENTS.md` is the source of truth for instructions; `CLAUDE.md` is a real file (no symlinks) whose first line imports it:
 
-```shell
-ln -s AGENTS.md CLAUDE.md
-ln -s .agents .claude
+```markdown
+@AGENTS.md
 ```
 
-`.agents/` and `AGENTS.md` are the sources of truth; `.claude` and `CLAUDE.md` are symlinks pointing at them. This keeps a single set of instructions that every agent (Claude Code, Codex, Cursor, etc.) reads. The same pattern applies globally: `~/.agents/AGENTS.md` is canonical, and `~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md` symlink to it.
+Claude-specific additions may follow the import line; never duplicate shared instructions there. `.claude/` is a real directory for skills/commands/settings; Claude Code has no import mechanism for directories, so there is no `.agents/` directory at repo level. Every agent reads the same instructions: Claude Code via the import, Codex and others read `AGENTS.md` directly. Globally, `~/.agents/AGENTS.md` remains canonical, with `~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md` symlinked to it.
 
 ## Environment
 

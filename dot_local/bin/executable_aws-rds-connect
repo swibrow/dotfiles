@@ -403,17 +403,10 @@ parse_credentials() {
         port=""
     fi
 
-    # If database not found, use fzf to select (optional)
+    # If database not found, main() prompts for it
     if [ -z "$database" ] || [ "$database" = "null" ]; then
         log_info "No database key found in secret"
-        # Ask if user wants to select a database key
-        local db_keys
-        db_keys=$(echo "$secret_string" | jq -r 'keys[]' | grep -iE 'db|database|name' || true)
-        if [ -n "$db_keys" ]; then
-            database=$(select_secret_key "$secret_string" "database") || database=""
-        else
-            database=""
-        fi
+        database=""
     fi
 
     echo "{\"username\":\"$username\",\"password\":\"$password\",\"host\":\"$host\",\"port\":\"$port\",\"database\":\"$database\"}"
@@ -652,9 +645,11 @@ main() {
         cred_port="$db_port"
     fi
 
-    # Use detected database name if secret doesn't have it
+    # Secret had no database key: ask, defaulting to the name RDS reports
     if [ -z "$cred_database" ] || [ "$cred_database" = "null" ]; then
-        cred_database="$db_name"
+        local typed_database
+        read -r -p "$(echo -e "${BLUE}[INPUT]${NC} Database name [${db_name}]: ")" typed_database </dev/tty || true
+        cred_database="${typed_database:-$db_name}"
     fi
 
     # Validate we have required credentials
