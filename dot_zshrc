@@ -104,6 +104,7 @@ source $HOME/.config/zsh/functions/general.zsh
 source $HOME/.config/zsh/functions/kubectl.zsh
 source $HOME/.config/zsh/functions/terraform.zsh
 source $HOME/.config/zsh/functions/talos.zsh
+source $HOME/.config/zsh/functions/memini.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 # Work config (private repo, cloned by chezmoi; absent on machines without it)

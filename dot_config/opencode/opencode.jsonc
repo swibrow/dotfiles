@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "memini": {
+      "type": "remote",
+      "url": "https://memini-api.wibrow.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:MEMINI_API_KEY}",
+        "X-Memini-Namespace": "{env:MEMINI_NAMESPACE}"
+      }
+    },
+    "browser-mcp": {
+      "type": "remote",
+      "url": "http://localhost:3000/mcp"
+    }
+  }
+}
