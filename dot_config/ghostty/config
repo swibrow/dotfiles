@@ -10,6 +10,5 @@ quick-terminal-size = 75%
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = shift+enter=text:\n
-command = /bin/zsh -lc "tmux-sesh start"
 
 background-opacity = 1.00

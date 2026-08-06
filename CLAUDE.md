@@ -29,7 +29,7 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 ```
 
 ### Scripts (`~/.local/bin`, on PATH via `.zprofile`)
-- `tmux-sesh <connect|window|start>` - sesh/fzf session picker (tmux bindings `s`/`f`; Ghostty launches `tmux-sesh start`)
+- `tmux-sesh <connect|window|start>` - sesh/fzf session picker (tmux bindings `s`/`f`)
 - `tmux-workspace <claude|dev>` - pick a `~/dev` project, open tmux window with claude/nvim layout (bindings `g`/`d`)
 - `tmux-cht`, `tmux-notes`, `tmux-scratch`, `tmux-bins`, `tmux-worktree-claude` - other tmux popup tools
 - `brewfile-sync <add|remove> <pkg>...` - add/remove a single Brewfile entry; called automatically by the `brew` wrapper function in `dot_config/zsh/functions/general.zsh`
