@@ -72,6 +72,22 @@ From [AWS Labs](https://github.com/aws/amazon-eks-ami). Calculates max pods per 
 
 ## Utilities
 
+### `brewfile-sync`
+
+Adds or removes a single entry in the [Brewfiles](brewfile.md), so they track
+what is actually installed:
+
+```bash
+brewfile-sync add gh          # after installing outside an interactive shell
+brewfile-sync remove gh
+```
+
+The `brew` wrapper in `dot_config/zsh/functions/general.zsh` calls it after every
+successful `brew install` / `brew uninstall`, so you rarely run it by hand. Added
+lines are copied verbatim from `brew bundle dump` — `trusted:` flags and custom
+tap remotes match what a full dump would have written — and routed to the private
+layer (work taps), `Brewfile.macos` (casks), or `Brewfile`.
+
 ### `keychain-secret`
 
 Manages environment secrets in the macOS login keychain (service `env`, account = variable name):

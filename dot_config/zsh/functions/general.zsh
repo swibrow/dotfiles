@@ -2,6 +2,23 @@
 cm() { [ $# -eq 0 ] && chezmoi cd || chezmoi "$@"; }
 compdef cm=chezmoi
 
+# Mirror hand-run installs/uninstalls into the chezmoi Brewfiles. Otherwise the
+# `brew bundle` that chezmoi apply runs (so: every topgrade) reinstalls whatever
+# you uninstalled.
+brew() {
+    command brew "$@" || return
+    (( $# )) || return 0
+    (( $+commands[brewfile-sync] )) || return 0
+    local cmd=$1
+    shift
+    local -a pkgs=(${@:#-*})
+    (( $#pkgs )) || return 0
+    case $cmd in
+        install) brewfile-sync add $pkgs ;;
+        uninstall|remove|rm) brewfile-sync remove $pkgs ;;
+    esac
+}
+
 install_or_update_brew_app() {
     APP_NAME="$1"
 

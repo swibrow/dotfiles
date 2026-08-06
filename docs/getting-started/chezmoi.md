@@ -106,10 +106,15 @@ The numeric prefix (`00`, `01`, `02`...) controls execution order.
 
 ## Brewfile Management
 
-When regenerating the Brewfile after installing new packages:
+`brew install` / `brew uninstall` keep the Brewfiles up to date on their own —
+see [Brewfile](../reference/brewfile.md). The files live at `homebrew/` in the
+source dir and are symlinked to `~/.config/homebrew/`, so `brew bundle` writes
+into the repo rather than into a copy an apply would overwrite.
+
+To regenerate one from scratch:
 
 ```bash
-brew bundle dump --file=dot_config/homebrew/Brewfile --force --no-vscode
+brew bundle dump --force --no-vscode
 ```
 
 !!! warning "Always use `--no-vscode`"

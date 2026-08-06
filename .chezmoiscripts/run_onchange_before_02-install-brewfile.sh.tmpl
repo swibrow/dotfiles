@@ -2,19 +2,19 @@
 #!/bin/bash
 set -euo pipefail
 
-# Brewfile hash: {{ include "dot_config/homebrew/Brewfile" | sha256sum }}
+# Brewfile hash: {{ include "homebrew/Brewfile" | sha256sum }}
 {{ if eq .profile "osx" -}}
-# Brewfile.macos hash: {{ include "dot_config/homebrew/Brewfile.macos" | sha256sum }}
+# Brewfile.macos hash: {{ include "homebrew/Brewfile.macos" | sha256sum }}
 {{ end -}}
 if command -v brew &>/dev/null; then
     echo "[INFO] Installing Homebrew packages from Brewfile..."
-    brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/homebrew/Brewfile" --verbose
+    brew bundle --no-upgrade --file="{{ .chezmoi.sourceDir }}/homebrew/Brewfile" --verbose
 {{ if eq .profile "osx" -}}
-    brew bundle --file="{{ .chezmoi.sourceDir }}/dot_config/homebrew/Brewfile.macos" --verbose
+    brew bundle --no-upgrade --file="{{ .chezmoi.sourceDir }}/homebrew/Brewfile.macos" --verbose
 {{ end -}}
     # Private layer; not hashed above, so run `brew bundle` by hand after editing it
     if [ -f "$HOME/.config/dotfiles-private/Brewfile" ]; then
-        brew bundle --file="$HOME/.config/dotfiles-private/Brewfile" --verbose
+        brew bundle --no-upgrade --file="$HOME/.config/dotfiles-private/Brewfile" --verbose
     fi
 else
     echo "[WARNING] Homebrew not found, skipping Brewfile install."

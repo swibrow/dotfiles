@@ -3,6 +3,10 @@ CLAUDE.md
 LICENSE
 .pre-commit-config.yaml
 
+# The Brewfiles themselves are not deployed - .config/homebrew/ holds symlinks
+# back into the source dir, so `brew bundle dump/add/remove` writes into the repo.
+homebrew/**
+
 # Docs & CI
 docs/**
 mkdocs.yml

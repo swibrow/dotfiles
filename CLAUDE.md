@@ -32,6 +32,7 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 - `tmux-sesh <connect|window|start>` - sesh/fzf session picker (tmux bindings `s`/`f`; Ghostty launches `tmux-sesh start`)
 - `tmux-workspace <claude|dev>` - pick a `~/dev` project, open tmux window with claude/nvim layout (bindings `g`/`d`)
 - `tmux-cht`, `tmux-notes`, `tmux-scratch`, `tmux-bins`, `tmux-worktree-claude` - other tmux popup tools
+- `brewfile-sync <add|remove> <pkg>...` - add/remove a single Brewfile entry; called automatically by the `brew` wrapper function in `dot_config/zsh/functions/general.zsh`
 - `aws-rds-connect` - interactive RDS connection via Secrets Manager (shares `aws-common.sh`)
 - `kubelog` - interactive kubectl log tailer
 - `keychain-secret` - macOS keychain secret helper
@@ -40,11 +41,13 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 AWS profile switching uses the `af` shell function (AWS SSO via the native CLI), role assumption `aws-assume`/`aws-unassume`; see `dot_config/zsh/functions/general.zsh`. EKS/profile/role pickers are fzf-based `aws` CLI aliases in `dot_aws/cli/alias`. Kubernetes helpers (`kclean`, `kdebug`, `kadmin`, etc.) live in `dot_config/zsh/functions/kubectl.zsh`.
 
 ### Brewfile Management
-- When regenerating the Brewfile, always use `--no-vscode` to exclude VS Code extensions:
+- `brew install` / `brew uninstall` are wrapped in zsh and mirrored into the Brewfiles by `brewfile-sync`, so a later `brew bundle` cannot resurrect something you removed. New entries are copied verbatim from `brew bundle dump` and routed: work taps -> private Brewfile, casks -> `Brewfile.macos`, rest -> `Brewfile`. Only interactive zsh is wrapped; after installing from a script, run `brewfile-sync add <pkg>` by hand.
+- The Brewfiles live at `homebrew/Brewfile` and `homebrew/Brewfile.macos` in the source dir, `.chezmoiignore`d so chezmoi does not deploy them. `~/.config/homebrew/*` are symlinks back to them (`dot_config/homebrew/symlink_Brewfile*.tmpl`) and `HOMEBREW_BUNDLE_FILE` points there, so every `brew bundle` subcommand reads and writes the repo directly.
+- When regenerating a Brewfile, always use `--no-vscode` to exclude VS Code extensions:
   ```shell
-  brew bundle dump --file=dot_config/homebrew/Brewfile --force --no-vscode
+  brew bundle dump --force --no-vscode
   ```
-- The Brewfile is auto-installed by chezmoi via `.chezmoiscripts/run_onchange_before_02-install-brewfile.sh.tmpl`
+- The Brewfiles are auto-installed by chezmoi via `.chezmoiscripts/run_onchange_before_02-install-brewfile.sh.tmpl`, which passes `--no-upgrade` so an apply never upgrades packages behind your back
 - A dump re-adds the work tap and its formulae. This repo is public: move those lines back into `~/.config/dotfiles-private/Brewfile` before committing.
 
 ## Private Layer

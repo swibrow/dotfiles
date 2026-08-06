@@ -396,8 +396,6 @@ brew "sass/sass/sass"
 brew "siderolabs/tap/talosctl"
 # TUI for monitoring and resuming Claude Code agent sessions in tmux
 brew "swibrow/tap/agent-ops"
-# Terminal UI for GitHub Actions
-brew "swibrow/tap/gha", trusted: true
 # Generate markdown tables for your Github action and reusable workflow with ease.
 brew "tj-actions/tap/auto-doc"
 brew "yakitrak/yakitrak/notesmd-cli", link: false, trusted: true

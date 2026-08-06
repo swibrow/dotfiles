@@ -74,7 +74,7 @@ _cached_eval() {
 |----------|-------|---------|
 | `EDITOR` | `vim` | Default editor |
 | `STARSHIP_CONFIG` | `~/.config/starship/starship.toml` | Prompt config location |
-| `HOMEBREW_BUNDLE_FILE` | `~/.config/homebrew/Brewfile` | Brewfile location |
+| `HOMEBREW_BUNDLE_FILE` | `~/.config/homebrew/Brewfile` | Brewfile location (symlink into the chezmoi source) |
 | `K9S_CONFIG_DIR` | `~/.config/k9s` | K9s config location |
 | `TF_PLUGIN_CACHE_DIR` | `~/.terraform.d/plugin-cache` | Terraform provider cache |
 | `GPG_TTY` | `$(tty)` | GPG agent terminal |

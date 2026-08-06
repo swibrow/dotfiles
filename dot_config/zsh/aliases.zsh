@@ -15,7 +15,28 @@ alias afc='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_P
 alias afp='echo "Current AWS_PROFILE: ${AWS_PROFILE:-none}"'
 
 # Tmux
-alias s='tmux send-keys C-Space s'
+# `tm<key>` does what prefix+<key> does. Case matches the binding: tms =
+# prefix+s, tmS = prefix+S. Keep in sync with ~/.tmux.conf.
+#
+# Anything reaching `switch-client` (tmux-sesh) must run inline, not in a
+# popup: a popup is itself a client, so from a shell the switch lands on the
+# popup and you get a session nested inside it. Anything reaching `attach`
+# (tmux-scratch) is the reverse and needs the popup's own client.
+alias tmr='tmux source-file ~/.tmux.conf && echo "Reloaded ~/.tmux.conf"'
+alias tms='tmux-sesh connect'
+alias s='tmux-sesh connect'
+alias tmf='tmux-sesh window'
+alias tmg='tmux-workspace claude'
+alias tmd='tmux-workspace dev'
+alias tmW='tmux-worktree-claude'
+alias tmi='tmux neww $HOME/.local/bin/tmux-cht'
+alias tmt='wt switch'
+alias tmS='tmux display-popup -E -w 85% -h 75% "zsh $HOME/.local/bin/tmux-scratch"'
+alias tmN='tmux display-popup -E -w 85% -h 80% "zsh $HOME/.local/bin/tmux-notes"'
+alias tmb='tmux display-popup -E -w 60% -h 60% "zsh $HOME/.local/bin/tmux-bins"'
+alias tmC="tmux split-window -h -c '#{pane_current_path}' \"zsh -lc 'mise exec -- claude'\""
+alias tmV="tmux split-window -v -c '#{pane_current_path}' \"zsh -lc 'mise exec -- claude'\""
+alias tmF="tmux list-windows -a -F '#{session_name}:#{window_index} #{window_name} #{pane_current_path}' | fzf --reverse | cut -d' ' -f1 | xargs tmux switch-client -t"
 
 # Bat
 # alias cat="bat"

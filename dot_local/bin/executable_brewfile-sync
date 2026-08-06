@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+# Add/remove single entries in the chezmoi-managed Brewfiles so they track what
+# is actually installed. Without this, `brew bundle` (run by chezmoi apply, and
+# so by topgrade) reinstalls anything you uninstalled by hand.
+#
+# Added lines are copied verbatim from `brew bundle dump`, so `trusted:` flags
+# and custom tap remotes match what a full dump would have written. Entries are
+# routed: work taps -> private Brewfile, casks -> Brewfile.macos, rest -> Brewfile.
+set -euo pipefail
+
+usage() {
+    echo "usage: brewfile-sync <add|remove> <package>..." >&2
+    exit 64
+}
+
+[ $# -ge 2 ] || usage
+action=$1
+shift
+
+source_dir=$(chezmoi source-path)
+public="$source_dir/homebrew/Brewfile"
+macos="$source_dir/homebrew/Brewfile.macos"
+private="$HOME/.config/dotfiles-private/Brewfile"
+
+work_orgs=()
+# shellcheck source=/dev/null
+[ -f "$HOME/.config/dotfiles-private/work.zsh" ] && source "$HOME/.config/dotfiles-private/work.zsh"
+
+is_work_org() {
+    local org
+    for org in ${work_orgs+"${work_orgs[@]}"}; do
+        [ "$org" = "$1" ] && return 0
+    done
+    return 1
+}
+
+quote_re() { printf '%s' "$1" | sed 's/[][\.*^$+?(){}|\/]/\\&/g'; }
+
+files() {
+    local f
+    for f in "$public" "$macos" "$private"; do
+        [ -f "$f" ] && printf '%s\n' "$f"
+    done
+}
+
+# First existing Brewfile holding a line matching $1, or nothing.
+locate() {
+    local file
+    while read -r file; do
+        if grep -qE "$1" "$file"; then
+            printf '%s\n' "$file"
+            return
+        fi
+    done < <(files)
+}
+
+# Line number at which a new entry of $kind sorts in $file: just after the last
+# entry that sorts below it. `brew bundle dump` emits dependencies ahead of their
+# dependents, so the file is only roughly sorted - anchoring on the last smaller
+# entry tolerates that, anchoring on the first larger one does not. It also keeps
+# tap-qualified entries in their own block, so only entries of the same shape are
+# candidates. Comment lines directly above an entry belong to it, so back up over
+# them.
+insert_point() {
+    local file=$1 kind=$2 key=$3 strip=$4 qualified=$5
+    awk -v kind="$kind" -v key="$key" -v strip="$strip" -v qualified="$qualified" '
+        $0 ~ "^" kind " \"" {
+            n = $0
+            sub("^" kind " \"", "", n)
+            sub("\".*", "", n)
+            b = n
+            if (strip) sub(".*/", "", b)
+            if ((b != n ? 1 : 0) == qualified) {
+                if (b "" < key "") after = NR
+                if (first == "") first = NR - cmt
+            }
+            cmt = 0
+            next
+        }
+        /^#/ { cmt++; next }
+        { cmt = 0 }
+        END {
+            if (after) print after + 1
+            else if (first != "") print first
+            else print NR + 1
+        }
+    ' "$file"
+}
+
+splice() {
+    local file=$1 at=$2
+    shift 2
+    local tmp
+    tmp=$(mktemp)
+    {
+        head -n "$((at - 1))" "$file"
+        printf '%s\n' "$@"
+        tail -n "+$at" "$file"
+    } >"$tmp"
+    cat "$tmp" >"$file" # write in place; mv would drop the file's mode
+    rm -f "$tmp"
+}
+
+dump=""
+ensure_dump() {
+    [ -n "$dump" ] && return
+    dump=$(mktemp)
+    trap 'rm -f "$dump"' EXIT
+    brew bundle dump --no-vscode --file=- >"$dump"
+}
+
+add() {
+    local name=$1 entry="" comment kind full tap token target
+
+    ensure_dump
+    # A name can exist as both a formula and a cask (a tap moving a tool from
+    # Formula/ to Casks/ leaves both behind); the cask is the live one.
+    if brew list --cask --versions "$name" >/dev/null 2>&1; then
+        entry=$(grep -m1 -E "^cask \"([^\"]*\/)?$(quote_re "$name")\"(,|\$)" "$dump" || true)
+    fi
+    [ -n "$entry" ] ||
+        entry=$(grep -m1 -E "^(brew|cask) \"([^\"]*\/)?$(quote_re "$name")\"(,|\$)" "$dump" || true)
+    if [ -z "$entry" ]; then
+        echo "brewfile-sync: $name is not an installed top-level package, skipping" >&2
+        return
+    fi
+    comment=$(grep -B1 -m1 -F -x "$entry" "$dump" | grep '^#' || true)
+
+    kind=${entry%% *}
+    full=${entry#*\"}
+    full=${full%%\"*}
+    token=${full##*/}
+    tap=${full%/*}
+    [ "$tap" = "$full" ] && tap=""
+
+    if [ -n "$(locate "^$kind \"$(quote_re "$full")\"(,|\$)")" ]; then
+        return
+    fi
+
+    if [ -n "$tap" ] && is_work_org "${tap%%/*}"; then
+        target=$private
+        if [ ! -f "$target" ]; then
+            echo "brewfile-sync: $target missing, not recording $full" >&2
+            return
+        fi
+    elif [ "$kind" = cask ]; then
+        target=$macos
+    else
+        target=$public
+    fi
+
+    if [ -n "$tap" ] && ! grep -qE "^tap \"$(quote_re "$tap")\"(,|\$)" "$target"; then
+        splice "$target" "$(insert_point "$target" tap "$tap" 0 0)" \
+            "$(grep -m1 -E "^tap \"$(quote_re "$tap")\"(,|\$)" "$dump")"
+    fi
+
+    local at
+    at=$(insert_point "$target" "$kind" "$token" 1 "$([ -n "$tap" ] && echo 1 || echo 0)")
+    if [ -n "$comment" ]; then
+        splice "$target" "$at" "$comment" "$entry"
+    else
+        splice "$target" "$at" "$entry"
+    fi
+    echo "brewfile-sync: added $entry to ${target/#$HOME/\~}"
+}
+
+remove() {
+    local name=$1 re alt file tmp
+    # Drop only the entries whose package is actually gone: `brew uninstall
+    # --cask container` must not delete `brew "container"`, which is a different
+    # package that happens to share the name.
+    local -a kinds=()
+    brew list --formula --versions "$name" >/dev/null 2>&1 || kinds+=(brew)
+    brew list --cask --versions "$name" >/dev/null 2>&1 || kinds+=(cask)
+    [ ${#kinds[@]} -gt 0 ] || return
+    alt=$(
+        IFS='|'
+        echo "${kinds[*]}"
+    )
+    re="^($alt) \"([^\"]*\/)?$(quote_re "$name")\"(,|\$)"
+
+    while read -r file; do
+        grep -qE "$re" "$file" || continue
+        tmp=$(mktemp)
+        awk -v re="$re" '
+            /^#/ { pending = pending $0 "\n"; next }
+            $0 ~ re { pending = ""; next }
+            { printf "%s", pending; pending = ""; print }
+            END { printf "%s", pending }
+        ' "$file" >"$tmp"
+        cat "$tmp" >"$file" # write in place; mv would drop the file's mode
+        rm -f "$tmp"
+        echo "brewfile-sync: removed $name from ${file/#$HOME/\~}"
+    done < <(files)
+}
+
+for pkg in "$@"; do
+    case "$action" in
+    add) add "$(basename "${pkg%.rb}")" ;;
+    remove) remove "$(basename "${pkg%.rb}")" ;;
+    *) usage ;;
+    esac
+done
