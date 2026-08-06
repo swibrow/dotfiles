@@ -7,11 +7,19 @@ dark_name = "catppuccin"
 light_name = "catppuccin-latte"
 
 [keys]
-prefix = "ctrl+b"
-focus_pane_left = "ctrl+h"
-focus_pane_down = "ctrl+j"
-focus_pane_up = "ctrl+k"
-focus_pane_right = "ctrl+l"
+prefix = "ctrl+space"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+[[keys.command]]
+key = "prefix+shift+c"
+type = "pane"
+command = "mise exec -- claude"
+
+[ui]
+accent = "magenta"
 
 [ui.sidebar.agents]
 rows = [["state_icon", "workspace", "tab"], ["agent"]]
@@ -19,3 +27,6 @@ rows = [["state_icon", "workspace", "tab"], ["agent"]]
 [ui.toast]
 delivery = "herdr"
 delay_seconds = 1
+
+[advanced]
+scrollback_limit_bytes = 50000000
