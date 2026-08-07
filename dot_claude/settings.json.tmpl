@@ -3,7 +3,6 @@
   "env": {},
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Bash(rg:*)",
       "Bash(fd:*)",
@@ -35,9 +34,10 @@
       "Read(~/.ssh/id_*)",
       "Read(~/.config/mise/age.txt)"
     ],
-    "ask": []
+    "ask": [],
+    "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
@@ -90,14 +90,14 @@
       }
     }
   },
-  "awaySummaryEnabled": false,
-  "tui": "fullscreen",
-  "editorMode": "vim",
-  "effortLevel": "high",
-  "autoUpdatesChannel": "stable",
-  "showTipsOnStartup": false,
   "spinnerTipsEnabled": false,
+  "effortLevel": "high",
+  "awaySummaryEnabled": false,
+  "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "agentPushNotifEnabled": true
+  "editorMode": "vim",
+  "agentPushNotifEnabled": true,
+  "showTipsOnStartup": false
 }
