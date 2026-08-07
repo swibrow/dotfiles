@@ -13,5 +13,9 @@
       "type": "remote",
       "url": "http://localhost:3000/mcp"
     }
+  },
+  "lsp": true,
+  "permission": {
+    "lsp": "allow"
   }
 }

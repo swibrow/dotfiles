@@ -2,7 +2,7 @@ onboarding = false
 
 [theme]
 name = "catppuccin"
-auto_switch = true
+auto_switch = false
 dark_name = "catppuccin"
 light_name = "catppuccin-latte"
 
@@ -14,8 +14,15 @@ focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
 split_vertical = "prefix+|"
 split_horizontal = "prefix+\""
-workspace_picker = "prefix+s"
 settings = "prefix+shift+s"
+
+[[keys.command]]
+key = "prefix+s"
+type = "popup"
+command = "$HOME/.local/bin/herdr-sesh"
+description = "jump to open workspace / start new at directory (sesh-style)"
+width = "80%"
+height = "70%"
 
 [[keys.command]]
 key = "prefix+shift+v"
@@ -32,7 +39,7 @@ description = "new claude in horizontal split"
 [[keys.command]]
 key = "prefix+."
 type = "popup"
-command = "zsh -lc 'cwd=$(herdr pane current | jq -r \".result.pane.foreground_cwd // .result.pane.cwd\"); d=$(basename \"$cwd\"); printf \"rename workspace to [%s]: \" \"$d\"; read name; herdr workspace rename \"$HERDR_WORKSPACE_ID\" \"${name:-$d}\"'"
+command = "$HOME/.local/bin/herdr-rename-workspace.sh"
 description = "rename workspace (default: cwd basename)"
 width = "60%"
 height = "20%"
@@ -40,13 +47,17 @@ height = "20%"
 [ui]
 accent = "magenta"
 agent_panel_sort = "priority"
+show_agent_labels_on_pane_borders = true
 
 [ui.sidebar.agents]
 rows = [["state_icon", "workspace", "tab"], ["agent"]]
 
 [ui.toast]
-delivery = "herdr"
+delivery = "off"
 delay_seconds = 1
+
+[ui.sound]
+enabled = false
 
 [advanced]
 scrollback_limit_bytes = 50000000

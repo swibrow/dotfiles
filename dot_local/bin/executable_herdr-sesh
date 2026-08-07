@@ -1,0 +1,48 @@
+#!/usr/bin/env zsh
+# sesh-style picker for herdr: fzf over open workspaces + zoxide
+# directories. Selecting an open workspace focuses it; selecting a directory
+# (or typing a query with no match) starts a new workspace there.
+source "$HOME/.zprofile"
+
+# call jq by absolute path: the mise shim on PATH does a slow inactive-tool
+# resolution (~1-2s) since jq isn't activated in this cwd
+jq() { /opt/homebrew/bin/jq "$@"; }
+
+workspace_lines=$(herdr workspace list | jq -r '.result.workspaces[] | "\(.workspace_id)\t\(.label)"' \
+  | while IFS=$'\t' read -r id label; do
+      printf 'workspace\t%s\t\e[32m●\e[0m %s (open)\n' "$id" "$label"
+    done)
+
+dir_lines=$(zoxide query -l | while IFS= read -r p; do
+  printf 'dir\t%s\t\e[36m▸\e[0m %s\n' "$p" "${p/#$HOME/~}"
+done)
+
+result=$(printf '%s\n%s\n' "$workspace_lines" "$dir_lines" | fzf \
+  --print-query \
+  --ansi --delimiter '\t' --with-nth 3 \
+  --border-label ' workspace ' --prompt '> ' \
+  --header 'enter: focus open workspace / start new at dir' \
+  --preview 'if [ {1} = workspace ]; then herdr workspace get {2} | /opt/homebrew/bin/jq .; else eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2}; fi' \
+  --preview-window 'right:55%')
+
+query=$(printf '%s\n' "$result" | sed -n 1p)
+selected=$(printf '%s\n' "$result" | sed -n 2p)
+
+if [[ -n "$selected" ]]; then
+  type=$(printf '%s' "$selected" | cut -f1)
+  value=$(printf '%s' "$selected" | cut -f2)
+  if [[ "$type" == "workspace" ]]; then
+    herdr workspace focus "$value"
+    exit 0
+  fi
+  dir="$value"
+elif [[ -n "$query" ]]; then
+  dir="$query"
+else
+  exit 0
+fi
+
+dir="${dir/#\~/$HOME}"
+[[ -d "$dir" ]] || exit 0
+
+herdr workspace create --cwd "$dir" --focus
