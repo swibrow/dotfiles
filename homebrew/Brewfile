@@ -291,6 +291,8 @@ brew "sentry-cli"
 brew "sesh"
 # Work with remote images registries
 brew "skopeo"
+# SMART hard drive monitoring
+brew "smartmontools"
 # SOcket CAT: netcat on steroids
 brew "socat"
 # Editor of encrypted files

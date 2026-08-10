@@ -172,3 +172,30 @@ alias dev="cd ~/git/github.com/swibrow/"
 alias -s txt=nvim
 alias -s py=nvim
 alias -s json=nvim
+
+# Second brain: one long-lived pi session covering work and personal.
+export SECOND_BRAIN_DIR="$HOME/dev/swibrow/second-brain"
+
+brain() {
+  local ctx=both
+  case "$1" in
+    work|w)        ctx=work; shift ;;
+    me|personal|p) ctx=personal; shift ;;
+    both|b)        ctx=both; shift ;;
+  esac
+
+  # Already multiplexed: just run in this pane.
+  if [[ -n "$TMUX" ]]; then
+    ( cd "$SECOND_BRAIN_DIR" && pi --brain "$ctx" "$@" )
+    return
+  fi
+
+  # Otherwise attach to the durable session, creating it once.
+  local session="brain"
+  [[ "$ctx" != both ]] && session="brain-$ctx"
+  if tmux has-session -t "$session" 2>/dev/null; then
+    tmux attach-session -t "$session"
+  else
+    tmux new-session -s "$session" -c "$SECOND_BRAIN_DIR" "pi --brain $ctx"
+  fi
+}
