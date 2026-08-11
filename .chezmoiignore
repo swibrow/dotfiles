@@ -7,6 +7,10 @@ LICENSE
 # back into the source dir, so `brew bundle dump/add/remove` writes into the repo.
 homebrew/**
 
+# Likewise for the mise global config - .config/mise/config.toml is a symlink
+# back into the source dir so hand-edits and `mise` writes land in the repo.
+mise/**
+
 # Docs & CI
 docs/**
 mkdocs.yml
