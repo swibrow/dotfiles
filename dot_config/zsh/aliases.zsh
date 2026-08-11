@@ -184,8 +184,8 @@ brain() {
     both|b)        ctx=both; shift ;;
   esac
 
-  # Already multiplexed: just run in this pane.
-  if [[ -n "$TMUX" ]]; then
+  # Already multiplexed (tmux or herdr): just run in this pane.
+  if [[ -n "$TMUX" || -n "$HERDR_ENV" ]]; then
     ( cd "$SECOND_BRAIN_DIR" && pi --brain "$ctx" "$@" )
     return
   fi
