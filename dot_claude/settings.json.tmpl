@@ -1,6 +1,11 @@
 {
   "cleanupPeriodDays": 999999,
-  "env": {},
+  "env": {
+    "MLFLOW_CLAUDE_TRACING_ENABLED": "true",
+    "MLFLOW_TRACKING_URI": "https://mlflow.wibrow.dev",
+    "MLFLOW_EXPERIMENT_ID": "1",
+    "MLFLOW_EXPERIMENT_NAME": "home-ops"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -37,7 +42,7 @@
     "ask": [],
     "defaultMode": "auto"
   },
-  "model": "sonnet",
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",
@@ -68,7 +73,8 @@
     "clangd-lsp@claude-plugins-official": true,
     "obsidian@obsidian-skills": true,
     "swift-lsp@claude-plugins-official": true,
-    "claude-code-tracing@coding-harness-tracing": true
+    "claude-code-tracing@coding-harness-tracing": true,
+    "mlflow-tracing@mlflow-plugins": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -87,6 +93,15 @@
       "source": {
         "source": "github",
         "repo": "Arize-ai/coding-harness-tracing"
+      }
+    },
+    "mlflow-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "mlflow/mlflow",
+        "sparsePaths": [
+          ".claude-plugin"
+        ]
       }
     }
   },
