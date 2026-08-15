@@ -261,3 +261,7 @@ run = 'move-node-to-workspace D'
 if.app-id = 'com.anthropic.claudefordesktop'
 run = 'move-node-to-workspace Q'
 
+[[on-window-detected]]
+if.app-id = 'com.electron.ollama'
+run = 'layout floating'
+
