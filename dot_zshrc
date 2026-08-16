@@ -118,6 +118,10 @@ alias tm='task-master'
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOMEBREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
+# zsh infers vi mode when EDITOR is already exported at startup, so nested
+# shells (herdr panes, tmux) diverged from top-level ones. Pin it.
+bindkey -e
+
 # Up/Down arrow: prefix history search (type "k" then up → matches "kubectl …")
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
