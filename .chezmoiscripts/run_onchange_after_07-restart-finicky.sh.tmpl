@@ -1,0 +1,22 @@
+{{ if eq .profile "osx" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Finicky watches ~/.finicky.js by inode; chezmoi applies via temp file + rename,
+# which drops the watch, so a running instance keeps serving the old rules.
+{{ $work := joinPath .chezmoi.homeDir ".config/dotfiles-private/finicky-work.js" -}}
+# config: {{ include "dot_finicky.js.tmpl" | sha256sum }}
+{{ if stat $work -}}
+# work rules: {{ output "cat" $work | sha256sum }}
+{{ end -}}
+
+if [ -d /Applications/Finicky.app ] && pgrep -qx Finicky; then
+    echo "[INFO] Restarting Finicky to pick up config changes..."
+    osascript -e 'quit app "Finicky"' || true
+    for _ in $(seq 1 50); do
+        pgrep -qx Finicky || break
+        sleep 0.1
+    done
+    open -a Finicky
+fi
+{{ end -}}
