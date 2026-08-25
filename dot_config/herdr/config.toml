@@ -15,6 +15,7 @@ focus_pane_right = "prefix+l"
 split_vertical = "prefix+|"
 split_horizontal = "prefix+\""
 settings = "prefix+shift+s"
+new_worktree = ""
 
 [[keys.command]]
 key = "prefix+s"
@@ -35,6 +36,14 @@ key = "prefix+shift+c"
 type = "shell"
 command = "zsh -lc 'pane=$(herdr pane split --current --direction down --focus | jq -r \".result.pane.pane_id\"); herdr pane run \"$pane\" mise exec -- claude'"
 description = "new claude in horizontal split"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "$HOME/.local/bin/herdr-new-worktree.sh"
+description = "new worktree as a sibling of the repo (<repo>.<branch>)"
+width = "60%"
+height = "20%"
 
 [[keys.command]]
 key = "prefix+."
