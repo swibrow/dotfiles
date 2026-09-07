@@ -38,8 +38,7 @@ Inline assignments beat mise's exported env, so these aliases pick a profile fro
 | Alias | Config Dir | Auth |
 |-------|-----------|------|
 | `ccmain` | default (`CLAUDE_CONFIG_DIR` unset) | Personal OAuth (API key unset) |
-| `ccwork` | `~/.claude_work` | `ANTHROPIC_WORK_API_KEY` |
-| `ccent` | `~/.claude_work` | Work OAuth (API key unset) |
+| `ccwork` | `~/.claude_work` | Work OAuth (API key unset) |
 
 ## Tmux Integration
 

@@ -75,7 +75,15 @@ alias gcaa="git commit --amend -a"
 alias gcaan="git commit --amend -an --no-edit"
 gcm() { git checkout "$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')" }
 
-alias ghpr="gh pr view --web 2>/dev/null || gh pr create --web"
+# gh pr view matches a branch's PR whatever its state, so a merged or closed one
+# would otherwise be reopened in the browser instead of creating the new PR.
+ghpr() {
+  if [[ "$(gh pr view --json state --jq .state 2>/dev/null)" == OPEN ]]; then
+    gh pr view --web
+  else
+    gh pr create --web
+  fi
+}
 
 # Terraform
 alias tf="terraform"
@@ -133,8 +141,7 @@ alias wsc="wt switch --create -x claude"
 # ccmain unsets CLAUDE_CONFIG_DIR rather than setting it: the default resolves
 # the state file to ~/.claude.json, but any explicit dir moves it inside that dir.
 alias ccmain='env -u ANTHROPIC_API_KEY -u CLAUDE_CONFIG_DIR claude'
-alias ccwork='ANTHROPIC_API_KEY="$ANTHROPIC_WORK_API_KEY" CLAUDE_CONFIG_DIR="$HOME/.claude_work" claude'
-alias ccent='env -u ANTHROPIC_API_KEY CLAUDE_CONFIG_DIR="$HOME/.claude_work" claude'
+alias ccwork='env -u ANTHROPIC_API_KEY CLAUDE_CONFIG_DIR="$HOME/.claude_work" claude'
 
 # Claude Code: yolo agent in a fresh worktrunk worktree, opened in a new
 # tmux window of the current session (runs inline if not inside tmux)
