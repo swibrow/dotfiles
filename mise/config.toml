@@ -48,6 +48,61 @@ set -euo pipefail
 mise unset --file "$HOME/.config/dotfiles-private/mise.toml" "$usage_name"
 '''
 
+[tasks."secrets:scrub"]
+description = "Delete lines containing any of the given secret prefixes from local files. Usage: mise run secrets:scrub -- <prefix1,prefix2,...> <file> [file...] [--dry-run]"
+raw = true
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+cd "${MISE_ORIGINAL_CWD:-.}"
+
+usage() {
+  cat >&2 <<'EOF'
+Usage: mise run secrets:scrub -- <prefix1,prefix2,...> <file> [file...] [--dry-run]
+  e.g. mise run secrets:scrub -- xoxb-,xoxp-,xapp-,sk-ant-,ghp_,ghu_ ~/.claude/history.jsonl *.jsonl
+Matches are literal substrings (not regex): a line is deleted if it contains
+any given prefix anywhere. Each modified file is backed up to
+<file>.bak.<timestamp> first.
+EOF
+  exit 1
+}
+
+dry_run=false
+rest=()
+for a in "$@"; do
+  case "$a" in
+    --dry-run) dry_run=true ;;
+    *) rest+=("$a") ;;
+  esac
+done
+[ -n "${rest[1]:-}" ] || usage
+
+IFS=',' read -r -a prefixes <<< "${rest[0]}"
+files=("${rest[@]:1}")
+
+grep_args=()
+for p in "${prefixes[@]}"; do
+  [ -n "$p" ] && grep_args+=(-e "$p")
+done
+[ -n "${grep_args[0]:-}" ] || { echo "error: no prefixes given" >&2; exit 1; }
+
+for f in "${files[@]}"; do
+  [ -f "$f" ] || { echo "skip (not a file): $f" >&2; continue; }
+  hits=$(grep -nF "${grep_args[@]}" "$f" || true)
+  [ -n "$hits" ] || continue
+  count=$(printf '%s\n' "$hits" | wc -l | tr -d ' ')
+  if $dry_run; then
+    echo "$f: $count matching line(s) [dry-run]"
+    printf '%s\n' "$hits" | cut -d: -f1 | sed 's/^/  line /'
+  else
+    backup="$f.bak.$(date +%Y%m%d%H%M%S)"
+    cp "$f" "$backup"
+    grep -vF "${grep_args[@]}" "$backup" > "$f"
+    echo "$f: removed $count line(s), backup at $backup"
+  fi
+done
+'''
+
 [tasks."keys:top"]
 description = "Show most-used keys (keyfreq). Args: number of keys, e.g. mise run keys:top 30"
 run = "keyfreq top"
