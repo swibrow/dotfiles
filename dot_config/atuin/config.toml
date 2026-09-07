@@ -1,8 +1,8 @@
 # atuin configuration
 # https://docs.atuin.sh/configuration/config/
 
-# Local-only mode (no sync server)
-sync_address = ""
+# Local-only mode: omit sync_address entirely to disable sync
+# (an empty string fails TOML deserialization on atuin 18.x)
 
 # Search mode: prefix, fulltext, fuzzy, or skim
 search_mode = "fuzzy"
