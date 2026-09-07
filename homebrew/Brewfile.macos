@@ -3,6 +3,7 @@
 # .chezmoiscripts/run_onchange_before_02-install-brewfile.sh.tmpl
 
 tap "barutsrb/tap", "https://github.com/BarutSRB/homebrew-tap", trusted: true
+tap "jhlee0409/tap"
 tap "nikitabobko/tap", trusted: true
 tap "oktadev/tap", "https://github.com/oktadev/homebrew-tap.git", trusted: true
 tap "postfinance/tap"
@@ -20,6 +21,8 @@ brew "terminal-notifier"
 
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "nikitabobko/tap/aerospace", trusted: true
+# Browse and analyze Claude Code conversation history offline
+cask "jhlee0409/tap/claude-code-history-viewer", trusted: true
 # Terminal UI for GitHub Actions
 cask "swibrow/tap/gha", trusted: true
 # Smart terminal cheatsheet — ask a question, get a command
