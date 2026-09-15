@@ -27,6 +27,8 @@ cask "jhlee0409/tap/claude-code-history-viewer", trusted: true
 cask "swibrow/tap/gha", trusted: true
 # Smart terminal cheatsheet — ask a question, get a command
 cask "swibrow/tap/how", trusted: true
+# Note editor and whiteboard
+cask "affine"
 # Automatic tiling window manager similar to xmonad
 cask "amethyst"
 # Kubernetes desktop client
