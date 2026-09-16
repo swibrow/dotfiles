@@ -1,7 +1,7 @@
 # atuin configuration
 # https://docs.atuin.sh/configuration/config/
 
-# Local-only mode: omit sync_address entirely to disable sync
+# sync_address comes from ATUIN_SYNC_ADDRESS in mise/config.toml; omit it here
 # (an empty string fails TOML deserialization on atuin 18.x)
 
 # Search mode: prefix, fulltext, fuzzy, or skim
