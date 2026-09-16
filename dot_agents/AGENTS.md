@@ -39,7 +39,7 @@ Claude-specific additions may follow the import line; never duplicate shared ins
 - Dotfiles are managed with chezmoi (source: `~/.local/share/chezmoi`). Edit dotfiles in the chezmoi source, not the rendered files in `$HOME`.
 - That dotfiles repo is **public**. Two things must never land in it: secret env values, and strings naming the employer, its GitHub orgs, its domains, or the work email inside absolute paths. Use `$HOME` or `{{ .chezmoi.homeDir }}` rather than absolute `/Users/...` paths.
 - Those excluded bits live in a **private layer**: a separate git repo cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`. Public config reads it but must degrade gracefully when it is absent. Its current org-name list is in `~/.config/dotfiles-private/work.zsh`; check a change against that file before committing to the public repo.
-- The private layer is a plain git repo, not chezmoi-managed files, so `chezmoi diff`/`status` say nothing about it and changes there need their own commit and push:
+- The private layer is a plain git repo, not chezmoi-managed files, so `chezmoi diff`/`status` say nothing about it and changes there need their own commit and push. After changing anything in it, summarise the change and ask for approval; once approved, commit and push straight away. This is the one exception to the "never commit or push unless asked" rule under Git:
   ```shell
   git -C ~/.config/dotfiles-private add -A
   git -C ~/.config/dotfiles-private commit -s -m "..."
