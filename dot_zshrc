@@ -56,7 +56,7 @@ _cached_eval() {
   local cache="$_zsh_cache/$name.zsh"
   local bin="${commands[$name]:-}"
   if [[ -n "$bin" ]]; then
-    if [[ ! -f "$cache" || "$bin" -nt "$cache" ]]; then
+    if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
       eval "$@" > "$cache" 2>/dev/null
     fi
     source "$cache"
