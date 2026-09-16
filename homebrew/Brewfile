@@ -1,6 +1,5 @@
 tap "anomalyco/tap", trusted: true
 tap "aws/tap", trusted: true
-tap "certak-com/kafkio", trusted: true
 tap "clowdhaus/taps", trusted: true
 tap "dart-lang/dart", trusted: true
 tap "env0/terratag", trusted: true
@@ -27,7 +26,6 @@ tap "siderolabs/tap", trusted: true
 tap "sst/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
 tap "swibrow/tap", trusted: true
 tap "tj-actions/tap", trusted: true
-tap "vladimirvivien/oss-tools", trusted: true
 tap "yakitrak/yakitrak", trusted: true
 # Run your GitHub Actions locally
 brew "act"
@@ -37,6 +35,8 @@ brew "shellcheck"
 brew "actionlint"
 # Simple, modern, secure file encryption
 brew "age"
+# Age plugin for Apple Secure Enclave
+brew "age-plugin-se"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # GitOps Continuous Delivery for Kubernetes
@@ -285,8 +285,6 @@ brew "rainfrog"
 brew "renovate"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Command-line utility to interact with Sentry
-brew "sentry-cli"
 # Smart session manager for the terminal
 brew "sesh"
 # Work with remote images registries
@@ -327,8 +325,6 @@ brew "unbound"
 brew "uv"
 # High-performance data structure server that primarily serves key/value workloads
 brew "valkey"
-# Tool for creating isolated virtual python environments
-brew "virtualenv"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Watch files and take action when they change
@@ -367,27 +363,14 @@ brew "zsh-fast-syntax-highlighting"
 brew "anomalyco/tap/opencode"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
-# A CLI to aid in upgrading Amazon EKS clusters
-brew "clowdhaus/taps/eksup"
-# Automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources on Terraform
-brew "env0/terratag/terratag"
-# Detect deprecated Kubernetes apiVersions
-brew "fairwindsops/tap/pluto"
-# Flux CLI
-brew "fluxcd/tap/flux@0.41", link: true
 # Interactive TUI for Homebrew
 brew "gromgit/brewtils/taproom"
-# TUI application for managing multiple kubectl port-forward configurations
-brew "hcavarsan/kftray/kftui"
 # The official Infisical CLI
 brew "infisical/get-cli/infisical"
 # Kanidm CLI
 brew "kanidm/kanidm/kanidm", trusted: true
 # Modern traceroute/mtr-style TUI with hop stats and ASN/geo enrichment
 brew "lance0/tap/ttl"
-brew "mk-5/mk-5/fjira"
-# Desktop-inspired terminal diff viewer for agent-authored changesets
-brew "modem-dev/tap/hunk", trusted: true
 # Automatically generate markdown documentation for helm charts
 brew "norwoodj/tap/helm-docs"
 # kube-capacity provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
@@ -403,7 +386,3 @@ brew "swibrow/tap/agent-ops"
 # Generate markdown tables for your Github action and reusable workflow with ease.
 brew "tj-actions/tap/auto-doc"
 brew "yakitrak/yakitrak/notesmd-cli", link: false, trusted: true
-go "cmd/go"
-go "cmd/gofmt"
-uv "mempalace"
-npm "corepack"
