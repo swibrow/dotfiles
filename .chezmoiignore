@@ -11,6 +11,10 @@ homebrew/**
 # back into the source dir so hand-edits and `mise` writes land in the repo.
 mise/**
 
+# Same again for the global justfile and its modules - ~/.justfile and
+# ~/.config/just are symlinks into just/ so edits land in the repo.
+just/**
+
 # Docs & CI
 docs/**
 mkdocs.yml

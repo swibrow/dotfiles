@@ -1,0 +1,10 @@
+# Global justfile. Picked up by `just -g <module> <recipe>` from anywhere, or by
+# plain `just` from any directory under $HOME without a justfile of its own.
+# Modules live in ~/.config/just/*.just.
+
+mod github '~/.config/just/github.just'
+mod wireguard '~/.config/just/wireguard.just'
+
+# List every module and recipe
+default:
+    @just --justfile '{{ justfile() }}' --list --list-submodules
