@@ -1,6 +1,6 @@
 {{- $email := promptStringOnce . "email" "Git email" "15628653+swibrow@users.noreply.github.com" -}}
 {{- $name := promptStringOnce . "name" "Git user name" "Samuel" -}}
-{{- $signingkey := promptStringOnce . "signingkey" "GPG signing key" "746DDAD6" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "GPG signing key" "CE460C629C8756A6" -}}
 {{- $profile := "osx" -}}
 {{- if ne .chezmoi.os "darwin" -}}
 {{-   $profile = promptStringOnce . "profile" "Profile" "linux-dev" -}}
