@@ -91,7 +91,7 @@ age-encrypted value into the private repo (commit it there).
 
 ## Ignored Files
 
-`.chezmoiignore` lists files that chezmoi should not manage — things like `README.md`, `CLAUDE.md`, the docs site, and other repo-only files.
+`.chezmoiignore` lists files that chezmoi should not manage — things like `README.md`, `AGENTS.md`, `CLAUDE.md`, the docs site, and other repo-only files.
 
 ## Run Scripts
 
