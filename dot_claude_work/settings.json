@@ -1,0 +1,12 @@
+{
+  "model": "opus[1m]",
+  "theme": "dark",
+  "includeCoAuthoredBy": false,
+  "enabledPlugins": {
+    "design@synced": false
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "wt list statusline --format=claude-code"
+  }
+}

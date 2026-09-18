@@ -90,6 +90,10 @@ Inline assignments beat mise's exported env, so these aliases pick a profile fro
 }
 ```
 
+### Work (`~/.claude_work/settings.json`)
+
+Managed separately by chezmoi (`dot_claude_work/settings.json`). It carries its own model and plugin choices but shares the same worktrunk `statusLine`, so the context bar shows in both profiles.
+
 ### MCP Servers
 
 GitHub MCP server runs in Docker:
