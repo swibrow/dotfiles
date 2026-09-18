@@ -1,0 +1,10 @@
+[
+  {
+    "bindings": {
+      "cmd-=": ["action::Sequence", [["zed::IncreaseBufferFontSize", { "persist": false }], ["zed::IncreaseUiFontSize", { "persist": false }]]],
+      "cmd-+": ["action::Sequence", [["zed::IncreaseBufferFontSize", { "persist": false }], ["zed::IncreaseUiFontSize", { "persist": false }]]],
+      "cmd--": ["action::Sequence", [["zed::DecreaseBufferFontSize", { "persist": false }], ["zed::DecreaseUiFontSize", { "persist": false }]]],
+      "cmd-0": ["action::Sequence", [["zed::ResetBufferFontSize", { "persist": false }], ["zed::ResetUiFontSize", { "persist": false }]]],
+    },
+  },
+]

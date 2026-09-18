@@ -15,6 +15,10 @@ mise/**
 # ~/.config/just are symlinks into just/ so edits land in the repo.
 just/**
 
+# Zed rewrites settings.json from its UI - ~/.config/zed/settings.json is a
+# symlink into zed/ so those writes land in the repo.
+zed/**
+
 # Docs & CI
 docs/**
 mkdocs.yml
