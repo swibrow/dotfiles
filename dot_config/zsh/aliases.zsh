@@ -6,8 +6,7 @@ alias zreload="source ~/.zshrc"
 alias upgrade="topgrade"
 
 # Open editors
-alias cu="cursor ."
-alias co="code ."
+alias co="zed ."
 alias nv="nvim ."
 
 # AWS
