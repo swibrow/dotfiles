@@ -63,6 +63,7 @@ else — tool config, aliases, completions — stays here.
 | `work.zsh` | `.zshrc` and `browser-open` — `work_orgs`, `GH_DEFAULT_ORG` |
 | `finicky-work.js` | inlined into `~/.finicky.js` by the `dot_finicky.js.tmpl` template |
 | `claude_work/CLAUDE.md` | `~/.claude_work/CLAUDE.md` symlink |
+| `claude_work/settings.json` | `~/.claude_work/settings.json` symlink - kept private because Claude Code writes work details (auto mode environment) into it |
 | `Brewfile` | the brew bundle run script — private tap and its formulae |
 
 Everything public degrades gracefully when the private repo is absent: `.zshrc`

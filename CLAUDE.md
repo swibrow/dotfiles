@@ -54,7 +54,7 @@ AWS profile switching uses the `af` shell function (AWS SSO via the native CLI),
 
 This repo is public. Two things must not land here: secret env values, and strings naming the employer, its GitHub orgs, its domains, or the work email inside absolute paths. The current list of those strings is in `~/.config/dotfiles-private/work.zsh` — check a change against it before committing. Everything else — tool config, aliases, completions — stays public even if it is only useful at work.
 
-The excluded content lives in a private repo cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`: `mise.toml` (age-encrypted secrets, symlinked into `~/.config/mise/conf.d/`), `work.zsh` (`work_orgs`, `GH_DEFAULT_ORG`; sourced by `.zshrc` and `browser-open`), `finicky-work.js` (inlined by `dot_finicky.js.tmpl`), `claude_work/CLAUDE.md`, `Brewfile`. Public config must degrade gracefully when it is absent. Use `$HOME` or `{{ .chezmoi.homeDir }}` rather than absolute `/Users/...` paths.
+The excluded content lives in a private repo cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`: `mise.toml` (age-encrypted secrets, symlinked into `~/.config/mise/conf.d/`), `work.zsh` (`work_orgs`, `GH_DEFAULT_ORG`; sourced by `.zshrc` and `browser-open`), `finicky-work.js` (inlined by `dot_finicky.js.tmpl`), `claude_work/CLAUDE.md` and `claude_work/settings.json` (symlinked into `~/.claude_work/`), `Brewfile`. Public config must degrade gracefully when it is absent. Use `$HOME` or `{{ .chezmoi.homeDir }}` rather than absolute `/Users/...` paths.
 
 ## Architecture Notes
 
