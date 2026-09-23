@@ -1,5 +1,12 @@
 Include {{ .chezmoi.homeDir }}/.colima/ssh_config
 
+# herdr's `machine add` connects with StrictHostKeyChecking=yes, which fails
+# against the 10.* rule below since that one discards host keys.
+Host pitower-herdr
+  HostName 10.20.10.232
+  User dev
+  StrictHostKeyChecking accept-new
+
 Host 192.168.*.*
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
