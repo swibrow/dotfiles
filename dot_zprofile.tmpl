@@ -1,7 +1,7 @@
 export DOTFILES_PROFILE="{{ .profile }}"
 
 # Hardcoded Homebrew env (avoids expensive eval of brew shellenv)
-if [ "$(arch)" = arm64 ] && [ -d "/opt/homebrew" ]; then
+if [ "$(uname -m)" = arm64 ] && [ -d "/opt/homebrew" ]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
     export HOMEBREW_REPOSITORY="/opt/homebrew"

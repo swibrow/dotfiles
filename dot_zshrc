@@ -116,8 +116,8 @@ source $HOME/.config/zsh/aliases.zsh
 alias tm='task-master'
 
 # Plugins (from brew)
-source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOMEBREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+[ -r "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -r "$HOMEBREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$HOMEBREW_PREFIX/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
 # zsh infers vi mode when EDITOR is already exported at startup, so nested
 # shells (herdr panes, tmux) diverged from top-level ones. Pin it.
@@ -129,7 +129,7 @@ bindkey '^[[B' history-search-forward
 
 # Background tasks
 {
-  pgrep -x gpg-agent >/dev/null || gpgconf --launch gpg-agent
+  pgrep -x gpg-agent >/dev/null || gpgconf --launch gpg-agent 2>/dev/null
 } &!
 
 unset _zsh_cache
