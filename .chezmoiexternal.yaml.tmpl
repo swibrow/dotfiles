@@ -1,9 +1,11 @@
 # Private layer: secrets and work-identifiable config. Absent on machines
 # without access; everything that reads it degrades gracefully.
+{{ if ne .profile "container" }}
 ".config/dotfiles-private":
   type: git-repo
   url: "git@github.com:swibrow/dotfiles-private.git"
   refreshPeriod: 168h
+{{ end }}
 
 ".config/tmux/plugins/tpm":
   type: git-repo
