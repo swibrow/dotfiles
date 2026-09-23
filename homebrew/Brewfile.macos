@@ -39,6 +39,8 @@ cask "balenaetcher"
 cask "bruno"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Online diagram software
+cask "drawio"
 # Launch builds and start simulators from your menu bar
 cask "expo-orbit"
 # Utility for customizing which browser to start
@@ -82,10 +84,6 @@ cask "tailscale-app"
 cask "warrensbox/tap/tfswitch", trusted: true
 # Talos Orchestrator by PostFinance
 cask "postfinance/tap/topf", trusted: true
-# Binary releases of VS Code without MS branding/telemetry/licensing
-cask "vscodium"
-# GPU-accelerated cross-platform terminal emulator and multiplexer
-cask "wezterm"
 # Network monitoring and troubleshooting tool
 cask "wifiman"
 # Multiplayer code editor
