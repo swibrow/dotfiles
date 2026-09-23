@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to AI coding agents when working with code in this repository.
+This file provides guidance to AI coding agents when working with code in this repository. `AGENTS.md` is the default and the source of truth: Claude Code reads it natively (2.1.277+), as Codex and the others already did. The `CLAUDE.md` beside it exists only because Claude Code prefers that filename when both are present, so it holds nothing but the `@AGENTS.md` import line.
 
 ## Repository Overview
 

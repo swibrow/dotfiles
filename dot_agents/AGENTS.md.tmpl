@@ -26,19 +26,21 @@ projects. Project-level AGENTS.md / CLAUDE.md files take precedence over this fi
 
 ## Agent configuration
 
-Use a tool-agnostic layout so config works across all AI tooling. In each repo, `AGENTS.md` is the source of truth for instructions; `CLAUDE.md` is a real file (no symlinks) whose first line imports it:
+Use a tool-agnostic layout so config works across all AI tooling. `AGENTS.md` is the default and the source of truth for instructions. Claude Code reads it natively (2.1.277+), as Codex and the others already did, so a repo needs no `CLAUDE.md` at all.
+
+Add a `CLAUDE.md` only when there are Claude-specific instructions worth keeping out of the shared file. Claude Code's default `instructionFiles` mode is `claude-md-or-agents-md`: where both files sit in one directory it loads `CLAUDE.md` and skips `AGENTS.md`. So that file is a real file (no symlinks) whose first line imports the shared one, with the extras below it, and never a copy of instructions that already live in `AGENTS.md`:
 
 ```markdown
 @AGENTS.md
 ```
 
-Claude-specific additions may follow the import line; never duplicate shared instructions there. `.claude/` is a real directory for skills/commands/settings; Claude Code has no import mechanism for directories, so there is no `.agents/` directory at repo level. Every agent reads the same instructions: Claude Code via the import, Codex and others read `AGENTS.md` directly. Globally, `~/.agents/AGENTS.md` remains canonical, with `~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md` symlinked to it.
+`.claude/` is a real directory for skills/commands/settings; Claude Code has no import mechanism for directories, so there is no `.agents/` directory at repo level. Globally, `~/.agents/AGENTS.md` remains canonical, with `~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md` symlinked to it: Claude Code reads neither `~/.agents/` nor a global `AGENTS.md`, so the symlink is what puts this file in front of it.
 
 ## Environment
 
 - Dotfiles are managed with chezmoi (source: `~/.local/share/chezmoi`). Edit dotfiles in the chezmoi source, not the rendered files in `$HOME`.
 - Prefer symlinks over copies when bringing config under chezmoi: keep the real file in the source dir (or in the private layer if it holds work details) and deploy it with a `symlink_` entry, so changes an app writes itself land in the repo instead of drifting.
-- That dotfiles repo is **public**. Two things must never land in it: secret env values, and strings naming the employer, its GitHub orgs, its domains, or the work email inside absolute paths. Use `$HOME` or `{{ .chezmoi.homeDir }}` rather than absolute `/Users/...` paths.
+- That dotfiles repo is **public**. Two things must never land in it: secret env values, and strings naming the employer, its GitHub orgs, its domains, or the work email inside absolute paths. Use `$HOME` or `{{ "{{ .chezmoi.homeDir }}" }}` rather than absolute `/Users/...` paths.
 - Those excluded bits live in a **private layer**: a separate git repo cloned to `~/.config/dotfiles-private` by `.chezmoiexternal.yaml`. Public config reads it but must degrade gracefully when it is absent. Its current org-name list is in `~/.config/dotfiles-private/work.zsh`; check a change against that file before committing to the public repo.
 - The private layer is a plain git repo, not chezmoi-managed files, so `chezmoi diff`/`status` say nothing about it and changes there need their own commit and push. After changing anything in it, summarise the change and ask for approval; once approved, commit and push straight away. This is the one exception to the "never commit or push unless asked" rule under Git:
   ```shell
@@ -68,3 +70,8 @@ Claude-specific additions may follow the import line; never duplicate shared ins
 ## Versioning
 
 This module is versioned with Semantic Versioning via semantic-release and Conventional Commits. See the [Versioning and Releases](README.md#versioning-and-releases) section of the README for the rules. Note in particular that a Kubernetes minor version update requires a MAJOR release of the module.
+
+<!-- newsagent:begin -->
+@{{ .chezmoi.homeDir }}/.newsagent/standards/bug-feature-tracker.md
+@{{ .chezmoi.homeDir }}/.newsagent/standards/code-style.md
+<!-- newsagent:end -->
