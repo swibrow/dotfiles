@@ -1,4 +1,4 @@
-provider: litellm
+provider: llm
 anthropic:
   api_key: ""
   model: claude-sonnet-4-5-20250929
@@ -8,7 +8,7 @@ openai:
 ollama:
   model: 'qwen3:4b'
   url: http://localhost:11434/v1
-litellm:
+llm:
   api_key: ""
-  model: gemini-3.6-flash
-  url: https://litellm.wibrow.dev
+  model: google/gemini-3.6-flash
+  url: https://llm.wibrow.dev/v1
