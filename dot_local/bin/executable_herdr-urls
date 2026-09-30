@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# fzf over URLs in the current pane's scrollback (newest first), open the picks via browser-open.
+source "$HOME/.zprofile"
+
+current=$(herdr pane current)
+pane_id=$(printf '%s' "$current" | jq -r '.result.pane.pane_id')
+cwd=$(printf '%s' "$current" | jq -r '.result.pane.foreground_cwd // .result.pane.cwd')
+
+urls=$(herdr pane read "$pane_id" --source recent-unwrapped --lines 10000 \
+  | rg -o 'https?://[^\s<>"'"'"'`|\\]+' \
+  | sed -E 's/[].,;:!?)]+$//' \
+  | tail -r \
+  | awk '!seen[$0]++')
+
+if [[ -z "$urls" ]]; then
+  echo "no URLs in this pane"
+  sleep 1
+  exit 0
+fi
+
+picked=$(printf '%s\n' "$urls" | fzf --multi --prompt 'url> ' --header 'enter: open  tab: multi-select  ctrl-y: copy' \
+  --bind 'ctrl-y:execute-silent(printf "%s" {} | pbcopy)+abort') || exit 0
+
+cd "$cwd" 2>/dev/null
+for url in ${(f)picked}; do
+  browser-open "$url"
+done

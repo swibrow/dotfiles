@@ -46,6 +46,14 @@ width = "60%"
 height = "20%"
 
 [[keys.command]]
+key = "prefix+u"
+type = "popup"
+command = "$HOME/.local/bin/herdr-urls"
+description = "fzf URLs in the current pane and open them"
+width = "80%"
+height = "60%"
+
+[[keys.command]]
 key = "prefix+."
 type = "popup"
 command = "$HOME/.local/bin/herdr-rename-workspace.sh"
