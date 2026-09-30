@@ -39,6 +39,8 @@ cask "balenaetcher"
 cask "bruno"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Voice and text chat software
+cask "discord"
 # Online diagram software
 cask "drawio"
 # Launch builds and start simulators from your menu bar

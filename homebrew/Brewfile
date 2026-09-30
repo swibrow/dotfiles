@@ -85,6 +85,8 @@ brew "cmake"
 brew "container"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# Extract article content and metadata from web pages
+brew "defuddle"
 # TIFF library and utilities
 brew "libtiff"
 # Load/unload environment variables based on $PWD
@@ -303,6 +305,8 @@ brew "starship"
 brew "stow"
 # Blazingly fast terminal recorder that generates animated gif images for the web
 brew "t-rec"
+# TUI to view and query tabular files (CSV,TSV, Parquet, etc.)
+brew "tabiew"
 # General purpose fuzzy finder TUI
 brew "television"
 # User interface to the TELNET protocol
