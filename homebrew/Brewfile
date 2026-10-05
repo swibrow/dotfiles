@@ -159,6 +159,8 @@ brew "helm"
 brew "herdr", restart_service: :changed
 # HTTP load generator, ApacheBench (ab) replacement
 brew "hey"
+# Client library for huggingface.co hub
+brew "hf"
 # Improved top (interactive process viewer)
 brew "htop"
 # Configurable static site generator
@@ -329,6 +331,8 @@ brew "unbound"
 brew "uv"
 # High-performance data structure server that primarily serves key/value workloads
 brew "valkey"
+# Allows for using more advanced kubevirt features
+brew "virtctl"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Watch files and take action when they change
