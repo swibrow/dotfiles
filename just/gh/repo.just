@@ -1,4 +1,4 @@
-# GitHub helpers. Used via the global justfile: `just -g github <recipe>`.
+# Repo helpers: `just -g gh repo <recipe>`.
 
 dev := home_directory() / 'dev'
 cache := env('XDG_CACHE_HOME', home_directory() / '.cache') / 'just' / 'github-repos'
@@ -52,7 +52,7 @@ _pick archived query:
     [[ -s '{{ cache }}' ]] || just --justfile '{{ module_file() }}' refresh
     [[ '{{ archived }}' == yes ]] && filter=cat || filter=(grep -v $'\tarchived$')
     "${filter[@]}" < '{{ cache }}' | fzf --layout=default --multi --query '{{ query }}' --prompt 'repo> ' \
-        --header 'tab: select several; run `just -g github refresh` if a repo is missing' \
+        --header 'tab: select several; run `just -g gh repo refresh` if a repo is missing' \
         | cut -f1 || exit 0
 
 # Refetch the cached repo list the other recipes pick from

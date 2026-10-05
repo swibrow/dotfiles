@@ -2,7 +2,7 @@
 # plain `just` from any directory under $HOME without a justfile of its own.
 # Modules live in ~/.config/just/*.just.
 
-mod github '~/.config/just/github.just'
+mod gh '~/.config/just/gh.just'
 mod wireguard '~/.config/just/wireguard.just'
 
 # List every module and recipe
