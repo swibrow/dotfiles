@@ -1,5 +1,6 @@
 export DOTFILES_PROFILE="{{ .profile }}"
 
+{{ if ne .profile "arch" -}}
 # Hardcoded Homebrew env (avoids expensive eval of brew shellenv)
 if [ "$(uname -m)" = arm64 ] && [ -d "/opt/homebrew" ]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
@@ -17,6 +18,7 @@ fi
 export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
 export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
+{{ end -}}
 
 export GOPATH="$HOME/go"
 export PATH="$PATH:$HOME/.local/bin"

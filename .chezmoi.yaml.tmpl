@@ -1,9 +1,13 @@
 {{- $email := promptStringOnce . "email" "Git email" "15628653+swibrow@users.noreply.github.com" -}}
-{{- $name := promptStringOnce . "name" "Git user name" "Samuel" -}}
+{{- $name := promptStringOnce . "name" "Git user name" "swibrow" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "GPG signing key" "CE460C629C8756A6" -}}
 {{- $profile := "osx" -}}
 {{- if ne .chezmoi.os "darwin" -}}
-{{-   $profile = promptStringOnce . "profile" "Profile" "linux-dev" -}}
+{{-   $defaultProfile := "linux-dev" -}}
+{{-   if eq (dig "osRelease" "id" "" .chezmoi) "arch" -}}
+{{-     $defaultProfile = "arch" -}}
+{{-   end -}}
+{{-   $profile = promptStringOnce . "profile" "Profile (arch, linux-dev, container)" $defaultProfile -}}
 {{- end -}}
 
 data:

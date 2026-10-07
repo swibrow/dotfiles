@@ -11,7 +11,8 @@ This will:
 1. Install chezmoi
 2. Clone the dotfiles repo to `~/.local/share/chezmoi`
 3. Prompt for user-specific data (email, name, GPG key), and on non-macOS,
-   the machine profile (default `linux-dev` — macOS always auto-selects `osx`)
+   the machine profile (default `arch` on Arch Linux, otherwise `linux-dev`; macOS
+   always auto-selects `osx`). The `arch` profile skips Homebrew entirely
 4. Run setup scripts in order
 5. Apply all dotfiles to the home directory
 
