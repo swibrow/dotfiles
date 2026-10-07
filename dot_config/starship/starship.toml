@@ -1,6 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -25,6 +26,11 @@ palette = "catppuccin_mocha"
 
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+
+[hostname]
+ssh_symbol = ' '
+style = 'bold peach'
+format = '[$ssh_symbol$hostname]($style) [in](white) '
 
 [fill]
 symbol = ' '
