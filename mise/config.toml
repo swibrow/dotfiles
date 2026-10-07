@@ -33,9 +33,38 @@ else
 fi
 [ -n "$value" ] || { echo "error: empty value" >&2; exit 1; }
 src="$HOME/.config/dotfiles-private/mise.toml"
+recipients="$HOME/.config/dotfiles-private/age-recipients.txt"
+args=()
+if [ -f "$recipients" ]; then
+  # Explicit recipients replace mise's defaults, so refuse a list that would
+  # lock this machine out of what it writes.
+  if [ -f "$HOME/.config/mise/age.txt" ] && command -v age-keygen >/dev/null; then
+    own=$(age-keygen -y "$HOME/.config/mise/age.txt")
+    grep -qF "$own" "$recipients" || { echo "error: this machine's age key $own is not in $recipients" >&2; exit 1; }
+  fi
+  while read -r key rest; do
+    case "$key" in
+      age1*) args+=(--age-recipient "$key") ;;
+      ssh-*) args+=(--age-ssh-recipient "$key $rest") ;;
+    esac
+  done < "$recipients"
+fi
 mise trust --quiet "$src" 2>/dev/null || true
-mise set --age-encrypt --file "$src" "$name=$value"
+mise set --age-encrypt ${args[@]+"${args[@]}"} --file "$src" "$name=$value"
 echo "Stored '$name' age-encrypted in $src (commit it in that repo)" >&2
+'''
+
+[tasks."secrets:rekey"]
+description = "Re-encrypt every secret in the private mise config to the keys in age-recipients.txt. Run after adding or removing a machine."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+src="$HOME/.config/dotfiles-private/mise.toml"
+# From $HOME so no project config shadows the private values.
+env_json=$(cd "$HOME" && mise env --json)
+for name in $(sed -nE 's/^([A-Z0-9_]+)[[:space:]]*=[[:space:]]*\{[[:space:]]*age[[:space:]]*=.*/\1/p' "$src"); do
+  jq -er --arg n "$name" '.[$n]' <<<"$env_json" | mise run --quiet secret:set "$name"
+done
 '''
 
 [tasks."secret:rm"]
