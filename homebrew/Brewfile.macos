@@ -82,6 +82,8 @@ cask "pearcleaner"
 cask "raycast"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # The tfswitch command lets you switch between terraform versions.
 cask "warrensbox/tap/tfswitch", trusted: true
 # Talos Orchestrator by PostFinance
