@@ -16,7 +16,10 @@ list_lines() {
         printf 'workspace\t%s\t\e[32m●\e[0m %s (open%s)\n' "$id" "$label" "${repo:+ · $repo worktree}"
       done)
 
-  dir_lines=$(zoxide query -l | while IFS= read -r p; do
+  zoxide_dirs=("${(@f)$(zoxide query -l)}")
+  typeset -A known_dirs
+  for p in $zoxide_dirs; do known_dirs[$p]=1; done
+  dir_lines=$(for p in $zoxide_dirs; do
     printf 'dir\t%s\t\e[36m▸\e[0m %s\n' "$p" "${p/#$HOME/~}"
   done)
 
@@ -25,7 +28,12 @@ list_lines() {
   repo_cache="${XDG_CACHE_HOME:-$HOME/.cache}/just/github-repos"
   repo_lines=$([[ -s "$repo_cache" ]] && grep -v $'\tarchived$' "$repo_cache" | while IFS= read -r repo; do
     owner="${repo%%/*}"; name="${repo#*/}"
-    [[ -d "$HOME/dev/${owner:l}/$name" ]] || printf 'repo\t%s\t\e[35m⇣\e[0m %s (clone)\n' "$repo" "$repo"
+    dir="$HOME/dev/${owner:l}/$name"
+    if [[ ! -d "$dir" ]]; then
+      printf 'repo\t%s\t\e[35m⇣\e[0m %s (clone)\n' "$repo" "$repo"
+    elif (( ! ${+known_dirs[$dir]} )); then
+      printf 'dir\t%s\t\e[36m▸\e[0m %s\n' "$dir" "${dir/#$HOME/~}"
+    fi
   done)
 
   printf '%s\n%s\n%s\n' "$workspace_lines" "$dir_lines" "$repo_lines" | grep -v '^$'
@@ -37,7 +45,8 @@ result=$(list_lines | fzf \
   --print-query \
   --ansi --delimiter '\t' --with-nth 3 \
   --border-label ' workspace ' --prompt '> ' \
-  --header 'enter: focus open workspace / start new at dir / clone repo · ctrl-r: refresh repo list' \
+  --header 'enter: focus open workspace / start new at dir / clone repo' \
+  --footer 'ctrl-r: refresh repo list from GitHub' \
   --bind "ctrl-r:change-border-label( refreshing repo list... )+reload-sync(just -g gh repo refresh >/dev/null 2>&1; ${(q)0:A} --list)" \
   --bind "load:change-border-label( workspace )" \
   --preview 'case {1} in workspace) herdr workspace get {2} | /opt/homebrew/bin/jq . ;; repo) gh repo view {2} ;; *) eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2} ;; esac' \
