@@ -9,28 +9,37 @@ source "$HOME/.zprofile"
 # resolution (~1-2s) since jq isn't activated in this cwd
 jq() { /opt/homebrew/bin/jq "$@"; }
 
-workspace_lines=$(herdr workspace list | jq -r '.result.workspaces[] | "\(.workspace_id)\t\(.label)"' \
-  | while IFS=$'\t' read -r id label; do
-      printf 'workspace\t%s\t\e[32m●\e[0m %s (open)\n' "$id" "$label"
-    done)
+list_lines() {
+  workspace_lines=$(herdr workspace list \
+    | jq -r '.result.workspaces[] | [.workspace_id, .label, (if .worktree.is_linked_worktree then .worktree.repo_name else "" end)] | @tsv' \
+    | while IFS=$'\t' read -r id label repo; do
+        printf 'workspace\t%s\t\e[32m●\e[0m %s (open%s)\n' "$id" "$label" "${repo:+ · $repo worktree}"
+      done)
 
-dir_lines=$(zoxide query -l | while IFS= read -r p; do
-  printf 'dir\t%s\t\e[36m▸\e[0m %s\n' "$p" "${p/#$HOME/~}"
-done)
+  dir_lines=$(zoxide query -l | while IFS= read -r p; do
+    printf 'dir\t%s\t\e[36m▸\e[0m %s\n' "$p" "${p/#$HOME/~}"
+  done)
 
-# repo list cached by `just -g gh repo refresh`; skipped when absent rather
-# than fetching it here, which takes ~30s
-repo_cache="${XDG_CACHE_HOME:-$HOME/.cache}/just/github-repos"
-repo_lines=$([[ -s "$repo_cache" ]] && grep -v $'\tarchived$' "$repo_cache" | while IFS= read -r repo; do
-  owner="${repo%%/*}"; name="${repo#*/}"
-  [[ -d "$HOME/dev/${owner:l}/$name" ]] || printf 'repo\t%s\t\e[35m⇣\e[0m %s (clone)\n' "$repo" "$repo"
-done)
+  # repo list cached by `just -g gh repo refresh`; skipped when absent rather
+  # than fetching it here, which takes ~30s
+  repo_cache="${XDG_CACHE_HOME:-$HOME/.cache}/just/github-repos"
+  repo_lines=$([[ -s "$repo_cache" ]] && grep -v $'\tarchived$' "$repo_cache" | while IFS= read -r repo; do
+    owner="${repo%%/*}"; name="${repo#*/}"
+    [[ -d "$HOME/dev/${owner:l}/$name" ]] || printf 'repo\t%s\t\e[35m⇣\e[0m %s (clone)\n' "$repo" "$repo"
+  done)
 
-result=$(printf '%s\n%s\n%s\n' "$workspace_lines" "$dir_lines" "$repo_lines" | grep -v '^$' | fzf \
+  printf '%s\n%s\n%s\n' "$workspace_lines" "$dir_lines" "$repo_lines" | grep -v '^$'
+}
+
+[[ "$1" == --list ]] && { list_lines; exit 0; }
+
+result=$(list_lines | fzf \
   --print-query \
   --ansi --delimiter '\t' --with-nth 3 \
   --border-label ' workspace ' --prompt '> ' \
-  --header 'enter: focus open workspace / start new at dir / clone repo' \
+  --header 'enter: focus open workspace / start new at dir / clone repo · ctrl-r: refresh repo list' \
+  --bind "ctrl-r:change-border-label( refreshing repo list... )+reload-sync(just -g gh repo refresh >/dev/null 2>&1; ${(q)0:A} --list)" \
+  --bind "load:change-border-label( workspace )" \
   --preview 'case {1} in workspace) herdr workspace get {2} | /opt/homebrew/bin/jq . ;; repo) gh repo view {2} ;; *) eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2} ;; esac' \
   --preview-window 'right:55%')
 
