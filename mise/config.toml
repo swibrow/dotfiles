@@ -7,7 +7,7 @@ INFISICAL_DOMAIN = "https://eu.infisical.com"
 ATUIN_SYNC_ADDRESS = "https://atuin.wibrow.dev"
 
 [tools]
-python = "3.14"
+python = "3.15.0"
 uv = "latest"
 node = "24"
 go = "latest"
