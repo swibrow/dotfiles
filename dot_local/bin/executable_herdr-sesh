@@ -42,27 +42,30 @@ list_lines() {
 [[ "$1" == --list ]] && { list_lines; exit 0; }
 
 result=$(list_lines | fzf \
-  --print-query \
+  --print-query --expect ctrl-t \
   --ansi --delimiter '\t' --with-nth 3 \
   --border-label ' workspace ' --prompt '> ' \
-  --header 'enter: focus open workspace / start new at dir / clone repo' \
-  --footer 'ctrl-r: refresh repo list from GitHub' \
+  --header-first \
+  --header $'enter: focus open workspace / start new at dir / clone repo\nctrl-t: new worktree from selection · ctrl-r: refresh repo list from GitHub' \
   --bind "ctrl-r:change-border-label( refreshing repo list... )+reload-sync(just -g gh repo refresh >/dev/null 2>&1; ${(q)0:A} --list)" \
   --bind "load:change-border-label( workspace )" \
   --preview 'case {1} in workspace) herdr workspace get {2} | /opt/homebrew/bin/jq . ;; repo) gh repo view {2} ;; *) eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2} ;; esac' \
   --preview-window 'right:55%')
 
 query=$(printf '%s\n' "$result" | sed -n 1p)
-selected=$(printf '%s\n' "$result" | sed -n 2p)
+key=$(printf '%s\n' "$result" | sed -n 2p)
+selected=$(printf '%s\n' "$result" | sed -n 3p)
 
 if [[ -n "$selected" ]]; then
   type=$(printf '%s' "$selected" | cut -f1)
   value=$(printf '%s' "$selected" | cut -f2)
-  if [[ "$type" == "workspace" ]]; then
+  if [[ "$type" == "workspace" && "$key" != ctrl-t ]]; then
     herdr workspace focus "$value"
     exit 0
   fi
-  if [[ "$type" == "repo" ]]; then
+  if [[ "$type" == "workspace" ]]; then
+    dir=$(herdr workspace list | jq -r --arg id "$value" '.result.workspaces[] | select(.workspace_id == $id) | .worktree.checkout_path // empty')
+  elif [[ "$type" == "repo" ]]; then
     owner="${value%%/*}"; name="${value#*/}"
     dir="$HOME/dev/${owner:l}/$name"
     [[ -d "$dir" ]] || gh repo clone "$value" "$dir" || { read -rs -k1 '?clone failed, press any key'; exit 1; }
@@ -77,5 +80,7 @@ fi
 
 dir="${dir/#\~/$HOME}"
 [[ -d "$dir" ]] || exit 0
+
+[[ "$key" == ctrl-t ]] && exec "$HOME/.local/bin/herdr-new-worktree.sh" "$dir"
 
 herdr workspace create --cwd "$dir" --focus

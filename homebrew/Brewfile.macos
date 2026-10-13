@@ -71,6 +71,8 @@ cask "mysqlworkbench"
 cask "ngrok"
 # Open-source software for live streaming and screen recording
 cask "obs"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
 cask "oktadev/tap/okta"
 # Tiling window manager for macOS with Niri-inspired column-based layout
 cask "barutsrb/tap/omniwm", trusted: true

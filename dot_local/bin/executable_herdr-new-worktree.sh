@@ -4,8 +4,7 @@
 # is a single fixed root and cannot express a per-repo sibling path.
 source "$HOME/.zprofile"
 
-current=$(herdr pane current)
-cwd=$(printf '%s' "$current" | jq -r '.result.pane.foreground_cwd // .result.pane.cwd')
+cwd=${1:-$(herdr pane current | jq -r '.result.pane.foreground_cwd // .result.pane.cwd')}
 
 if ! common=$(git -C "$cwd" rev-parse --path-format=absolute --git-common-dir 2>/dev/null); then
   print -u2 -- "not inside a git work tree: $cwd"
@@ -21,9 +20,9 @@ branch=""
 vared -p 'new worktree branch: ' branch
 [[ -n "$branch" ]] || exit 0
 
-path="${repo}.${branch//\//-}"
+target="${repo}.${branch//\//-}"
 
-if ! out=$(herdr worktree create --cwd "$cwd" --branch "$branch" --path "$path" --focus 2>&1); then
+if ! out=$(herdr worktree create --cwd "$cwd" --branch "$branch" --path "$target" --focus 2>&1); then
   print -u2 -- "$out"
   read -rs -k1
   exit 1
