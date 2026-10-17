@@ -18,4 +18,10 @@ fi
 if ! grep -q '^IgnorePkg *= *sunshine' /etc/pacman.conf; then
     sudo sed -i '/^\[options\]/a IgnorePkg = sunshine' /etc/pacman.conf
 fi
+
+# omarchy-install-service-sunshine opens the stream ports but not the web UI,
+# which home-ops proxies at omarchy-sunshine.wibrow.dev.
+for net in 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16; do
+    sudo ufw allow from "$net" to any port 47990 proto tcp comment omarchy-sunshine-webui >/dev/null
+done
 {{ end -}}
