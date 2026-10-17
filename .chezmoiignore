@@ -20,6 +20,10 @@ just/**
 # symlink into zed/ so those writes land in the repo.
 zed/**
 
+# omarchy writes these from its own tools (settings UI, monitor config) and so
+# does Sunshine's web UI - the deployed files are symlinks into omarchy/.
+omarchy/**
+
 # Docs & CI
 docs/**
 mkdocs.yml
@@ -41,6 +45,13 @@ site/**
 Library/LaunchAgents/**
 .local/bin/keychain-secret
 .local/bin/keyfreq.swift
+{{ end }}
+
+# omarchy desktop (the arch profile)
+{{ if ne .profile "arch" }}
+.config/hypr/**
+.config/omarchy/**
+.config/sunshine/**
 {{ end }}
 
 # No Homebrew on Arch; packages come from pacman

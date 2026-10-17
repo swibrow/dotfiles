@@ -64,8 +64,9 @@ The excluded content lives in a private repo cloned to `~/.config/dotfiles-priva
 - `private_*` prefix sets `0600` permissions
 - `*.tmpl` files are processed as Go templates with chezmoi data
 - `.chezmoiscripts/` contains run scripts (Homebrew install, brew bundle, etc.)
+- omarchy (the `arch` profile, a KubeVirt desktop VM in home-ops): `omarchy/` holds the hand-tuned `monitors.lua`, `shell.json` (idle lock pushed out to ~23 days, since `0` locks immediately) and `sunshine.conf`, deployed as symlinks so omarchy's and Sunshine's own UIs write into the repo. `run_onchange_after_08-omarchy-sunshine.sh.tmpl` replaces omarchy's Sunshine, built without CUDA, with LizardByte's release and pins it with `IgnorePkg`; bump `version` there to upgrade
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
-- `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key) and resolves the active machine `profile` (`osx` on macOS, always; prompted on other OSes, defaulting to `arch` on Arch Linux and `linux-dev` elsewhere; `arch` installs no Homebrew). `.profile` gates which packages (Brewfile vs Brewfile.macos) and macOS-only app configs get installed — see `.chezmoiignore`
+- `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key) and resolves the active machine `profile` (`osx` on macOS, always; prompted on other OSes, defaulting to `arch` on Arch Linux and derivatives such as omarchy and `linux-dev` elsewhere; `arch` installs no Homebrew). `.profile` gates which packages (Brewfile vs Brewfile.macos) and macOS-only app configs get installed — see `.chezmoiignore`
 - Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise run secret:set` / `secret:rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
 - AWS credentials managed via AWS SSO (`aws sso login`); profile switching via the `af` function
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)

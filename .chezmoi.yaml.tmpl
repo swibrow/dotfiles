@@ -4,7 +4,7 @@
 {{- $profile := "osx" -}}
 {{- if ne .chezmoi.os "darwin" -}}
 {{-   $defaultProfile := "linux-dev" -}}
-{{-   if eq (dig "osRelease" "id" "" .chezmoi) "arch" -}}
+{{-   if or (eq (dig "osRelease" "id" "" .chezmoi) "arch") (has "arch" (splitList " " (dig "osRelease" "idLike" "" .chezmoi))) -}}
 {{-     $defaultProfile = "arch" -}}
 {{-   end -}}
 {{-   $profile = promptStringOnce . "profile" "Profile (arch, linux-dev, container)" $defaultProfile -}}

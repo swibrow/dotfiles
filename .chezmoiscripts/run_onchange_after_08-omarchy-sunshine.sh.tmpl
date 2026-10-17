@@ -1,0 +1,21 @@
+{{ if and (eq .profile "arch") (eq (dig "osRelease" "id" "" .chezmoi) "omarchy") -}}
+#!/bin/bash
+set -euo pipefail
+
+# omarchy's sunshine package is built without CUDA, so NVENC falls back to
+# copying every frame GPU -> RAM -> GPU. LizardByte's release has CUDA.
+version=2026.914.233613
+
+if [[ "$(pacman -Q sunshine 2>/dev/null)" != "sunshine ${version}-1" ]]; then
+    echo "[INFO] Installing Sunshine ${version} from LizardByte..."
+    tmp=$(mktemp -d)
+    trap 'rm -rf "$tmp"' EXIT
+    curl -fsSL -o "$tmp/sunshine.pkg.tar.zst" \
+        "https://github.com/LizardByte/Sunshine/releases/download/v${version}/sunshine-${version}-1-x86_64.pkg.tar.zst"
+    sudo pacman -U --noconfirm "$tmp/sunshine.pkg.tar.zst"
+fi
+
+if ! grep -q '^IgnorePkg *= *sunshine' /etc/pacman.conf; then
+    sudo sed -i '/^\[options\]/a IgnorePkg = sunshine' /etc/pacman.conf
+fi
+{{ end -}}
