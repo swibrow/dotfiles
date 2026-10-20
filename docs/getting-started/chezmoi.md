@@ -70,7 +70,7 @@ Everything public degrades gracefully when the private repo is absent: `.zshrc`
 and `browser-open` source `work.zsh` only if it is readable, the finicky
 template omits the work handler, and the symlinks simply dangle.
 
-Add or rotate a secret with `mise run secret:set NAME`, which writes the
+Add or rotate a secret with `mise-secret-set NAME`, which writes the
 age-encrypted value into the private repo (commit it there).
 
 ## Key Commands

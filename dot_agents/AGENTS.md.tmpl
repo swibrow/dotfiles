@@ -48,7 +48,7 @@ Add a `CLAUDE.md` only when there are Claude-specific instructions worth keeping
   git -C ~/.config/dotfiles-private commit -s -m "..."
   git -C ~/.config/dotfiles-private push
   ```
-  This matters most after `mise run secret:set NAME`, which writes an age-encrypted value into that repo and leaves it uncommitted. An unpushed rotation stays invisible until a new machine clones the layer without it.
+  This matters most after `mise-secret-set NAME`, which writes an age-encrypted value into that repo and leaves it uncommitted. An unpushed rotation stays invisible until a new machine clones the layer without it.
 - Shell is zsh, no plugin manager.
 - Use `container` instead of `docker` for building and running containers. Instead of `docker compose`, use a kind cluster for multi-service local environments.
 

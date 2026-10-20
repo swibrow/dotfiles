@@ -25,7 +25,7 @@ ANTHROPIC_API_KEY = "{{env.ANTHROPIC_WORK_API_KEY}}"
 `ANTHROPIC_WORK_API_KEY` is age-encrypted in the private config layer (see [Private Layer](../getting-started/chezmoi.md#private-layer)), so it decrypts everywhere but only becomes `ANTHROPIC_API_KEY` where a work config opts in. Rotate it with:
 
 ```bash
-mise run secret:set ANTHROPIC_WORK_API_KEY
+mise-secret-set ANTHROPIC_WORK_API_KEY
 ```
 
 !!! note "First-time setup"

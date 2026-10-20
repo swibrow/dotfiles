@@ -5,7 +5,7 @@
 # override needs the literal name `ATUIN_EXTRA_HEADERS__X-API-Key`, which zsh's
 # `export` refuses (hyphens aren't valid in a shell identifier) - `env` has no
 # such restriction, so inject it there instead. The key itself lives as
-# ATUIN_API_KEY, age-encrypted via `mise run secret:set ATUIN_API_KEY`.
+# ATUIN_API_KEY, age-encrypted via `mise-secret-set ATUIN_API_KEY`.
 #
 # Shadowing the `atuin` command also covers its own shell-search keybindings,
 # which invoke the bare word `atuin` under the hood.

@@ -36,6 +36,7 @@ sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply swibrow
 - `aws-rds-connect` - interactive RDS connection via Secrets Manager (shares `aws-common.sh`)
 - `kubelog` - interactive kubectl log tailer
 - `keychain-secret` - macOS keychain secret helper
+- `mise-secret-set`, `mise-secret-rm`, `mise-secrets-rekey` - age-encrypted secrets in the private mise config; `mise-secrets-scrub` deletes lines with leaked token prefixes from local files
 - `claude-work`, `claude-tmux-mark` - Claude Code helpers
 
 AWS profile switching uses the `af` shell function (AWS SSO via the native CLI), role assumption `aws-assume`/`aws-unassume`; see `dot_config/zsh/functions/general.zsh`. EKS/profile/role pickers are fzf-based `aws` CLI aliases in `dot_aws/cli/alias`. Kubernetes helpers (`kclean`, `kdebug`, `kadmin`, etc.) live in `dot_config/zsh/functions/kubectl.zsh`.
@@ -67,6 +68,6 @@ The excluded content lives in a private repo cloned to `~/.config/dotfiles-priva
 - omarchy (the `arch` profile, a KubeVirt desktop VM in home-ops): `omarchy/` holds the hand-tuned `monitors.lua`, `hyprland.lua` (tiles the Battle.net launcher omarchy floats), `shell.json` (idle lock pushed out to ~23 days, since `0` locks immediately), `sunshine.conf` and `apps.json` (Moonlight app list, incl. Battle.net), deployed as symlinks so omarchy's and Sunshine's own UIs write into the repo. `run_onchange_after_08-omarchy-sunshine.sh.tmpl` replaces omarchy's Sunshine, built without CUDA, with LizardByte's release and pins it with `IgnorePkg`; bump `version` there to upgrade
 - `.chezmoiexternal.yaml` manages external dependencies (TPM for tmux)
 - `.chezmoi.yaml.tmpl` prompts for user-specific data (email, GPG key) and resolves the active machine `profile` (`osx` on macOS, always; prompted on other OSes, defaulting to `arch` on Arch Linux and derivatives such as omarchy and `linux-dev` elsewhere; `arch` installs no Homebrew). `.profile` gates which packages (Brewfile vs Brewfile.macos) and macOS-only app configs get installed — see `.chezmoiignore`
-- Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise run secret:set` / `secret:rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
+- Secrets stored in macOS login keychain (service=`env`, account=VAR_NAME); managed via `keychain-secret` helper and read by mise `exec()` with `cache_key`. Alternatively age-encrypted inline in the mise config via `mise-secret-set` / `mise-secret-rm` (key at `~/.config/mise/age.txt`, not chezmoi-managed)
 - AWS credentials managed via AWS SSO (`aws sso login`); profile switching via the `af` function
 - Terraform backend uses account-specific S3 bucket naming (`tf-state-{account-id}`)
