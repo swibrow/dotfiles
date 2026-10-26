@@ -309,6 +309,8 @@ brew "stow"
 brew "t-rec"
 # TUI to view and query tabular files (CSV,TSV, Parquet, etc.)
 brew "tabiew"
+# TUI-based PDF viewer
+brew "tdf"
 # General purpose fuzzy finder TUI
 brew "television"
 # User interface to the TELNET protocol

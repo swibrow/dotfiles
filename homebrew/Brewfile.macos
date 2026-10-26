@@ -78,6 +78,8 @@ cask "oktadev/tap/okta"
 cask "barutsrb/tap/omniwm", trusted: true
 # Whisper dictation/transcription app
 cask "opensuperwhisper"
+# G-code generator for 3D printers
+cask "orcaslicer"
 # Utility to uninstall apps and remove leftover files from old/uninstalled apps
 cask "pearcleaner"
 # Control your tools with a few keystrokes
