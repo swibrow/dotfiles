@@ -24,6 +24,10 @@ zed/**
 # does Sunshine's web UI - the deployed files are symlinks into omarchy/.
 omarchy/**
 
+# gh writes aliases and settings itself - ~/.config/gh/config.yml is a symlink
+# into gh/ so `gh alias set` and `gh config set` land in the repo.
+gh/**
+
 # Docs & CI
 docs/**
 mkdocs.yml
