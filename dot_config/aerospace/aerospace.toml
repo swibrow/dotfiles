@@ -254,6 +254,10 @@ if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace G'
 
 [[on-window-detected]]
+if.app-id = 'com.moonlight-stream.Moonlight'
+run = 'move-node-to-workspace G'
+
+[[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace D'
 
