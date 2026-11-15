@@ -5,10 +5,6 @@
 # selecting a repo clones it to ~/dev/<owner>/<repo> first.
 source "$HOME/.zprofile"
 
-# call jq by absolute path: the mise shim on PATH does a slow inactive-tool
-# resolution (~1-2s) since jq isn't activated in this cwd
-jq() { /opt/homebrew/bin/jq "$@"; }
-
 list_lines() {
   workspace_lines=$(herdr workspace list \
     | jq -r '.result.workspaces[] | [.workspace_id, .label, (if .worktree.is_linked_worktree then .worktree.repo_name else "" end)] | @tsv' \
@@ -49,7 +45,7 @@ result=$(list_lines | fzf \
   --header $'enter: focus open workspace / start new at dir / clone repo\nctrl-t: new worktree from selection · ctrl-r: refresh repo list from GitHub' \
   --bind "ctrl-r:change-border-label( refreshing repo list... )+reload-sync(just -g gh repo refresh >/dev/null 2>&1; ${(q)0:A} --list)" \
   --bind "load:change-border-label( workspace )" \
-  --preview 'case {1} in workspace) herdr workspace get {2} | /opt/homebrew/bin/jq . ;; repo) gh repo view {2} ;; *) eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2} ;; esac' \
+  --preview 'case {1} in workspace) herdr workspace get {2} | jq . ;; repo) gh repo view {2} ;; *) eza -1 --color=always --icons=auto {2} 2>/dev/null || ls -1 {2} ;; esac' \
   --preview-window 'right:55%')
 
 query=$(printf '%s\n' "$result" | sed -n 1p)

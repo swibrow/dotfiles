@@ -39,141 +39,19 @@ Both Brewfiles are auto-installed during `chezmoi apply` via a hash-tracked run
 script, which passes `--no-upgrade` so an apply never upgrades packages behind
 your back.
 
-## Categories
+## What stays in Homebrew
 
-### Shell & Terminal
+Command-line tools that ship prebuilt binaries for macOS and Linux live in the
+mise global config (`mise/config.toml`) instead, so the same set installs on
+every profile, including `arch`, which has no Homebrew. The Brewfiles keep only
+what mise cannot provide well:
 
-| Package | Description |
-|---------|-------------|
-| `zsh` | Shell |
-| `zsh-autosuggestions` | Fish-like suggestions |
-| `zsh-fast-syntax-highlighting` | Syntax highlighting |
-| `starship` | Prompt |
-| `fzf` | Fuzzy finder |
-| `zoxide` | Smart cd |
-| `atuin` | Shell history |
-| `carapace` | Completion bridge |
-| `bat` | Cat with syntax highlighting |
-| `eza` | Modern ls |
-| `ripgrep` | Fast grep |
-| `fd` | Fast find |
-| `jq` / `yq` | JSON/YAML processing |
-| `glow` | Markdown renderer |
-| `tmux` | Terminal multiplexer |
-
-### Editors
-
-| Package | Description |
-|---------|-------------|
-| `neovim` | Editor |
-| `vim` | Fallback editor |
-
-### Git & Version Control
-
-| Package | Description |
-|---------|-------------|
-| `git` | Version control |
-| `gh` | GitHub CLI |
-| `gnupg` | GPG signing |
-| `pre-commit` | Git hooks |
-| `gum` | Interactive CLI (used by git wipeout) |
-
-### Kubernetes
-
-| Package | Description |
-|---------|-------------|
-| `kubectl` | Kubernetes CLI |
-| `kubectx` | Context switching |
-| `kubens` | Namespace switching |
-| `kubetail` | Log tailing |
-| `helm` | Package manager |
-| `k9s` | Terminal UI |
-| `kustomize` | Manifest customization |
-| `kubeconform` | Manifest validation |
-| `kube-capacity` | Resource usage |
-| `argocd` | GitOps |
-| `argocd-autopilot` | ArgoCD bootstrap |
-| `kind` | Local clusters |
-| `ktop` | Node monitor |
-| `eksctl` | EKS management |
-
-### AWS
-
-| Package | Description |
-|---------|-------------|
-| `awscli` | AWS CLI |
-| `localstack` | Local AWS emulation |
-
-### Infrastructure
-
-| Package | Description |
-|---------|-------------|
-| `terraform` | IaC |
-| `terraform-docs` | Documentation generation |
-| `tflint` | Linter |
-| `tfswitch` | Version switcher |
-| `pulumi` | Alternative IaC |
-| `ansible` | Configuration management |
-| `talosctl` | Talos OS control |
-
-### Development
-
-| Package | Description |
-|---------|-------------|
-| `go` | Go language |
-| `node` | Node.js |
-| `python` | Python |
-| `mise` | Version manager |
-| `just` | Task runner |
-| `make` | Build tool |
-| `bun` | JS runtime |
-| `pre-commit` | Git hooks |
-
-### Containers
-
-| Package | Description |
-|---------|-------------|
-| `docker` | CLI |
-| `docker-desktop` | Desktop app |
-
-### Monitoring
-
-| Package | Description |
-|---------|-------------|
-| `htop` / `btop` / `bottom` | System monitors |
-| `k6` | Load testing |
-| `hey` | HTTP benchmarking |
-
-### Networking
-
-| Package | Description |
-|---------|-------------|
-| `nmap` | Network scanner |
-| `mtr` | Traceroute |
-| `tcpdump` | Packet capture |
-| `socat` | Socket relay |
-| `wget` / `curl` | HTTP clients |
-| `wireguard-tools` | VPN |
-| `tailscale` | Mesh VPN |
-
-### Databases
-
-| Package | Description |
-|---------|-------------|
-| `postgresql@17` | PostgreSQL |
-| `pgcli` | PostgreSQL CLI |
-| `mycli` | MySQL CLI |
-| `mongodb` | MongoDB |
-
-### GUI Apps (Casks)
-
-| Cask | Description |
-|------|-------------|
-| `aerospace` | Tiling window manager |
-| `ghostty` | Terminal |
-| `docker-desktop` | Docker GUI |
-| `obs` | Screen recording |
-| `hyperkey` | Keyboard remapper |
-| `ngrok` | Tunneling |
-| `gcloud-cli` | Google Cloud |
-| `mongodb-compass` | MongoDB GUI |
+- libraries and system plumbing: `zsh` and its plugins, `bash`, `git`,
+  `gnupg`, `coreutils`, `make`, `wget`, codecs and image libraries
+- services and databases: `mysql`, `postgresql@*`, `valkey`, `ollama`,
+  `herdr`, `fluent-bit`, `logstash`, `unbound`
+- tools without cross-platform release binaries: `btop` (no macOS build),
+  `skopeo`, `kanidm`, `krr`, `t-rec`, `tdf`, `htop`, `mtr`, `nmap`
+- Homebrew-specific tools such as `taproom`, plus `mise` itself
+- in `Brewfile.macos`: casks and macOS-only formulas such as `container` and
+  `age-plugin-se`
